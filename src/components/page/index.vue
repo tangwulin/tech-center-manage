@@ -19,7 +19,7 @@ const mergedConfig = computed(() => {
   const mergedVLoadingOptions = isBoolean(props.loading)
     ? {
         size: 'large',
-        loading: props.loading,
+        show: props.loading,
       }
     : {
         size: 'large',
@@ -28,8 +28,8 @@ const mergedConfig = computed(() => {
   return {
     footerHeight,
     background: vars.value.cardColor,
+    loadingZIndex: mergedVLoadingOptions.show ? 1 : -1,
     containerPageBottom: slots.footer ? footerHeight : 0,
-    loadingZIndex: mergedVLoadingOptions.loading ? 1 : -1,
     footerPositionBottom: layoutStore.showFooter ? `${layoutStore.footerHeight}px` : 0,
     vLoadingOptions: mergedVLoadingOptions,
   }
