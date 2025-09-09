@@ -62,10 +62,11 @@ const mergedConfig = computed(() => {
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
     z-index: v-bind('mergedConfig.loadingZIndex');
     width: calc(100% - var(--pro-layout-content-margin-left, 0px));
+    height: calc(100% - var(--pro-layout-content-margin-top, 0px));
     margin-left: var(--pro-layout-content-margin-left, 0); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
+    margin-top: var(--pro-layout-content-margin-top, 0); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
     transition:
       width 0.3s var(--n-bezier),
       margin-left 0.3s var(--n-bezier);
