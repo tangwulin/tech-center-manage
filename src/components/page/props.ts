@@ -5,7 +5,7 @@ export const proPageProps = {
   /**
    * v-loading 配置
    */
-  loading: [Boolean, Object] as PropType<LoadingOptions>,
+  loading: [Boolean, Object] as PropType<boolean | LoadingOptions>,
   /**
    * 底部区域高度
    */

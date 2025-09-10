@@ -80,6 +80,7 @@ const mergedConfig = computed(() => {
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    z-index: 1;
     height: v-bind('mergedConfig.footerHeight');
     background-color: v-bind('mergedConfig.background');
     margin-left: var(--pro-layout-content-margin-left, 0); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
