@@ -325,6 +325,15 @@ const accessRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'complex-form',
+        component: () => import('@/views/demos/complex-form/index.vue'),
+        meta: {
+          title: '复杂表单',
+          titleI18nKey: 'routes.complexForm',
+          icon: 'material-symbols:dynamic-form-outline',
+        },
+      },
+      {
         path: 'icon',
         component: () => import('@/views/demos/icon/index.vue'),
         meta: {
