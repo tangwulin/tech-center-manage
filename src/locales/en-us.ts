@@ -490,6 +490,7 @@ export default {
         showTabbarIcon: 'Show Tab Bar Icon',
         tabsMode: 'Tabs Mode',
         tabsPersist: 'Tabs Persist',
+        resetCacheAfterCloseTab: 'Reset Cache After Close Tab',
         showSidebar: 'Show Sidebar',
         mixedSidebarFixed: 'Mixed Sidebar Fixed',
         sidebarCollapsed: 'Sidebar Collapsed',

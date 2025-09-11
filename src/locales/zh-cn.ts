@@ -460,6 +460,7 @@ export default {
         showTabbarIcon: '显示标签栏图标',
         tabsMode: '标签栏模式',
         tabsPersist: '持久化标签页',
+        resetCacheAfterCloseTab: '关闭标签页后重置缓存',
         showSidebar: '显示侧边栏',
         mixedSidebarFixed: '混合侧边栏固定',
         sidebarCollapsed: '侧边栏折叠',
