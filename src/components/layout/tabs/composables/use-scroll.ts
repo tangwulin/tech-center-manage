@@ -37,7 +37,6 @@ export function useScroll() {
     if (scrollbarRef.value) {
       scrollbarRef.value.scrollBy({
         left: event.deltaY,
-        behavior: 'smooth',
       })
     }
   }
