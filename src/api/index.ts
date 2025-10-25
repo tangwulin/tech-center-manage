@@ -9,16 +9,6 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
     method.config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
   },
 
-  // async login(response, _) {
-  //     const data = (await response.clone().json() as ApiResultOfLoginResponse).data!
-  //     localStorage.setItem('accessToken', data.accessToken!);
-  //     localStorage.setItem('refreshToken', data.refreshToken!);
-  // },
-  //
-  // logout() {
-  //     localStorage.removeItem('accessToken');
-  //     localStorage.removeItem('refreshToken');
-  // },
   refreshTokenOnSuccess: {
     // 响应时触发，可获取到response和method，并返回boolean表示token是否过期
     // 当服务端返回401时，表示token过期
@@ -39,6 +29,9 @@ const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthenticati
         // 并抛出错误
         throw error
       }
+    },
+    metaMatches: {
+      refreshToken: true
     }
   }
 })
@@ -48,6 +41,9 @@ async function refreshToken() {
     Apis.Auth.refreshToken({
       data: {
         refreshToken: localStorage.getItem('refreshToken')!
+      },
+      meta: {
+        refreshToken: true
       }
     })
   )
