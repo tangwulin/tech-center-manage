@@ -3,17 +3,20 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { LOGIN_ROUTE_PATH } from '@/router/routes'
-import http from '@/utils/axios'
+import Apis from '@/api'
 
 export interface UserInfo {
+  id: number
+  email: string
   name: string
-  token: string
+  nickName: string
+  refreshToken: string
   roles: string[]
-  codes: string[]
+  token: string
 }
 
 export interface UserLoginPayload {
-  username: string
+  email: string
   password: string
   [x: string]: any
 }
@@ -26,24 +29,32 @@ export const useUserStore = defineStore('user', () => {
   const routes = ref<RouteRecordRaw[]>([]) // 当前角色拥有的路由，Admin 中根据此数据生成菜单
 
   const user = ref<UserInfo>({
+    id: 0,
+    email: '',
     name: '',
-    roles: [],
-    codes: [],
-    token: localStorage.getItem('token') ?? '',
+    nickName: '',
+    token: '',
+    refreshToken: '',
+    roles: []
   })
 
   async function fetchUpdateUserInfo() {
     try {
-      const { data } = await Api.queryUserInfo()
+      const res = await Apis.techCenterApi.post_api_user_basic_info({
+        data: {},
+        cacheFor: {
+          mode: 'memory',
+          expire: 60 * 1000 // 1 分钟
+        }
+      })
       user.value = {
         ...user.value,
-        ...data,
+        ...res.data
       }
       return user.value
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error)
-      logout()
+      await logout()
       return user.value
     }
   }
@@ -51,36 +62,59 @@ export const useUserStore = defineStore('user', () => {
   async function login(payload: UserLoginPayload) {
     try {
       loading.value = true
-      const res = await Api.login(payload)
-      const token = user.value.token = res.data.token
-      localStorage.setItem('token', token)
+      const req = Apis.Auth.login({
+        data: payload,
+        cache: 'no-cache',
+        meta: {
+          authRole: 'login'
+        }
+      })
+      const res = await req.send()
+      if (!res.data) {
+        throw new Error(res.message)
+      }
+      localStorage.setItem('token', (user.value.token = res.data?.accessToken!))
+      localStorage.setItem('refreshToken', (user.value.refreshToken = res.data?.refreshToken!))
       const info = await fetchUpdateUserInfo()
-      const redirect = route.query.redirect as string ?? homePath
+      const redirect = (route.query.redirect as string) ?? homePath
       await router.push(redirect)
       return info
-    }
-    finally {
+    } finally {
       loading.value = false
     }
   }
 
-  function logout() {
+  async function logout() {
     user.value = {
+      email: '',
+      id: 0,
+      nickName: '',
+      refreshToken: '',
       name: '',
       token: '',
-      roles: [],
-      codes: [],
+      roles: []
     }
+    await Apis.Auth.logout({
+      data: {
+        userId: user.value.id,
+        refreshToken: user.value.refreshToken
+      },
+      cache: 'no-cache',
+      meta: {
+        authRole: 'logout'
+      }
+    }).send()
     localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
   }
 
   async function logoutWithQueryRedirect(redirect?: string) {
-    logout()
+    await logout()
     return router.push({
       path: LOGIN_ROUTE_PATH,
       query: {
-        redirect: redirect ?? route.fullPath,
-      },
+        redirect: redirect ?? route.fullPath
+      }
     })
   }
 
@@ -92,23 +126,6 @@ export const useUserStore = defineStore('user', () => {
     fetchUpdateUserInfo,
     loginLoading: loading,
     logoutWithQueryRedirect,
-    user: computed(() => user.value),
+    user: computed(() => user.value)
   }
 })
-
-class Api {
-  static login(payload: UserLoginPayload) {
-    return http<{ token: string }>({
-      url: '/user/login',
-      method: 'post',
-      data: payload,
-    })
-  }
-
-  static queryUserInfo() {
-    return http<Omit<UserInfo, 'token'>>({
-      url: '/user/info',
-      method: 'get',
-    })
-  }
-}
