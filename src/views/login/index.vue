@@ -20,28 +20,22 @@ const via = computed(() => {
 })
 
 const form = createProForm({
-  initialValues: {
-    username: 'super',
-    password: '123456',
-    rememberMe: true,
-  },
   onSubmit: async (values) => {
     try {
       const user = await userStore.login(values)
       notification.success({
         title: $t('pages.login.loginSuccess'),
         content: `${$t('pages.login.welcomeBack')}，${user.name}`,
-        duration: 2000,
+        duration: 2000
       })
-    }
-    catch (error: any) {
+    } catch (error: any) {
       notification.error({
         title: $t('pages.login.loginFailed'),
         content: error.message,
-        duration: 2000,
+        duration: 2000
       })
     }
-  },
+  }
 })
 </script>
 
@@ -53,16 +47,12 @@ const form = createProForm({
       <div
         class="absolute inset-0 blur-2xl"
         :style="{
-          background: `linear-gradient(154deg,#07070915 30%,${via} 60%,#07070915 10%)`,
+          background: `linear-gradient(154deg,#07070915 30%,${via} 60%,#07070915 10%)`
         }"
       />
       <div class="relative z-10 w-full flex flex-col">
         <div class="flex items-center gap-3 p-8">
-          <img
-            src="@/assets/logo.svg"
-            alt="Logo"
-            class="w-8 h-8"
-          >
+          <img src="@/assets/logo.svg" alt="Logo" class="w-8 h-8" />
           <span class="text-xl font-semibold text-gray-800 dark:text-gray-100">{{ title }}</span>
         </div>
         <div class="flex-grow flex items-center justify-center">
@@ -82,11 +72,7 @@ const form = createProForm({
       <div class="flex-grow flex items-center justify-center">
         <div class="w-full max-w-[420px] px-6 lg:px-12">
           <div class="lg:hidden flex items-center justify-center gap-2 mb-12">
-            <img
-              src="@/assets/logo.svg"
-              alt="Logo"
-              class="w-8 h-8"
-            >
+            <img src="@/assets/logo.svg" alt="Logo" class="w-8 h-8" />
             <span class="text-xl font-semibold text-gray-900 dark:text-white">{{ title }}</span>
           </div>
 
@@ -99,57 +85,31 @@ const form = createProForm({
             </p>
           </div>
 
-          <pro-form
-            :form="form"
-            size="large"
-            :loading="loading"
-            label-placement="left"
-          >
-            <pro-input
-              required
-              path="username"
-              :placeholder="$t('pages.login.usernamePlaceholder')"
-            />
+          <pro-form :form="form" size="large" :loading="loading" label-placement="left">
+            <pro-input required path="email" :placeholder="$t('pages.login.usernamePlaceholder')" />
             <pro-password
               required
               path="password"
               :placeholder="$t('pages.login.passwordPlaceholder')"
               :field-props="{
-                showPasswordOn: 'click',
+                showPasswordOn: 'click'
               }"
             />
             <div class="flex justify-between items-center mb-6">
-              <pro-checkbox
-                path="rememberMe"
-                size="small"
-                :show-feedback="false"
-              >
+              <pro-checkbox path="rememberMe" size="small" :show-feedback="false">
                 {{ $t('pages.login.rememberMe') }}
               </pro-checkbox>
-              <n-button
-                text
-                type="primary"
-              >
+              <n-button text type="primary">
                 {{ $t('pages.login.forgotPassword') }}
               </n-button>
             </div>
 
-            <n-button
-              type="primary"
-              block
-              size="large"
-              :loading="loading"
-              @click="form.submit"
-            >
+            <n-button type="primary" block size="large" :loading="loading" @click="form.submit">
               {{ loading ? $t('pages.login.loginButtonLoading') : $t('pages.login.loginButton') }}
             </n-button>
             <div class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
               {{ $t('pages.login.noAccount') }}
-              <n-button
-                text
-                type="primary"
-                class="font-medium"
-              >
+              <n-button text type="primary" class="font-medium">
                 {{ $t('pages.login.register') }}
               </n-button>
             </div>
