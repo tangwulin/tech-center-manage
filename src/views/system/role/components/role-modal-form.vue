@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { translateOptions } from '@/utils/common'
 import { statusOptions } from '../utils/constants'
 </script>
@@ -6,32 +6,32 @@ import { statusOptions } from '../utils/constants'
 <template>
   <pro-input
     :title="$t('pages.system.role.roleName')"
-    path="name"
     :tooltip="$t('pages.system.role.roleNameTooltip')"
+    path="name"
     required
   />
   <pro-input
     :title="$t('pages.system.role.roleCode')"
-    path="code"
     :tooltip="$t('pages.system.role.roleCodeTooltip')"
+    path="code"
     required
   />
   <pro-radio-group
+    :field-props="{
+      options: translateOptions(statusOptions)
+    }"
     :title="$t('common.often.status')"
     path="status"
     required
-    :field-props="{
-      options: translateOptions(statusOptions),
-    }"
   />
   <pro-textarea
-    :title="$t('common.often.remark')"
-    path="remark"
     :field-props="{
       autosize: {
         minRows: 3,
-        maxRows: 5,
-      },
+        maxRows: 5
+      }
     }"
+    :title="$t('common.often.remark')"
+    path="remark"
   />
 </template>

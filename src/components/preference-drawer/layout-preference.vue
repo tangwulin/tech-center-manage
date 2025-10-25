@@ -1,4 +1,4 @@
-<script setup lang='tsx'>
+<script lang="tsx" setup>
 import type { ProLayoutMode } from 'pro-naive-ui'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -25,42 +25,34 @@ const {
   sidebarMenuDivider,
   sidebarCollapsedWidth,
   resetCacheAfterCloseTab,
-  sidebarCollapsedShowMenuTitle,
+  sidebarCollapsedShowMenuTitle
 } = storeToRefs(useLayoutStore())
 
 const tabsModeOptions = computed(() => [
   { label: $t('common.preference.layout.chrome'), value: 'chrome' },
-  { label: $t('common.preference.layout.card'), value: 'card' },
+  { label: $t('common.preference.layout.card'), value: 'card' }
 ])
 
-const layoutOptions = computed<Array<{ label: string, value: ProLayoutMode }>>(() => [
+const layoutOptions = computed<Array<{ label: string; value: ProLayoutMode }>>(() => [
   { label: $t('common.preference.layout.vertical'), value: 'vertical' },
   { label: $t('common.preference.layout.horizontal'), value: 'horizontal' },
   { label: $t('common.preference.layout.mixedTwoColumn'), value: 'mixed-two-column' },
   { label: $t('common.preference.layout.sidebar'), value: 'sidebar' },
   { label: $t('common.preference.layout.mixedSidebar'), value: 'mixed-sidebar' },
   { label: $t('common.preference.layout.fullContent'), value: 'full-content' },
-  { label: $t('common.preference.layout.twoColumn'), value: 'two-column' },
+  { label: $t('common.preference.layout.twoColumn'), value: 'two-column' }
 ])
 </script>
 
 <template>
-  <n-flex
-    vertical
-    :size="12"
-    class="my-24px"
-  >
+  <n-flex :size="12" class="my-24px" vertical>
     <div class="preference-item">
       <span>{{ $t('common.preference.layout.showLogo') }}</span>
       <n-switch v-model:value="showLogo" />
     </div>
     <div class="preference-item">
       <span>{{ $t('common.preference.layout.layoutMode') }}</span>
-      <n-select
-        v-model:value="mode"
-        class="w-150px"
-        :options="layoutOptions"
-      />
+      <n-select v-model:value="mode" :options="layoutOptions" class="w-150px" />
     </div>
     <div class="preference-item">
       <span>{{ $t('common.preference.layout.menuGroup') }}</span>
@@ -72,19 +64,11 @@ const layoutOptions = computed<Array<{ label: string, value: ProLayoutMode }>>((
     </div>
   </n-flex>
 
-  <n-flex
-    vertical
-    :size="12"
-    class="my-24px"
-  >
+  <n-flex :size="12" class="my-24px" vertical>
     <div class="font-bold text-16px">
       {{ $t('common.preference.layout.header') }}
     </div>
-    <n-flex
-      vertical
-      :size="12"
-      class="pl-8px"
-    >
+    <n-flex :size="12" class="pl-8px" vertical>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.showHeader') }}</span>
         <n-switch v-model:value="showNav" />
@@ -95,27 +79,16 @@ const layoutOptions = computed<Array<{ label: string, value: ProLayoutMode }>>((
       </div>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.headerHeight') }}</span>
-        <n-input-number
-          v-model:value="navHeight"
-          class="w-120px"
-        />
+        <n-input-number v-model:value="navHeight" class="w-120px" />
       </div>
     </n-flex>
   </n-flex>
 
-  <n-flex
-    vertical
-    :size="12"
-    class="my-24px"
-  >
+  <n-flex :size="12" class="my-24px" vertical>
     <div class="font-bold text-16px">
       {{ $t('common.preference.layout.tabbar') }}
     </div>
-    <n-flex
-      vertical
-      :size="12"
-      class="pl-8px"
-    >
+    <n-flex :size="12" class="pl-8px" vertical>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.showTabbar') }}</span>
         <n-switch v-model:value="showTabbar" />
@@ -130,35 +103,20 @@ const layoutOptions = computed<Array<{ label: string, value: ProLayoutMode }>>((
       </div>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.tabbarHeight') }}</span>
-        <n-input-number
-          v-model:value="tabbarHeight"
-          class="w-120px"
-        />
+        <n-input-number v-model:value="tabbarHeight" class="w-120px" />
       </div>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.tabsMode') }}</span>
-        <n-select
-          v-model:value="tabsMode"
-          class="w-120px"
-          :options="tabsModeOptions"
-        />
+        <n-select v-model:value="tabsMode" :options="tabsModeOptions" class="w-120px" />
       </div>
     </n-flex>
   </n-flex>
 
-  <n-flex
-    vertical
-    :size="12"
-    class="my-24px"
-  >
+  <n-flex :size="12" class="my-24px" vertical>
     <div class="font-bold text-16px">
       {{ $t('common.preference.layout.sidebar') }}
     </div>
-    <n-flex
-      vertical
-      :size="12"
-      class="pl-8px"
-    >
+    <n-flex :size="12" class="pl-8px" vertical>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.showSidebar') }}</span>
         <n-switch v-model:value="showSidebar" />
@@ -173,34 +131,20 @@ const layoutOptions = computed<Array<{ label: string, value: ProLayoutMode }>>((
       </div>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.sidebarWidth') }}</span>
-        <n-input-number
-          v-model:value="sidebarWidth"
-          class="w-120px"
-        />
+        <n-input-number v-model:value="sidebarWidth" class="w-120px" />
       </div>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.collapsedWidth') }}</span>
-        <n-input-number
-          v-model:value="sidebarCollapsedWidth"
-          class="w-120px"
-        />
+        <n-input-number v-model:value="sidebarCollapsedWidth" class="w-120px" />
       </div>
     </n-flex>
   </n-flex>
 
-  <n-flex
-    vertical
-    :size="12"
-    class="my-24px"
-  >
+  <n-flex :size="12" class="my-24px" vertical>
     <div class="font-bold text-16px">
       {{ $t('common.preference.layout.footer') }}
     </div>
-    <n-flex
-      vertical
-      :size="12"
-      class="pl-8px"
-    >
+    <n-flex :size="12" class="pl-8px" vertical>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.showFooter') }}</span>
         <n-switch v-model:value="showFooter" />
@@ -211,10 +155,7 @@ const layoutOptions = computed<Array<{ label: string, value: ProLayoutMode }>>((
       </div>
       <div class="preference-item">
         <span>{{ $t('common.preference.layout.footerHeight') }}</span>
-        <n-input-number
-          v-model:value="footerHeight"
-          class="w-120px"
-        />
+        <n-input-number v-model:value="footerHeight" class="w-120px" />
       </div>
     </n-flex>
   </n-flex>

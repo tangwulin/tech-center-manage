@@ -1,4 +1,4 @@
-<script setup lang='tsx'>
+<script lang="tsx" setup>
 import type { ProLayoutMode } from 'pro-naive-ui'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
@@ -13,19 +13,11 @@ interface LogoProps {
   usingMobileSidebarDrawer?: boolean
 }
 
-const {
-  usingMobileSidebarDrawer = false,
-} = defineProps<LogoProps>()
+const { usingMobileSidebarDrawer = false } = defineProps<LogoProps>()
 
-const {
-  title,
-} = storeToRefs(useAppStore())
+const { title } = storeToRefs(useAppStore())
 
-const {
-  mode,
-  mobile,
-  collapsed,
-} = storeToRefs(useLayoutStore())
+const { mode, mobile, collapsed } = storeToRefs(useLayoutStore())
 
 const enablePaddingLeft = computed(() => {
   const layoutMode = mode.value as ProLayoutMode
@@ -35,10 +27,12 @@ const enablePaddingLeft = computed(() => {
   if (mobile.value) {
     return true
   }
-  return layoutMode === 'horizontal'
-    || layoutMode === 'sidebar'
-    || layoutMode === 'mixed-sidebar'
-    || (layoutMode === 'vertical' && !collapsed.value)
+  return (
+    layoutMode === 'horizontal' ||
+    layoutMode === 'sidebar' ||
+    layoutMode === 'mixed-sidebar' ||
+    (layoutMode === 'vertical' && !collapsed.value)
+  )
 })
 
 const showAppTitle = computed(() => {
@@ -49,29 +43,25 @@ const showAppTitle = computed(() => {
   if (mobile.value) {
     return false
   }
-  return layoutMode === 'sidebar'
-    || layoutMode === 'horizontal'
-    || layoutMode === 'mixed-sidebar'
-    || (layoutMode === 'vertical' && !collapsed.value)
+  return (
+    layoutMode === 'sidebar' ||
+    layoutMode === 'horizontal' ||
+    layoutMode === 'mixed-sidebar' ||
+    (layoutMode === 'vertical' && !collapsed.value)
+  )
 })
 </script>
 
 <template>
   <a
-    href="javascript: void 0;"
-    class="flex items-center gap-12px h-full"
     :class="{
       'pl-12px': enablePaddingLeft,
-      'justify-center': !enablePaddingLeft,
+      'justify-center': !enablePaddingLeft
     }"
+    class="flex items-center gap-12px h-full"
+    href="javascript: void 0;"
   >
-    <img
-      :src="logo"
-      class="size-32px truncate"
-    >
-    <h1
-      v-show="showAppTitle"
-      class="truncate text-18px"
-    >{{ title }}</h1>
+    <img :src="logo" class="size-32px truncate" />
+    <h1 v-show="showAppTitle" class="truncate text-18px">{{ title }}</h1>
   </a>
 </template>

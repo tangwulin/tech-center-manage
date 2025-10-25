@@ -1,10 +1,11 @@
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import type { ProDataTableColumns } from 'pro-naive-ui'
+import { createProDrawerForm, renderProTags } from 'pro-naive-ui'
 import type { Merge, SetOptional } from 'type-fest'
 import type { Menu } from './index.api'
+import { Api } from './index.api'
 import { Icon } from '@iconify/vue'
 import { storeToRefs } from 'pinia'
-import { createProDrawerForm, renderProTags } from 'pro-naive-ui'
 import { computed } from 'vue'
 import { useProNDataTable } from '@/composables/use-pro-n-data-table'
 import { useProRequest } from '@/composables/use-pro-request'
@@ -13,55 +14,47 @@ import { useLayoutStore } from '@/store/use-layout-store'
 import { translateOptions } from '@/utils/common'
 import DirectoryDrawerForm from './components/driectory-drawer-form.vue'
 import MenuDrawerForm from './components/menu-drawer-form.vue'
-import { Api } from './index.api'
-import {
-  menuTypeEnum,
-  typeMapping,
-  typeOptions,
-  typeToColorMapping,
-} from './utils/constants'
+import { menuTypeEnum, typeMapping, typeOptions, typeToColorMapping } from './utils/constants'
 
-const {
-  mobile,
-} = storeToRefs(useLayoutStore())
+const { mobile } = storeToRefs(useLayoutStore())
 
-const {
-  loading: insertOrUpdateLoading,
-  runAsync: runAsyncInsertOrUpdate,
-} = useProRequest(Api.insertOrUpdate, {
-  manual: true,
-  successTip: true,
-})
-
-const {
-  table: { tableProps, onChange },
-} = useProNDataTable(
-  async () => {
-    const { data } = await Api.list()
-    return { list: data, total: data.length }
-  },
+const { loading: insertOrUpdateLoading, runAsync: runAsyncInsertOrUpdate } = useProRequest(
+  Api.insertOrUpdate,
+  {
+    manual: true,
+    successTip: true
+  }
 )
 
-const drawerForm = createProDrawerForm<Merge<SetOptional<Menu, 'id'>, { parentId: null | string }>>({
-  onSubmit: (values) => {
-    const data = {
-      ...values,
-      id: drawerForm.values.value.id,
-      parentId: drawerForm.values.value.parentId,
-    }
-    runAsyncInsertOrUpdate(data).then(() => {
-      drawerForm.show.value = false
-      onChange({ page: 1 })
-    })
-  },
+const {
+  table: { tableProps, onChange }
+} = useProNDataTable(async () => {
+  const { data } = await Api.list()
+  return { list: data, total: data.length }
 })
+
+const drawerForm = createProDrawerForm<Merge<SetOptional<Menu, 'id'>, { parentId: null | string }>>(
+  {
+    onSubmit: (values) => {
+      const data = {
+        ...values,
+        id: drawerForm.values.value.id,
+        parentId: drawerForm.values.value.parentId
+      }
+      runAsyncInsertOrUpdate(data).then(() => {
+        drawerForm.show.value = false
+        onChange({ page: 1 })
+      })
+    }
+  }
+)
 
 const { run: runDeleteMenus } = useProRequest(Api.del, {
   manual: true,
   successTip: 'common.often.deleteSuccess',
   onSuccess() {
     onChange({ page: 1 })
-  },
+  }
 })
 
 const tableColumns = computed<ProDataTableColumns<Menu>>(() => {
@@ -71,15 +64,12 @@ const tableColumns = computed<ProDataTableColumns<Menu>>(() => {
       width: 180,
       render: (row) => {
         return (
-          <n-flex
-            inline
-            align="center"
-          >
+          <n-flex inline align="center">
             {row.meta?.icon && <Icon icon={row.meta.icon}></Icon>}
             <span>{row.meta?.title}</span>
           </n-flex>
         )
-      },
+      }
     },
     {
       title: $t('pages.system.menu.type'),
@@ -88,19 +78,19 @@ const tableColumns = computed<ProDataTableColumns<Menu>>(() => {
       render: (row) => {
         return renderProTags({
           content: $t(typeMapping[row.type]),
-          type: typeToColorMapping[row.type],
+          type: typeToColorMapping[row.type]
         })
-      },
+      }
     },
     {
       title: $t('pages.system.menu.path'),
       path: 'path',
-      width: 150,
+      width: 150
     },
     {
       title: $t('pages.system.menu.component'),
       path: 'component',
-      width: 150,
+      width: 150
     },
     {
       title: $t('common.often.operation'),
@@ -131,8 +121,8 @@ const tableColumns = computed<ProDataTableColumns<Menu>>(() => {
                   parentId: null,
                   meta: {
                     layout: true,
-                    ...(row.meta ?? {} as any),
-                  },
+                    ...(row.meta ?? ({} as any))
+                  }
                 }
               }}
             >
@@ -149,45 +139,40 @@ const tableColumns = computed<ProDataTableColumns<Menu>>(() => {
                 ),
                 trigger: () => {
                   return (
-                    <n-button
-                      type="error"
-                      size="small"
-                      text={true}
-                    >
+                    <n-button type="error" size="small" text={true}>
                       {$t('common.often.delete')}
                     </n-button>
                   )
-                },
+                }
               }}
             </n-popconfirm>
           </n-flex>
         )
-      },
-    },
+      }
+    }
   ]
 })
 </script>
 
 <template>
-  <n-flex
-    class="h-full"
-    vertical
-    size="large"
-  >
+  <n-flex class="h-full" size="large" vertical>
     <pro-data-table
+      :columns="tableColumns"
+      :pagination="false"
+      :scroll-x="730"
       :title="$t('pages.system.menu.title')"
       row-key="id"
-      :scroll-x="730"
-      :columns="tableColumns"
       v-bind="tableProps"
-      :pagination="false"
     >
       <template #toolbar>
         <n-flex>
           <n-button
-            type="primary"
             ghost
-            @click="drawerForm.show.value = true;drawerForm.values.value.type = menuTypeEnum.MENU"
+            type="primary"
+            @click="
+              drawerForm.show.value = true
+              drawerForm.values.value.type = menuTypeEnum.MENU
+            "
           >
             <template #icon>
               <n-icon>
@@ -205,20 +190,22 @@ const tableColumns = computed<ProDataTableColumns<Menu>>(() => {
       :width="mobile ? '100%' : undefined"
     >
       <pro-drawer-content
-        :title="`${drawerForm.values.value.id ? $t('pages.system.menu.editMenu') : $t('pages.system.menu.addMenu')}`"
         :native-scrollbar="false"
+        :title="`${drawerForm.values.value.id ? $t('pages.system.menu.editMenu') : $t('pages.system.menu.addMenu')}`"
       >
         <pro-radio-group
-          :title="$t('pages.system.menu.menuType')"
-          path="type"
           :field-props="{
             type: 'button',
-            options: translateOptions(typeOptions),
+            options: translateOptions(typeOptions)
           }"
+          :title="$t('pages.system.menu.menuType')"
+          path="type"
         />
         <div class="grid-cols-responsive-1-2-2 gap-x-0 md:gap-x-4">
           <menu-drawer-form v-if="drawerForm.values.value.type === menuTypeEnum.MENU" />
-          <directory-drawer-form v-else-if="drawerForm.values.value.type === menuTypeEnum.DIRECTORY" />
+          <directory-drawer-form
+            v-else-if="drawerForm.values.value.type === menuTypeEnum.DIRECTORY"
+          />
         </div>
       </pro-drawer-content>
     </pro-drawer-form>

@@ -6,8 +6,7 @@ const users = [
   {
     username: 'super',
     password: '123456',
-    token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlciIsImV4cCI6MTczMjI0MzYyNn0.super',
+    token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlciIsImV4cCI6MTczMjI0MzYyNn0.super',
     roles: ['super'],
     name: 'Super',
     codes: ['1001', '1002', '1003', '1004'],
@@ -19,8 +18,8 @@ const users = [
         meta: {
           title: '首页',
           icon: 'material-symbols:dashboard-outline-rounded',
-          titleI18nKey: 'routes.home',
-        },
+          titleI18nKey: 'routes.home'
+        }
       },
       {
         path: '/demos',
@@ -37,22 +36,22 @@ const users = [
                 meta: {
                   title: '权限切换',
                   icon: 'mdi:page-previous-outline',
-                  titleI18nKey: 'routes.accessToggle',
-                },
-              },
+                  titleI18nKey: 'routes.accessToggle'
+                }
+              }
             ],
             meta: {
               title: '权限',
               icon: 'material-symbols:lock-outline',
-              titleI18nKey: 'routes.access',
-            },
-          },
+              titleI18nKey: 'routes.access'
+            }
+          }
         ],
         meta: {
           title: '演示',
           icon: 'hugeicons:codesandbox',
-          titleI18nKey: 'routes.demo',
-        },
+          titleI18nKey: 'routes.demo'
+        }
       },
       {
         name: 'System',
@@ -65,8 +64,8 @@ const users = [
             meta: {
               title: '用户管理',
               icon: 'ant-design:user-outlined',
-              titleI18nKey: 'routes.userManagement',
-            },
+              titleI18nKey: 'routes.userManagement'
+            }
           },
           {
             name: 'Role',
@@ -75,8 +74,8 @@ const users = [
             meta: {
               title: '角色管理',
               icon: 'carbon:user-role',
-              titleI18nKey: 'routes.roleManagement',
-            },
+              titleI18nKey: 'routes.roleManagement'
+            }
           },
           {
             name: 'Menu',
@@ -85,23 +84,22 @@ const users = [
             meta: {
               title: '菜单管理',
               icon: 'ant-design:menu-outlined',
-              titleI18nKey: 'routes.menuManagement',
-            },
-          },
+              titleI18nKey: 'routes.menuManagement'
+            }
+          }
         ],
         meta: {
           title: '系统管理',
           icon: 'ant-design:setting-outlined',
-          titleI18nKey: 'routes.system',
-        },
-      },
-    ],
+          titleI18nKey: 'routes.system'
+        }
+      }
+    ]
   },
   {
     username: 'admin',
     password: '123456',
-    token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTczMjI0MzYyNn0.admin',
+    token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTczMjI0MzYyNn0.admin',
     roles: ['admin'],
     name: 'Admin',
     codes: ['1003'],
@@ -113,8 +111,8 @@ const users = [
         meta: {
           title: '首页',
           icon: 'material-symbols:dashboard-outline-rounded',
-          titleI18nKey: 'routes.home',
-        },
+          titleI18nKey: 'routes.home'
+        }
       },
       {
         path: '/demos',
@@ -131,22 +129,22 @@ const users = [
                 meta: {
                   title: '权限切换',
                   icon: 'mdi:page-previous-outline',
-                  titleI18nKey: 'routes.accessToggle',
-                },
-              },
+                  titleI18nKey: 'routes.accessToggle'
+                }
+              }
             ],
             meta: {
               title: '权限',
               icon: 'material-symbols:lock-outline',
-              titleI18nKey: 'routes.access',
-            },
-          },
+              titleI18nKey: 'routes.access'
+            }
+          }
         ],
         meta: {
           title: '演示',
           icon: 'hugeicons:codesandbox',
-          titleI18nKey: 'routes.demo',
-        },
+          titleI18nKey: 'routes.demo'
+        }
       },
       {
         name: 'System',
@@ -159,23 +157,22 @@ const users = [
             meta: {
               title: '用户管理',
               icon: 'ant-design:user-outlined',
-              titleI18nKey: 'routes.userManagement',
-            },
-          },
+              titleI18nKey: 'routes.userManagement'
+            }
+          }
         ],
         meta: {
           title: '系统管理',
           icon: 'ant-design:setting-outlined',
-          titleI18nKey: 'routes.system',
-        },
-      },
-    ],
+          titleI18nKey: 'routes.system'
+        }
+      }
+    ]
   },
   {
     username: 'user',
     password: '123456',
-    token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzMyMjQzNjI2fQ.user',
+    token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNzMyMjQzNjI2fQ.user',
     roles: ['user'],
     name: 'User',
     codes: [],
@@ -187,8 +184,8 @@ const users = [
         meta: {
           title: '首页',
           icon: 'material-symbols:dashboard-outline-rounded',
-          titleI18nKey: 'routes.home',
-        },
+          titleI18nKey: 'routes.home'
+        }
       },
       {
         path: '/demos',
@@ -205,32 +202,32 @@ const users = [
                 meta: {
                   title: '权限切换',
                   icon: 'mdi:page-previous-outline',
-                  titleI18nKey: 'routes.accessToggle',
-                },
-              },
+                  titleI18nKey: 'routes.accessToggle'
+                }
+              }
             ],
             meta: {
               title: '权限',
               icon: 'material-symbols:lock-outline',
-              titleI18nKey: 'routes.access',
-            },
-          },
+              titleI18nKey: 'routes.access'
+            }
+          }
         ],
         meta: {
           title: '演示',
           icon: 'hugeicons:codesandbox',
-          titleI18nKey: 'routes.demo',
-        },
-      },
-    ],
-  },
+          titleI18nKey: 'routes.demo'
+        }
+      }
+    ]
+  }
 ]
 
 function createSuccessResponse(data: any) {
   return {
     data,
     code: 200,
-    message: 'success',
+    message: 'success'
   }
 }
 
@@ -238,12 +235,12 @@ function createErrorResponse(message: string) {
   return {
     message,
     code: 201,
-    data: null,
+    data: null
   }
 }
 
 function isInvalidToken(token: string) {
-  return !token || !users.some(user => user.token === token)
+  return !token || !users.some((user) => user.token === token)
 }
 
 const systemRoleRoutes = buildCURDRoutes('/system/role', database.role)
@@ -258,12 +255,14 @@ export default defineFakeRoute([
     url: '/user/login',
     method: 'post',
     response: ({ body }) => {
-      const user = users.find(user => user.username === body.username && user.password === body.password)
+      const user = users.find(
+        (user) => user.username === body.username && user.password === body.password
+      )
       if (!user) {
         return createErrorResponse('用户名或密码错误')
       }
       return createSuccessResponse({ token: user.token })
-    },
+    }
   },
   {
     url: '/user/info',
@@ -273,16 +272,16 @@ export default defineFakeRoute([
       if (isInvalidToken(token)) {
         return createErrorResponse('token 无效')
       }
-      const user = users.find(user => user.token === token)
+      const user = users.find((user) => user.token === token)
       if (!user) {
         return createErrorResponse('用户名或密码错误')
       }
       return createSuccessResponse({
         name: user.name,
         roles: user.roles,
-        codes: user.codes,
+        codes: user.codes
       })
-    },
+    }
   },
   {
     url: '/menus/all',
@@ -292,11 +291,11 @@ export default defineFakeRoute([
       if (isInvalidToken(token)) {
         return createErrorResponse('token 无效')
       }
-      const user = users.find(user => user.token === token)
+      const user = users.find((user) => user.token === token)
       if (!user) {
         return createErrorResponse('用户名或密码错误')
       }
       return createSuccessResponse(user.menus)
-    },
-  },
+    }
+  }
 ])

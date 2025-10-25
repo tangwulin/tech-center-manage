@@ -2,7 +2,7 @@ import type {
   I18nKeyPath as _I18nKeyPath,
   IsI18nKey as _IsI18nKey,
   MaybeI18nKeyPath as _MaybeI18nKeyPath,
-  Translate as _Translate,
+  Translate as _Translate
 } from '@/locales/locales'
 
 declare global {

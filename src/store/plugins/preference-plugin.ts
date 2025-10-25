@@ -32,10 +32,13 @@ declare module 'pinia' {
 
 const { copy } = useClipboard()
 let registedBeforeunloadEvent = false
-const storeIdToKeysInitialValueRecord = new Map<string, {
-  prefixPath: string
-  initialValueMap: Map<string, any>
-}>()
+const storeIdToKeysInitialValueRecord = new Map<
+  string,
+  {
+    prefixPath: string
+    initialValueMap: Map<string, any>
+  }
+>()
 
 export function preferencePlugin({ pinia, options, store, app }: PiniaPluginContext) {
   if (options.preference) {
@@ -48,13 +51,12 @@ export function preferencePlugin({ pinia, options, store, app }: PiniaPluginCont
       if (!storeIdToKeysInitialValueRecord.has(store.$id)) {
         storeIdToKeysInitialValueRecord.set(store.$id, {
           prefixPath,
-          initialValueMap: new Map(),
+          initialValueMap: new Map()
         })
       }
       storeIdToKeysInitialValueRecord
         .get(store.$id)!
-        .initialValueMap
-        .set(key, cloneDeep(store[key]))
+        .initialValueMap.set(key, cloneDeep(store[key]))
       const finalValue = getPreferenceFromStorage(`${prefixPath}.${key}`, store[key])
       store[key] = finalValue
     })
@@ -68,7 +70,7 @@ export function preferencePlugin({ pinia, options, store, app }: PiniaPluginCont
       }
       const { initialValueMap } = storeIdToKeysInitialValueRecord.get(s.$id)!
       initialValueMap.forEach((value, key) => {
-        (s as any)[key] = value
+        ;(s as any)[key] = value
       })
     })
   }
@@ -81,7 +83,7 @@ export function preferencePlugin({ pinia, options, store, app }: PiniaPluginCont
       }
       const { initialValueMap, prefixPath } = storeIdToKeysInitialValueRecord.get(s.$id)!
       initialValueMap.forEach((_, key) => {
-        (s as any)[key] = get(preferenceConfig, `${prefixPath}.${key}`) as any
+        ;(s as any)[key] = get(preferenceConfig, `${prefixPath}.${key}`) as any
       })
     })
   }
@@ -114,10 +116,7 @@ function getAllPreference(pinia: Pinia) {
     if (!storeIdToKeysInitialValueRecord.has(s.$id)) {
       return
     }
-    const {
-      prefixPath,
-      initialValueMap,
-    } = storeIdToKeysInitialValueRecord.get(s.$id)!
+    const { prefixPath, initialValueMap } = storeIdToKeysInitialValueRecord.get(s.$id)!
     initialValueMap.forEach((_, key) => {
       set(preferences, `${prefixPath}.${key}`, (s as any)[key])
     })

@@ -15,7 +15,7 @@ export const preferenceConfig = {
     /**
      * 语言
      */
-    lang: 'zh-CN', // en-US
+    lang: 'zh-CN' // en-US
   },
   layout: {
     /**
@@ -101,7 +101,7 @@ export const preferenceConfig = {
     /**
      * 是否开启侧边栏菜单分割线
      */
-    sidebarMenuDivider: false,
+    sidebarMenuDivider: false
   },
   theme: {
     /**
@@ -119,6 +119,6 @@ export const preferenceConfig = {
     /**
      * 是否为色弱模式
      */
-    colorWeakness: false,
-  },
+    colorWeakness: false
+  }
 }

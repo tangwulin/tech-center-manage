@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Icon } from '@iconify/vue'
 import { useThemeVars } from 'naive-ui'
 import { storeToRefs } from 'pinia'
@@ -13,39 +13,25 @@ const route = useRoute()
 const router = useRouter()
 const vars = useThemeVars()
 
-const {
-  routes,
-  activeIndex,
-  move,
-  remove,
-} = router.visitedRoutesPlugin
+const { routes, activeIndex, move, remove } = router.visitedRoutesPlugin
 
-const {
-  tabsMode,
-} = storeToRefs(useLayoutStore())
+const { tabsMode } = storeToRefs(useLayoutStore())
 
-const {
-  primaryColors,
-} = storeToRefs(useThemeStore())
+const { primaryColors } = storeToRefs(useThemeStore())
 
-const {
-  tabsRef,
-  handleWheel,
-  scrollbarRef,
-  scrollbarContainerCls,
-} = useScroll()
+const { tabsRef, handleWheel, scrollbarRef, scrollbarContainerCls } = useScroll()
 
 const {
   showDropdown,
   dropdownPosition,
   handleContextMenu,
   handleDropdownSelect,
-  createDropdownOptions,
+  createDropdownOptions
 } = useContextMenu()
 
 async function handleUnFixed(index: number) {
   routes[index].meta.fixedInTabs = false
-  const fixedCount = routes.filter(r => r.meta?.fixedInTabs).length
+  const fixedCount = routes.filter((r) => r.meta?.fixedInTabs).length
   await move(index, Math.max(0, fixedCount))
 }
 
@@ -56,7 +42,7 @@ function onBeforeLeave(el: Element) {
   Object.assign(dom.style, {
     position: 'absolute',
     left: `${offsetLeft}px`,
-    height: `${offsetHeight}px`,
+    height: `${offsetHeight}px`
   })
 }
 
@@ -67,51 +53,43 @@ watch(
     if (path && path !== route.path && path !== route.fullPath) {
       router.push(path)
     }
-  },
+  }
 )
 </script>
 
 <template>
   <n-scrollbar
     ref="scrollbarRef"
-    x-scrollable
-    :class="scrollbarContainerCls"
     :builtin-theme-overrides="{
       width: '0px',
       height: '0px',
-      railColor: 'transparent',
+      railColor: 'transparent'
     }"
+    :class="scrollbarContainerCls"
     :content-style="{ height: '100%' }"
+    x-scrollable
     @wheel.prevent="handleWheel"
   >
-    <div
-      ref="tabsRef"
-      class="tabs"
-      :class="[`tabs--${tabsMode}-theme`]"
-    >
+    <div ref="tabsRef" :class="[`tabs--${tabsMode}-theme`]" class="tabs">
       <transition-group
-        leave-to-class="translate-x--5 scale-95  opacity-0"
-        enter-from-class="translate-x--5 scale-45 opacity-0"
-        move-class="transition-[opacity,transform]! duration-300 ease"
         enter-active-class="transition-[opacity,transform] duration-300 ease"
+        enter-from-class="translate-x--5 scale-45 opacity-0"
         leave-active-class="transition-[opacity,transform] duration-300 ease"
+        leave-to-class="translate-x--5 scale-95  opacity-0"
+        move-class="transition-[opacity,transform]! duration-300 ease"
         @before-leave="onBeforeLeave"
       >
         <div
           v-for="(tab, index) in routes"
           :key="tab.path"
-          class="tabs__item"
           :class="{
-            'tabs__item--active': activeIndex === index,
+            'tabs__item--active': activeIndex === index
           }"
+          class="tabs__item"
           @click="activeIndex = index"
           @contextmenu.prevent="handleContextMenu(index, $event)"
         >
-          <icon
-            v-if="tab.meta?.icon"
-            :icon="tab.meta.icon"
-            class="tabs__item__icon"
-          />
+          <icon v-if="tab.meta?.icon" :icon="tab.meta.icon" class="tabs__item__icon" />
           <span>{{ tab.meta?.titleI18nKey ? $t(tab.meta.titleI18nKey) : tab.meta?.title }}</span>
           <icon
             v-if="tab.meta?.fixedInTabs"
@@ -129,18 +107,18 @@ watch(
       </transition-group>
     </div>
     <n-dropdown
+      :options="createDropdownOptions()"
       :show="showDropdown"
       :x="dropdownPosition.x"
       :y="dropdownPosition.y"
       placement="bottom-start"
-      :options="createDropdownOptions()"
-      @select="handleDropdownSelect"
       @clickoutside="showDropdown = false"
+      @select="handleDropdownSelect"
     />
   </n-scrollbar>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .tabs {
   display: flex;
   height: 100%;

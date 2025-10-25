@@ -21,7 +21,7 @@ declare module '../types' {
  */
 export const messageTipAfterRequestFinallyPlugin: UseProRequestPlugin<any, any[]> = (
   _,
-  { successTip, errorTip },
+  { successTip, errorTip }
 ) => {
   const message = useMessage()
 
@@ -35,9 +35,7 @@ export const messageTipAfterRequestFinallyPlugin: UseProRequestPlugin<any, any[]
     if (isFunction(successTip)) {
       return successTip(data, params)
     }
-    return isI18nKey(successTip)
-      ? $t(successTip)
-      : successTip
+    return isI18nKey(successTip) ? $t(successTip) : successTip
   }
 
   function resolveErrorMessage(error: Error, params: any[]) {
@@ -51,9 +49,7 @@ export const messageTipAfterRequestFinallyPlugin: UseProRequestPlugin<any, any[]
     if (isFunction(errorTip)) {
       return errorTip(error, params)
     }
-    return isI18nKey(errorTip)
-      ? $t(errorTip)
-      : errorTip
+    return isI18nKey(errorTip) ? $t(errorTip) : errorTip
   }
 
   return {
@@ -63,13 +59,12 @@ export const messageTipAfterRequestFinallyPlugin: UseProRequestPlugin<any, any[]
         if (successMessage) {
           message.success(successMessage)
         }
-      }
-      else {
+      } else {
         const errorMessage = resolveErrorMessage(error, params)
         if (errorMessage) {
           message.error(errorMessage)
         }
       }
-    },
+    }
   }
 }

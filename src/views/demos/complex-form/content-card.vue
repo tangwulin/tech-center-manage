@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { $t } from '@/locales/locales'
 </script>
 
@@ -11,22 +11,19 @@ import { $t } from '@/locales/locales'
         required
       />
       <pro-select
-        :title="$t('pages.demos.complexForm.contentInfo.category')"
-        path="category"
-        required
         :field-props="{
           options: [
             { label: $t('pages.demos.complexForm.contentInfo.categoryTech'), value: 'tech' },
             { label: $t('pages.demos.complexForm.contentInfo.categoryProduct'), value: 'product' },
             { label: $t('pages.demos.complexForm.contentInfo.categoryGuide'), value: 'guide' },
-            { label: $t('pages.demos.complexForm.contentInfo.categoryOther'), value: 'other' },
-          ],
+            { label: $t('pages.demos.complexForm.contentInfo.categoryOther'), value: 'other' }
+          ]
         }"
+        :title="$t('pages.demos.complexForm.contentInfo.category')"
+        path="category"
+        required
       />
       <pro-select
-        :title="$t('pages.demos.complexForm.contentInfo.tags')"
-        path="tags"
-        required
         :field-props="{
           multiple: true,
           options: [
@@ -35,24 +32,27 @@ import { $t } from '@/locales/locales'
             { label: $t('pages.demos.complexForm.contentInfo.tagJavaScript'), value: 'javascript' },
             { label: $t('pages.demos.complexForm.contentInfo.tagTypeScript'), value: 'typescript' },
             { label: $t('pages.demos.complexForm.contentInfo.tagCSS'), value: 'css' },
-            { label: $t('pages.demos.complexForm.contentInfo.tagHTML'), value: 'html' },
-          ],
+            { label: $t('pages.demos.complexForm.contentInfo.tagHTML'), value: 'html' }
+          ]
         }"
+        :title="$t('pages.demos.complexForm.contentInfo.tags')"
+        path="tags"
+        required
       />
       <pro-date-time
+        :field-props="{
+          valueFormat: 'yyyy.MM.dd HH:mm:ss'
+        }"
         :title="$t('pages.demos.complexForm.contentInfo.publishTime')"
         path="publishTime"
         required
-        :field-props="{
-          valueFormat: 'yyyy.MM.dd HH:mm:ss',
-        }"
       />
       <pro-form-list
         :title="$t('pages.demos.complexForm.contentInfo.dynamicList')"
-        path="dynamicList"
-        required
         class="col-span-1 md:col-span-1 lg:col-span-2"
         only-show-first-item-label
+        path="dynamicList"
+        required
       >
         <pro-input
           :title="$t('pages.demos.complexForm.contentInfo.itemName')"
@@ -60,19 +60,19 @@ import { $t } from '@/locales/locales'
           required
         />
         <pro-digit
+          :field-props="{
+            min: 0
+          }"
           :title="$t('pages.demos.complexForm.contentInfo.itemValue')"
           path="value"
           required
-          :field-props="{
-            min: 0,
-          }"
         />
       </pro-form-list>
       <pro-wang-editor
         :title="$t('pages.demos.complexForm.contentInfo.content')"
+        class="col-span-1 md:col-span-2 lg:col-span-3"
         path="content"
         required
-        class="col-span-1 md:col-span-2 lg:col-span-3"
       />
     </div>
   </pro-card>

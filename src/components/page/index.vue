@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { ProPageSlots } from './slots'
 import { isBoolean } from 'lodash-es'
 import { useThemeVars } from 'naive-ui'
@@ -7,7 +7,7 @@ import { useLayoutStore } from '@/store/use-layout-store'
 import { proPageProps } from './props'
 
 defineOptions({
-  name: 'ProPage',
+  name: 'ProPage'
 })
 const props = defineProps(proPageProps)
 const slots = defineSlots<ProPageSlots>()
@@ -19,11 +19,11 @@ const mergedConfig = computed(() => {
   const mergedVLoadingOptions = isBoolean(props.loading)
     ? {
         size: 'large',
-        show: props.loading,
+        show: props.loading
       }
     : {
         size: 'large',
-        ...(props.loading ?? {}),
+        ...(props.loading ?? {})
       }
   return {
     footerHeight,
@@ -31,7 +31,7 @@ const mergedConfig = computed(() => {
     loadingZIndex: mergedVLoadingOptions.show ? 1 : -1,
     containerPageBottom: slots.footer ? footerHeight : 0,
     footerPositionBottom: layoutStore.showFooter ? `${layoutStore.footerHeight}px` : 0,
-    vLoadingOptions: mergedVLoadingOptions,
+    vLoadingOptions: mergedVLoadingOptions
   }
 })
 </script>
@@ -39,20 +39,14 @@ const mergedConfig = computed(() => {
 <template>
   <div class="pro-page">
     <slot />
-    <div
-      v-loading="mergedConfig.vLoadingOptions"
-      class="pro-page__loading"
-    />
-    <footer
-      v-if="slots.footer"
-      class="pro-page__footer"
-    >
+    <div v-loading="mergedConfig.vLoadingOptions" class="pro-page__loading" />
+    <footer v-if="slots.footer" class="pro-page__footer">
       <slot name="footer" />
     </footer>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .pro-page {
   min-height: 100%;
   padding-bottom: v-bind('mergedConfig.containerPageBottom');
@@ -65,8 +59,14 @@ const mergedConfig = computed(() => {
     z-index: v-bind('mergedConfig.loadingZIndex');
     width: calc(100% - var(--pro-layout-content-margin-left, 0px));
     height: calc(100% - var(--pro-layout-content-margin-top, 0px));
-    margin-left: var(--pro-layout-content-margin-left, 0); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
-    margin-top: var(--pro-layout-content-margin-top, 0); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
+    margin-left: var(
+      --pro-layout-content-margin-left,
+      0
+    ); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
+    margin-top: var(
+      --pro-layout-content-margin-top,
+      0
+    ); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
     transition:
       width 0.3s var(--n-bezier),
       margin-left 0.3s var(--n-bezier);
@@ -83,7 +83,10 @@ const mergedConfig = computed(() => {
     z-index: 1;
     height: v-bind('mergedConfig.footerHeight');
     background-color: v-bind('mergedConfig.background');
-    margin-left: var(--pro-layout-content-margin-left, 0); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
+    margin-left: var(
+      --pro-layout-content-margin-left,
+      0
+    ); // 兼容 sidebar-layout、mixed-sidebar-layout 的布局
     width: calc(100% - var(--pro-layout-content-margin-left, 0px));
     transition:
       width 0.3s var(--n-bezier),

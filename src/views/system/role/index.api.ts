@@ -43,7 +43,7 @@ export class Api {
     return http({
       method: isNil(data.id) ? 'post' : 'put',
       url: '/system/role',
-      data,
+      data
     })
   }
 

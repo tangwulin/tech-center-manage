@@ -16,9 +16,8 @@ export function joinURLs(baseURL: string, ...relativeURLs: string[]) {
   return relativeURLs
     .filter(Boolean)
     .reduce(
-      (base, relative) =>
-        `${base.replace(/\/+$/, '')}/${relative.replace(/^\/+/, '')}`,
-      baseURL,
+      (base, relative) => `${base.replace(/\/+$/, '')}/${relative.replace(/^\/+/, '')}`,
+      baseURL
     )
 }
 
@@ -41,13 +40,10 @@ export function joinURLs(baseURL: string, ...relativeURLs: string[]) {
  * ```
  */
 // eslint-disable-next-line ts/no-empty-object-type
-export function filterByParams<T extends {}>(
-  data: T[],
-  params: Record<string, any>,
-): T[] {
+export function filterByParams<T extends {}>(data: T[], params: Record<string, any>): T[] {
   return data.filter((item) => {
     return Object.keys(params).every(
-      key => !(key in item) || filter(item[key as keyof T], params[key]),
+      (key) => !(key in item) || filter(item[key as keyof T], params[key])
     )
   })
 
@@ -59,7 +55,7 @@ export function filterByParams<T extends {}>(
       return toString(value).toLowerCase().includes(params.toLowerCase())
     }
     if (isArray(params)) {
-      params = params.filter(v => v != null && v !== '')
+      params = params.filter((v) => v != null && v !== '')
       return params.length === 0 || params.some((param: any) => filter(value, param))
     }
     return value === params

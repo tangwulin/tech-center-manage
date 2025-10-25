@@ -1,6 +1,6 @@
 import { createAlova } from 'alova'
 import fetchAdapter from 'alova/fetch'
-import { createApis, withConfigType, mountApis } from './createApis'
+import { createApis, mountApis, withConfigType } from './createApis'
 import VueHook from 'alova/vue'
 import { createServerTokenAuthentication, useRequest } from 'alova/client'
 

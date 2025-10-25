@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useTimeoutFn } from '@vueuse/core'
 import { useMessage } from 'naive-ui'
 import { createProForm } from 'pro-naive-ui'
@@ -18,7 +18,7 @@ const form = createProForm({
   onSubmit: (values) => {
     console.log('Form submitted:', values)
     message.success($t('pages.demos.complexForm.submitSuccess'))
-  },
+  }
 })
 
 useTimeoutFn(() => {
@@ -45,7 +45,7 @@ async function fillForm() {
     phone: '1234567890',
     gender: 'male',
     status: 'active',
-    birthDate: '2021.01.01',
+    birthDate: '2021.01.01'
   }
   loading1.value = false
   loading2.value = true
@@ -59,10 +59,10 @@ async function fillForm() {
     dynamicList: [
       {
         name: 'test',
-        value: 18,
-      },
+        value: 18
+      }
     ],
-    content: `<h1>hello world</h1>`,
+    content: `<h1>hello world</h1>`
   }
   loading2.value = false
   loading3.value = true
@@ -75,8 +75,8 @@ async function fillForm() {
     list: [
       { title: 'test1', now: Date.now() },
       { title: 'test2' },
-      { title: 'test3', now: Date.now() },
-    ],
+      { title: 'test3', now: Date.now() }
+    ]
   }
   loading3.value = false
 }
@@ -86,34 +86,22 @@ async function fillForm() {
   <pro-page
     :loading="{
       show: pageLoading,
-      description: $t('pages.demos.complexForm.loadingText'),
+      description: $t('pages.demos.complexForm.loadingText')
     }"
   >
     <pro-form :form="form">
-      <n-flex
-        vertical
-        :size="12"
-      >
+      <n-flex :size="12" vertical>
         <basic-info-card v-loading="loading1" />
         <content-card v-loading="loading2" />
         <data-table-card v-loading="loading3" />
       </n-flex>
     </pro-form>
     <template #footer>
-      <n-flex
-        class="w-full"
-        justify="flex-end"
-      >
-        <n-button
-          type="error"
-          @click="fillForm"
-        >
+      <n-flex class="w-full" justify="flex-end">
+        <n-button type="error" @click="fillForm">
           {{ $t('pages.demos.complexForm.fillForm') }}
         </n-button>
-        <n-button
-          type="primary"
-          @click="form.submit"
-        >
+        <n-button type="primary" @click="form.submit">
           {{ $t('pages.demos.complexForm.submit') }}
         </n-button>
       </n-flex>

@@ -1,4 +1,8 @@
-import type { RouteLocationNormalizedGeneric, RouteRecordNameGeneric, RouteRecordRaw } from 'vue-router'
+import type {
+  RouteLocationNormalizedGeneric,
+  RouteRecordNameGeneric,
+  RouteRecordRaw
+} from 'vue-router'
 
 let uid = 0
 const symbol = '__PRO_ROUTER_PLUGIN_AUTO_GENERATED__'
@@ -13,7 +17,7 @@ export function generateRouteComponentName(route: RouteLocationNormalizedGeneric
 
 export function getRouteComponentName(
   route: RouteLocationNormalizedGeneric,
-  namespace: string = 'default',
+  namespace: string = 'default'
 ): string | undefined {
   const currentRoute = route.matched[route.matched.length - 1]
   const currentRouteComponent = currentRoute?.components?.[namespace]
@@ -21,9 +25,7 @@ export function getRouteComponentName(
 }
 
 export function ensureRouteName(route: RouteRecordRaw) {
-  return route.name
-    ? route.name
-    : generateRouteName()
+  return route.name ? route.name : generateRouteName()
 }
 
 export function isRouteName(name: any): name is RouteRecordNameGeneric {

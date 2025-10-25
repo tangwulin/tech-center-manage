@@ -1,13 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Icon } from '@iconify/vue'
 </script>
 
 <template>
   <n-breadcrumb>
-    <n-breadcrumb-item
-      v-for="breadcrumb in $router.buildBreadcrumbs()"
-      :key="breadcrumb.path"
-    >
+    <n-breadcrumb-item v-for="breadcrumb in $router.buildBreadcrumbs()" :key="breadcrumb.path">
       <n-icon v-if="breadcrumb.icon">
         <icon :icon="breadcrumb.icon" />
       </n-icon>

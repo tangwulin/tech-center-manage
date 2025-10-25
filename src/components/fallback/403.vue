@@ -1,92 +1,45 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useThemeVars } from 'naive-ui'
 
 const vars = useThemeVars()
 </script>
 
 <template>
-  <svg
-    viewBox="0 0 400 320"
-    class="size-full"
-  >
+  <svg class="size-full" viewBox="0 0 400 320">
     <defs>
-      <linearGradient
-        id="lockGradient403"
-        x1="0%"
-        y1="0%"
-        x2="100%"
-        y2="100%"
-      >
+      <linearGradient id="lockGradient403" x1="0%" x2="100%" y1="0%" y2="100%">
+        <stop :style="{ 'stop-color': vars.warningColor }" offset="0%" style="stop-opacity: 1" />
         <stop
-          offset="0%"
-          style="stop-opacity:1"
-          :style="{ 'stop-color': vars.warningColor }"
-        />
-        <stop
-          offset="100%"
-          style="stop-opacity:1"
           :style="{ 'stop-color': vars.warningColorHover }"
-        />
-      </linearGradient>
-      <linearGradient
-        id="shieldGradient403"
-        x1="0%"
-        y1="0%"
-        x2="100%"
-        y2="100%"
-      >
-        <stop
-          offset="0%"
-          style="stop-opacity:1"
-          :style="{ 'stop-color': vars.primaryColor }"
-        />
-        <stop
           offset="100%"
-          style="stop-opacity:1"
-          :style="{ 'stop-color': vars.primaryColorHover }"
+          style="stop-opacity: 1"
         />
       </linearGradient>
-      <filter
-        id="shadow403"
-        x="-50%"
-        y="-50%"
-        width="200%"
-        height="200%"
-      >
-        <feDropShadow
-          dx="0"
-          dy="4"
-          stdDeviation="8"
-          flood-color="#000000"
-          flood-opacity="0.1"
+      <linearGradient id="shieldGradient403" x1="0%" x2="100%" y1="0%" y2="100%">
+        <stop :style="{ 'stop-color': vars.primaryColor }" offset="0%" style="stop-opacity: 1" />
+        <stop
+          :style="{ 'stop-color': vars.primaryColorHover }"
+          offset="100%"
+          style="stop-opacity: 1"
         />
+      </linearGradient>
+      <filter id="shadow403" height="200%" width="200%" x="-50%" y="-50%">
+        <feDropShadow dx="0" dy="4" flood-color="#000000" flood-opacity="0.1" stdDeviation="8" />
       </filter>
     </defs>
 
     <!-- 装饰性几何图形 -->
-    <circle
-      cx="80"
-      cy="80"
-      r="40"
-      :fill="vars.primaryColor"
-      opacity="0.08"
-    />
-    <circle
-      cx="320"
-      cy="240"
-      r="30"
-      :fill="vars.warningColor"
-      opacity="0.08"
-    />
+    <circle :fill="vars.primaryColor" cx="80" cy="80" opacity="0.08" r="40" />
+    <circle :fill="vars.warningColor" cx="320" cy="240" opacity="0.08" r="30" />
     <rect
+      :fill="vars.successColor"
+      height="20"
+      opacity="0.1"
+      rx="4"
+      transform="rotate(45 340 60)"
+      width="20"
       x="330"
       y="50"
-      width="20"
-      height="20"
-      rx="4"
-      :fill="vars.successColor"
-      opacity="0.1"
-      transform="rotate(45 340 60)"
     />
 
     <!-- 主要插图 - 现代化盾牌和锁 -->
@@ -110,137 +63,85 @@ const vars = useThemeVars()
       <g transform="translate(0, -10)">
         <!-- 锁体 -->
         <rect
-          x="-12"
-          y="0"
-          width="24"
-          height="20"
-          rx="4"
           fill="url(#lockGradient403)"
           filter="url(#shadow403)"
+          height="20"
+          rx="4"
+          width="24"
+          x="-12"
+          y="0"
         />
         <!-- 锁环 -->
         <path
           d="M-8,-15 Q-8,-25 0,-25 Q8,-25 8,-15"
           fill="none"
           stroke="url(#lockGradient403)"
-          stroke-width="4"
           stroke-linecap="round"
+          stroke-width="4"
         />
         <!-- 锁孔 -->
-        <circle
-          cx="0"
-          cy="10"
-          r="3"
-          fill="#ffffff"
-          opacity="0.9"
-        />
-        <rect
-          x="-1"
-          y="10"
-          width="2"
-          height="6"
-          fill="#ffffff"
-          opacity="0.9"
-        />
+        <circle cx="0" cy="10" fill="#ffffff" opacity="0.9" r="3" />
+        <rect fill="#ffffff" height="6" opacity="0.9" width="2" x="-1" y="10" />
       </g>
 
       <!-- 装饰性光效 -->
-      <circle
-        cx="-20"
-        cy="-20"
-        r="3"
-        fill="#ffffff"
-        opacity="0.6"
-      />
-      <circle
-        cx="25"
-        cy="-15"
-        r="2"
-        fill="#ffffff"
-        opacity="0.4"
-      />
-      <circle
-        cx="-15"
-        cy="25"
-        r="2"
-        fill="#ffffff"
-        opacity="0.5"
-      />
-
+      <circle cx="-20" cy="-20" fill="#ffffff" opacity="0.6" r="3" />
+      <circle cx="25" cy="-15" fill="#ffffff" opacity="0.4" r="2" />
+      <circle cx="-15" cy="25" fill="#ffffff" opacity="0.5" r="2" />
     </g>
 
     <!-- 现代化警告元素 -->
     <g transform="translate(120, 120)">
-      <circle
-        cx="0"
-        cy="0"
-        r="16"
-        :fill="vars.warningColor"
-        opacity="0.2"
-      />
-      <circle
-        cx="0"
-        cy="0"
-        r="12"
-        :fill="vars.warningColor"
-        opacity="0.4"
-      />
+      <circle :fill="vars.warningColor" cx="0" cy="0" opacity="0.2" r="16" />
+      <circle :fill="vars.warningColor" cx="0" cy="0" opacity="0.4" r="12" />
       <text
-        x="0"
-        y="4"
-        text-anchor="middle"
+        :fill="vars.warningColor"
         font-family="Inter, system-ui, sans-serif"
         font-size="14"
         font-weight="700"
-        :fill="vars.warningColor"
-      >!</text>
+        text-anchor="middle"
+        x="0"
+        y="4"
+      >
+        !
+      </text>
     </g>
 
     <g transform="translate(280, 120)">
-      <circle
-        cx="0"
-        cy="0"
-        r="14"
-        :fill="vars.errorColor"
-        opacity="0.2"
-      />
-      <circle
-        cx="0"
-        cy="0"
-        r="10"
-        :fill="vars.errorColor"
-        opacity="0.4"
-      />
+      <circle :fill="vars.errorColor" cx="0" cy="0" opacity="0.2" r="14" />
+      <circle :fill="vars.errorColor" cx="0" cy="0" opacity="0.4" r="10" />
       <text
-        x="0"
-        y="3"
-        text-anchor="middle"
+        :fill="vars.errorColor"
         font-family="Inter, system-ui, sans-serif"
         font-size="12"
         font-weight="700"
-        :fill="vars.errorColor"
-      >×</text>
+        text-anchor="middle"
+        x="0"
+        y="3"
+      >
+        ×
+      </text>
     </g>
 
     <!-- 底部装饰线条 -->
     <path
-      d="M50,280 Q200,270 350,280"
       :stroke="vars.primaryColor"
-      stroke-width="2"
+      d="M50,280 Q200,270 350,280"
       fill="none"
       opacity="0.3"
+      stroke-width="2"
     />
     <path
-      d="M80,290 Q200,285 320,290"
       :stroke="vars.warningColor"
-      stroke-width="1"
+      d="M80,290 Q200,285 320,290"
       fill="none"
       opacity="0.2"
+      stroke-width="1"
     />
     <!-- 底部波浪装饰 -->
     <path
-      d="M0,290 Q100,280 200,290 T400,290 L400,320 L0,320 Z"
       :fill="vars.primaryColor"
+      d="M0,290 Q100,280 200,290 T400,290 L400,320 L0,320 Z"
       opacity="0.05"
     />
   </svg>

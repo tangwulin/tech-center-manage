@@ -25,13 +25,11 @@ export async function prepareMount(app: App) {
 
 function setupComponents(app: App) {
   // pro-naive-ui 中的 pro-search-form 支持按需加载组件，所以这里需要手动注册
-  app.use(create({
-    components: [
-      ProInput,
-      ProSelect,
-      ProDateTime,
-    ],
-  }))
+  app.use(
+    create({
+      components: [ProInput, ProSelect, ProDateTime]
+    })
+  )
   app.component(ProIconifyIcons.name!, ProIconifyIcons)
   app.component(ProIconifyIcons2.name!, ProIconifyIcons2)
   // 这里纯粹是为了方便使用，跟 pro-search-form 无关

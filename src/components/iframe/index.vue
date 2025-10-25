@@ -1,25 +1,18 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 
 defineProps({
   url: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 })
 
 const loading = ref(true)
 </script>
 
 <template>
-  <div
-    v-loading="loading"
-    class="size-full"
-  >
-    <iframe
-      class="size-full border-none overflow-hidden"
-      :src="url"
-      @load="loading = false"
-    />
+  <div v-loading="loading" class="size-full">
+    <iframe :src="url" class="size-full border-none overflow-hidden" @load="loading = false" />
   </div>
 </template>

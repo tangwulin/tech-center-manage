@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import AppProvider from '@/components/app-provider/index.vue'
 import PreferenceDrawer from '@/components/preference-drawer/index.vue'
 </script>

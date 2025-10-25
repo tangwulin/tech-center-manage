@@ -1,17 +1,11 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useRouter } from 'vue-router'
 import { $t } from '@/locales/locales'
 
 const router = useRouter()
 const demoFullPath = '/demos/fallback/403'
 
-const {
-  routes,
-  remove,
-  activeIndex,
-  removes,
-  guards,
-} = router.visitedRoutesPlugin
+const { routes, remove, activeIndex, removes, guards } = router.visitedRoutesPlugin
 
 function openDynamicTitleTab() {
   const off = guards.beforeAdd(async (route) => {
@@ -22,8 +16,8 @@ function openDynamicTitleTab() {
       meta: {
         ...route.meta,
         title: `${$t('common.layout.tabs.dynamicTitle')} #${Date.now()}`,
-        titleI18nKey: '' as any,
-      },
+        titleI18nKey: '' as any
+      }
     }
   })
 
@@ -35,7 +29,7 @@ function openTestPage() {
 }
 
 function closeTestPage() {
-  const index = routes.findIndex(r => r.path === demoFullPath)
+  const index = routes.findIndex((r) => r.path === demoFullPath)
   if (index !== -1) {
     remove(index)
   }
@@ -60,16 +54,10 @@ async function closeOtherTabs() {
 </script>
 
 <template>
-  <n-space
-    vertical
-    size="large"
-  >
+  <n-space size="large" vertical>
     <n-card>
       <n-space vertical>
-        <n-h2
-          prefix="bar"
-          style="margin: 0;"
-        >
+        <n-h2 prefix="bar" style="margin: 0">
           {{ $t('common.layout.tabs.tabManagement') }}
         </n-h2>
         <n-text depth="3">
@@ -78,19 +66,10 @@ async function closeOtherTabs() {
       </n-space>
     </n-card>
 
-    <n-space
-      vertical
-      size="medium"
-    >
-      <n-card
-        :title="$t('common.layout.tabs.dynamicTabs')"
-        size="small"
-      >
+    <n-space size="medium" vertical>
+      <n-card :title="$t('common.layout.tabs.dynamicTabs')" size="small">
         <template #header-extra>
-          <n-tag
-            type="info"
-            size="small"
-          >
+          <n-tag size="small" type="info">
             {{ $t('common.layout.tabs.interceptor') }}
           </n-tag>
         </template>
@@ -106,15 +85,9 @@ async function closeOtherTabs() {
         </n-space>
       </n-card>
 
-      <n-card
-        :title="$t('common.layout.tabs.openCloseTabs')"
-        size="small"
-      >
+      <n-card :title="$t('common.layout.tabs.openCloseTabs')" size="small">
         <template #header-extra>
-          <n-tag
-            type="success"
-            size="small"
-          >
+          <n-tag size="small" type="success">
             {{ $t('common.layout.tabs.basic') }}
           </n-tag>
         </template>
@@ -133,15 +106,9 @@ async function closeOtherTabs() {
         </n-space>
       </n-card>
 
-      <n-card
-        :title="$t('common.layout.tabs.tabOperations')"
-        size="small"
-      >
+      <n-card :title="$t('common.layout.tabs.tabOperations')" size="small">
         <template #header-extra>
-          <n-tag
-            type="warning"
-            size="small"
-          >
+          <n-tag size="small" type="warning">
             {{ $t('common.layout.tabs.batch') }}
           </n-tag>
         </template>

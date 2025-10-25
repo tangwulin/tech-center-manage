@@ -27,7 +27,7 @@ export function useScroll() {
 
         scrollbarRef.value.scrollTo({
           left: finalScrollLeft,
-          behavior: 'smooth',
+          behavior: 'smooth'
         })
       }
     })
@@ -37,9 +37,7 @@ export function useScroll() {
     if (scrollbarRef.value) {
       // 判断手势决定使用水平滚动量还是纵向滚动量
       scrollbarRef.value.scrollBy({
-        left: Math.abs(event.deltaX) > Math.abs(event.deltaY)
-          ? event.deltaX
-          : event.deltaY,
+        left: Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY
       })
     }
   }
@@ -48,7 +46,7 @@ export function useScroll() {
     () => router.visitedRoutesPlugin.routes[activeIndex.value]?.path,
     () => {
       updateTabsScroll(activeIndex.value)
-    },
+    }
   )
 
   useResizeObserver(
@@ -64,7 +62,7 @@ export function useScroll() {
     },
     () => {
       updateTabsScroll(activeIndex.value)
-    },
+    }
   )
 
   return {
@@ -72,6 +70,6 @@ export function useScroll() {
     handleWheel,
     scrollbarRef,
     updateTabsScroll,
-    scrollbarContainerCls,
+    scrollbarContainerCls
   }
 }

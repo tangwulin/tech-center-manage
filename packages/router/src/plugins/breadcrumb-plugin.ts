@@ -38,28 +38,20 @@ interface BreadcrumbPluginOptions {
 }
 
 export function breadcrumbPlugin({
-  resolveBreadcrumb,
+  resolveBreadcrumb
 }: BreadcrumbPluginOptions = {}): ProRouterPlugin {
   return ({ router, onUnmount }) => {
     const breadcrumbs = computed(() => {
       const breadcrumbs: BreadcrumbItem[] = []
       router.currentRoute.value.matched.forEach((matchedRoute) => {
-        const {
-          icon,
-          title,
-          hideInBreadcrumb,
-        } = matchedRoute.meta ?? {}
+        const { icon, title, hideInBreadcrumb } = matchedRoute.meta ?? {}
         if (title && !hideInBreadcrumb) {
           const item: BreadcrumbItem = {
             icon,
             title,
-            path: matchedRoute.path,
+            path: matchedRoute.path
           }
-          breadcrumbs.push(
-            resolveBreadcrumb
-              ? resolveBreadcrumb(item, matchedRoute)
-              : item,
-          )
+          breadcrumbs.push(resolveBreadcrumb ? resolveBreadcrumb(item, matchedRoute) : item)
         }
       })
       return breadcrumbs

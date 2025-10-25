@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { LOGIN_ROUTE_PATH } from '@/router/routes'
 import Apis from '@/api'
 

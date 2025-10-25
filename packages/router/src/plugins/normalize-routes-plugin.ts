@@ -1,4 +1,8 @@
-import type { RouteLocationNormalizedGeneric, RouteRecordNameGeneric, RouteRecordRaw } from 'vue-router'
+import type {
+  RouteLocationNormalizedGeneric,
+  RouteRecordNameGeneric,
+  RouteRecordRaw
+} from 'vue-router'
 import type { ProRouterPlugin } from '../plugin'
 import { ROUTE_COMPONENT_NAME, ROUTE_NAME } from '../symbols'
 import { ensureRouteName, generateRouteComponentName, isRouteName } from '../utils/route'
@@ -18,7 +22,7 @@ export function normalizeRoutesPlugin(): ProRouterPlugin {
     resolveOptions: (options) => {
       return {
         ...options,
-        routes: normalizeRoutes(options.routes as RouteRecordRaw[]),
+        routes: normalizeRoutes(options.routes as RouteRecordRaw[])
       }
     },
     install: ({ router }) => {
@@ -26,7 +30,7 @@ export function normalizeRoutesPlugin(): ProRouterPlugin {
 
       router.addRoute = function addRoute(
         parentOrRoute: NonNullable<RouteRecordNameGeneric> | RouteRecordRaw,
-        route?: RouteRecordRaw,
+        route?: RouteRecordRaw
       ) {
         return isRouteName(parentOrRoute)
           ? originalAddRoute(parentOrRoute, normalizeRoutes([route!])[0])
@@ -41,11 +45,11 @@ export function normalizeRoutesPlugin(): ProRouterPlugin {
           currentRoute.components[namespace] = { ...normalizedComponent }
           currentRoute.meta = {
             ...currentRoute.meta,
-            [ROUTE_COMPONENT_NAME]: normalizedComponent.__name,
+            [ROUTE_COMPONENT_NAME]: normalizedComponent.__name
           }
         }
       })
-    },
+    }
   }
 }
 
@@ -57,8 +61,8 @@ function normalizeRoutes(routes: RouteRecordRaw[], parents: RouteRecordRaw[] = [
       name: routeName,
       meta: {
         ...(route.meta ?? {}),
-        [ROUTE_NAME]: routeName,
-      },
+        [ROUTE_NAME]: routeName
+      }
     }
     if (newRoute.children && newRoute.children.length > 0) {
       newRoute.children = normalizeRoutes(newRoute.children, [...parents, newRoute])
@@ -69,24 +73,30 @@ function normalizeRoutes(routes: RouteRecordRaw[], parents: RouteRecordRaw[] = [
 
 function normalizeRouteResolvedComponent(
   route: RouteLocationNormalizedGeneric,
-  namespace: string = 'default',
+  namespace: string = 'default'
 ) {
   const currentRoute = route.matched[route.matched.length - 1]
   const currentRouteComponent = currentRoute?.components?.[namespace]
   if (!currentRouteComponent) {
     return
   }
-  if (currentRouteComponent.name && currentRouteComponent.name !== (currentRouteComponent as any).__name) {
+  if (
+    currentRouteComponent.name &&
+    currentRouteComponent.name !== (currentRouteComponent as any).__name
+  ) {
     return {
       ...currentRouteComponent,
-      __name: currentRouteComponent.name,
+      __name: currentRouteComponent.name
     }
   }
   const newRouteComponentName = generateRouteComponentName(route)
-  if (!currentRouteComponent.name && (currentRouteComponent as any).__name !== newRouteComponentName) {
+  if (
+    !currentRouteComponent.name &&
+    (currentRouteComponent as any).__name !== newRouteComponentName
+  ) {
     return {
       ...currentRouteComponent,
-      __name: newRouteComponentName,
+      __name: newRouteComponentName
     }
   }
 }

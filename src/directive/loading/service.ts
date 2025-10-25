@@ -1,6 +1,6 @@
 import type { LoadingInstance } from './loading'
-import type { LoadingOptions } from './types'
 import { createLoadingInstance, resolveOptions } from './loading'
+import type { LoadingOptions } from './types'
 
 /**
  * 全屏 loading 是单例的
@@ -19,7 +19,7 @@ export function Loading(options: LoadingOptions = {}): LoadingInstance {
       if (resolvedOptions.fullscreen) {
         fullscreenInstance = undefined
       }
-    },
+    }
   })
   instance.show.value = resolvedOptions.show
   if (resolvedOptions.fullscreen) {

@@ -10,18 +10,13 @@ export function useContextMenu() {
   const contextMenuIndex = ref(-1)
   const dropdownPosition = ref({ x: 0, y: 0 })
 
-  const {
-    routes,
-    move,
-    remove,
-    removes,
-  } = router.visitedRoutesPlugin
+  const { routes, move, remove, removes } = router.visitedRoutesPlugin
 
   function createIcon(iconName: string) {
     return () =>
       h(Icon, {
         icon: iconName,
-        style: 'margin-right: 6px',
+        style: 'margin-right: 6px'
       })
   }
 
@@ -35,33 +30,33 @@ export function useContextMenu() {
       {
         label: fixed ? $t('common.layout.tabs.unpin') : $t('common.layout.tabs.pin'),
         key: 'toggleFixed',
-        icon: createIcon(fixed ? 'mdi:pin-off-outline' : 'mdi:pin-outline'),
+        icon: createIcon(fixed ? 'mdi:pin-off-outline' : 'mdi:pin-outline')
       },
       {
         label: $t('common.layout.tabs.closeLeft'),
         key: 'closeLeft',
-        icon: createIcon('tabler:arrow-bar-to-left'),
+        icon: createIcon('tabler:arrow-bar-to-left')
       },
       {
         label: $t('common.layout.tabs.closeRight'),
         key: 'closeRight',
-        icon: createIcon('tabler:arrow-bar-to-right'),
+        icon: createIcon('tabler:arrow-bar-to-right')
       },
       {
         label: $t('common.layout.tabs.closeOthers'),
         key: 'closeOther',
-        icon: createIcon('tabler:arrow-bar-both'),
+        icon: createIcon('tabler:arrow-bar-both')
       },
       {
         label: $t('common.layout.tabs.openInNewWindow'),
         key: 'openInNewWindow',
-        icon: createIcon('mdi:open-in-new'),
+        icon: createIcon('mdi:open-in-new')
       },
       {
         label: $t('common.layout.tabs.close'),
         key: 'close',
-        icon: createIcon('ant-design:close-outlined'),
-      },
+        icon: createIcon('ant-design:close-outlined')
+      }
     ]
     return options
   }
@@ -80,7 +75,7 @@ export function useContextMenu() {
       case 'toggleFixed': {
         route.meta ??= {}
         route.meta.fixedInTabs = !route.meta.fixedInTabs
-        const fixedCount = routes.filter(r => r.meta?.fixedInTabs).length
+        const fixedCount = routes.filter((r) => r.meta?.fixedInTabs).length
         // 目标索引 = 固定区长度变化后的右边界位置
         const targetIndex = route.meta.fixedInTabs ? fixedCount - 1 : fixedCount
         await move(index, Math.max(0, targetIndex))
@@ -118,6 +113,6 @@ export function useContextMenu() {
     dropdownPosition,
     handleContextMenu,
     handleDropdownSelect,
-    createDropdownOptions,
+    createDropdownOptions
   }
 }

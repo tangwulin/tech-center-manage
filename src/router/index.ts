@@ -1,11 +1,7 @@
 import type {
   RbacAccessPluginBaseServiceReturned,
-  RbacAccessPluginRouteRecordRawWithStringComponent,
+  RbacAccessPluginRouteRecordRawWithStringComponent
 } from '@pro/router'
-
-import type { App } from 'vue'
-import type { RouteMeta } from 'vue-router'
-
 import {
   autoRedirectPlugin,
   breadcrumbPlugin,
@@ -19,10 +15,12 @@ import {
   rbacAccessPlugin,
   refreshPlugin,
   transitionPlugin,
-  visitedRoutesPlugin,
+  visitedRoutesPlugin
 } from '@pro/router'
 
+import type { App } from 'vue'
 import { h } from 'vue'
+import type { RouteMeta } from 'vue-router'
 import { createWebHistory } from 'vue-router'
 import IframeContainer from '@/components/iframe/index.vue'
 import { $t } from '@/locales/locales'
@@ -40,25 +38,19 @@ import {
   notFoundRoute,
   pageMap,
   ROOT_ROUTE_NAME,
-  rootRoute,
+  rootRoute
 } from './routes'
 
 function resolveI18nTitle(route: { meta?: RouteMeta }) {
   const appStore = useAppStore()
   const { title, titleI18nKey } = route.meta ?? {}
-  return titleI18nKey
-    ? $t(titleI18nKey)
-    : title ?? appStore.title
+  return titleI18nKey ? $t(titleI18nKey) : (title ?? appStore.title)
 }
 
 export async function setupRouter(app: App) {
   const router = createRouter({
     history: createWebHistory(),
-    routes: [
-      rootRoute,
-      ...ignoreAccessRoutes,
-      notFoundRoute,
-    ],
+    routes: [rootRoute, ...ignoreAccessRoutes, notFoundRoute],
     plugins: [
       /**
        * 路由进度条插件
@@ -70,7 +62,7 @@ export async function setupRouter(app: App) {
       documentTitlePlugin({
         resolveTitle: (route) => {
           return resolveI18nTitle(route)
-        },
+        }
       }),
       /**
        * 面包屑插件
@@ -80,9 +72,9 @@ export async function setupRouter(app: App) {
           const finalTitle = resolveI18nTitle(route)
           return {
             ...item,
-            title: finalTitle,
+            title: finalTitle
           }
-        },
+        }
       }),
       /**
        * 访问过的路由插件
@@ -94,7 +86,7 @@ export async function setupRouter(app: App) {
       linkPlugin({
         renderIframe: (url) => {
           return h(IframeContainer, { url })
-        },
+        }
       }),
       /**
        * 路由缓存插件
@@ -110,13 +102,13 @@ export async function setupRouter(app: App) {
       transitionPlugin({
         transitionName: () => {
           return useAppStore().transitionName
-        },
+        }
       }),
       /**
        * 自动重定向到目标路由插件
        */
       autoRedirectPlugin({
-        homePath: () => useUserStore().homePath,
+        homePath: () => useUserStore().homePath
       }),
       /**
        * 权限插件
@@ -136,21 +128,22 @@ export async function setupRouter(app: App) {
             parentNameForAddRoute: ROOT_ROUTE_NAME,
             onRoutesBuilt: (routes) => {
               userStore.routes = routes
-            },
+            }
           }
           if (appStore.accessMode === 'frontend') {
             return {
               ...baseInfo,
               mode: 'frontend',
               routes: accessRoutes,
-              roles: userStore.user.roles,
+              roles: userStore.user.roles
             }
           }
           return {
             ...baseInfo,
             mode: 'backend',
             fetchRoutes: async () => {
-              const res = await http.get<RbacAccessPluginRouteRecordRawWithStringComponent[]>('/menus/all')
+              const res =
+                await http.get<RbacAccessPluginRouteRecordRawWithStringComponent[]>('/menus/all')
               return res.data
             },
             resolveComponent: (component) => {
@@ -162,9 +155,9 @@ export async function setupRouter(app: App) {
                 }
               }
               return dynamicComponent
-            },
+            }
           }
-        },
+        }
       }),
       /**
        * 菜单插件，将数据转换成 n-menu 菜单数据
@@ -178,13 +171,11 @@ export async function setupRouter(app: App) {
               const { titleI18nKey } = rawItem.meta ?? {}
               return {
                 ...item,
-                label: titleI18nKey
-                  ? $t(titleI18nKey)
-                  : item.label,
+                label: titleI18nKey ? $t(titleI18nKey) : item.label
               }
-            },
+            }
           }
-        },
+        }
       }),
       /**
        * 嵌套路由视图渲染插件
@@ -201,8 +192,8 @@ export async function setupRouter(app: App) {
       /**
        * tabs 插件
        */
-      tabsPlugin(),
-    ],
+      tabsPlugin()
+    ]
   })
   app.use(router)
   await router.isReady()

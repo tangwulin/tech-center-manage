@@ -58,8 +58,7 @@ export function refreshPlugin(): ProRouterPlugin {
         const name = getRouteComponentName(router.currentRoute.value)
         const info = routeKeyMap.value.get(name)!
         routeKeyMap.value.set(name, { ...info, timestamp: Date.now() })
-      }
-      else {
+      } else {
         // 根据 name 或者 path 刷新路由
         const route = router.resolve(routeNameOrRoutePath)
         const name = getRouteComponentName(route)
@@ -85,7 +84,7 @@ export function refreshPlugin(): ProRouterPlugin {
       }
       routeKeyMap.value.set(toName, {
         ...(routeKeyMap.value.get(toName) ?? {}),
-        key: toName,
+        key: toName
       })
     })
 
@@ -97,7 +96,7 @@ export function refreshPlugin(): ProRouterPlugin {
     return {
       onCleanup: () => {
         routeKeyMap.value.clear()
-      },
+      }
     }
   }
 }

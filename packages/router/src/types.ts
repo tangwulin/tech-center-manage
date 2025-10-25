@@ -5,5 +5,5 @@ export type {
   BackendServiceReturned as RbacAccessPluginBackendServiceReturned,
   BaseServiceReturned as RbacAccessPluginBaseServiceReturned,
   FrontendServiceReturned as RbacAccessPluginFrontendServiceReturned,
-  RouteRecordRawWithStringComponent as RbacAccessPluginRouteRecordRawWithStringComponent,
+  RouteRecordRawWithStringComponent as RbacAccessPluginRouteRecordRawWithStringComponent
 } from './plugins/rbac-access-plugin'

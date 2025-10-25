@@ -1,7 +1,7 @@
 import type { MaybeRefOrGetter } from 'vue'
+import { toValue } from 'vue'
 import type { NavigationGuardReturn, RouteLocationNormalizedGeneric } from 'vue-router'
 import type { ProRouterPlugin } from '../plugin'
-import { toValue } from 'vue'
 
 interface AutoRedirectPluginOptions {
   /**
@@ -18,30 +18,26 @@ interface AutoRedirectPluginOptions {
 
 export function autoRedirectPlugin({
   homePath,
-  redirectTo,
+  redirectTo
 }: AutoRedirectPluginOptions = {}): ProRouterPlugin {
   return ({ router }) => {
     router.beforeResolve((to) => {
       const currentRoute = to.matched[to.matched.length - 1]
-      if (
-        homePath
-        && !currentRoute.redirect
-        && currentRoute.path === '/'
-      ) {
+      if (homePath && !currentRoute.redirect && currentRoute.path === '/') {
         if (redirectTo) {
           return redirectTo(to)
         }
         const resolved = router.resolve(toValue(homePath))
         return {
           ...resolved,
-          replace: true,
+          replace: true
         }
       }
       if (
-        !currentRoute.redirect
-        && !currentRoute.components
-        && currentRoute.children
-        && currentRoute.children.length > 0
+        !currentRoute.redirect &&
+        !currentRoute.components &&
+        currentRoute.children &&
+        currentRoute.children.length > 0
       ) {
         if (redirectTo) {
           return redirectTo(to)
@@ -50,7 +46,7 @@ export function autoRedirectPlugin({
         const resolved = router.resolve(firstChildRoute)
         return {
           ...resolved,
-          replace: true,
+          replace: true
         }
       }
     })

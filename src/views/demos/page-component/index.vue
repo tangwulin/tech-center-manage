@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { NButton, NText } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
@@ -26,7 +26,7 @@ function startLoading() {
   <pro-page
     :loading="{
       show: loading,
-      description: $t('pages.demos.pageComponent.loadingText'),
+      description: $t('pages.demos.pageComponent.loadingText')
     }"
   >
     <div class="mb-6">
@@ -40,10 +40,7 @@ function startLoading() {
       </div>
     </div>
     <div class="my-2">
-      <div
-        v-for="i in itemCount"
-        :key="i"
-      >
+      <div v-for="i in itemCount" :key="i">
         {{ $t('pages.demos.pageComponent.itemText') }}{{ i }}
       </div>
     </div>
@@ -55,28 +52,21 @@ function startLoading() {
           {{ $t('pages.demos.pageComponent.currentNumber') }}: {{ itemCount }}
         </n-text>
         <n-flex>
-          <n-button
-            :focusable="false"
-            @click="itemCount = random(10, 80)"
-          >
+          <n-button :focusable="false" @click="itemCount = random(10, 80)">
             {{ $t('pages.demos.pageComponent.randomNumber') }}
           </n-button>
           <n-input-number
             v-if="!mobile"
             v-model:value="loadingTime"
-            :min="1000"
             :max="30000"
+            :min="1000"
             :step="1000"
           >
             <template #prefix>
               {{ $t('pages.demos.pageComponent.loadingTime') }}
             </template>
           </n-input-number>
-          <n-button
-            type="primary"
-            :focusable="false"
-            @click="startLoading"
-          >
+          <n-button :focusable="false" type="primary" @click="startLoading">
             {{ $t('pages.demos.pageComponent.startLoading') }}
           </n-button>
         </n-flex>

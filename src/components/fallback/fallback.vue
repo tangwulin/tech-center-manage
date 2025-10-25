@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { $t } from '@/locales/locales'
 import { useUserStore } from '@/store/use-user-store'
@@ -14,7 +14,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   title: '',
-  description: '',
+  description: ''
 })
 
 const userStore = useUserStore()
@@ -61,24 +61,15 @@ const description = computed(() => {
         <fallback-500 v-else-if="type === '500'" />
       </div>
       <div class="space-y-4">
-        <div
-          v-if="title"
-          class="text-xl font-medium text-text-1"
-        >
+        <div v-if="title" class="text-xl font-medium text-text-1">
           {{ title }}
         </div>
-        <div
-          v-if="description"
-          class="text-sm text-text-3 max-w-md"
-        >
+        <div v-if="description" class="text-sm text-text-3 max-w-md">
           {{ description }}
         </div>
       </div>
       <div class="flex flex-wrap gap-3 justify-center pt-4">
-        <n-button
-          type="primary"
-          @click="$router.push(userStore.homePath)"
-        >
+        <n-button type="primary" @click="$router.push(userStore.homePath)">
           {{ $t('common.fallback.backHome') }}
         </n-button>
       </div>

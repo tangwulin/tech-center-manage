@@ -10,8 +10,7 @@ export function getFilenameFromUrl(url: string, fallback = 'download'): string {
     const pathname = urlObj.pathname
     const filename = pathname.split('/').pop()
     return filename || fallback
-  }
-  catch {
+  } catch {
     return fallback
   }
 }
@@ -42,8 +41,7 @@ export function isExternalUrl(url: string): boolean {
     const urlObj = new URL(url)
     const currentOrigin = window.location.origin
     return urlObj.origin !== currentOrigin
-  }
-  catch {
+  } catch {
     return true
   }
 }
@@ -86,19 +84,17 @@ export function downloadFileFromUrl(url: string, filename?: string): Promise<voi
     try {
       if (isExternalUrl(url)) {
         window.open(url, '_self')
-      }
-      else {
+      } else {
         // 对于内部API，使用axios
         const response = await http.get(url, {
-          responseType: 'blob',
+          responseType: 'blob'
         })
         const blob = response.data
         const finalFilename = filename ?? getFilenameFromUrl(url)
         downloadBlob(blob, finalFilename)
         resolve()
       }
-    }
-    catch (error) {
+    } catch (error) {
       reject(error)
     }
   })
@@ -117,8 +113,7 @@ export function downloadImage(imageUrl: string, filename?: string) {
       const finalFilename = filename ?? getFilenameFromUrl(imageUrl)
       downloadBase64(base64, finalFilename, 'image/png')
       resolve()
-    }
-    catch (error) {
+    } catch (error) {
       reject(error)
     }
   })
@@ -133,15 +128,14 @@ export function downloadImage(imageUrl: string, filename?: string) {
 export function downloadText(
   content: string,
   filename = 'download.txt',
-  mimeType = 'text/plain;charset=utf-8',
+  mimeType = 'text/plain;charset=utf-8'
 ) {
   return new Promise<void>((resolve, reject) => {
     try {
       const blob = new Blob([content], { type: mimeType })
       downloadBlob(blob, filename)
       resolve()
-    }
-    catch (error) {
+    } catch (error) {
       reject(error)
     }
   })
@@ -153,25 +147,20 @@ export function downloadText(
  * @param filename 文件名
  * @param mimeType MIME类型
  */
-export function downloadBase64(
-  base64Data: string,
-  filename = 'download',
-  mimeType = 'image/png',
-) {
+export function downloadBase64(base64Data: string, filename = 'download', mimeType = 'image/png') {
   return new Promise<void>((resolve, reject) => {
     try {
-      const base64 = base64Data.includes('base64,')
-        ? base64Data.split('base64,')[1]
-        : base64Data
+      const base64 = base64Data.includes('base64,') ? base64Data.split('base64,')[1] : base64Data
 
       const byteCharacters = atob(base64)
-      const byteNumbers = Array.from({ length: byteCharacters.length }, (_, i) => byteCharacters.charCodeAt(i))
+      const byteNumbers = Array.from({ length: byteCharacters.length }, (_, i) =>
+        byteCharacters.charCodeAt(i)
+      )
       const byteArray = new Uint8Array(byteNumbers)
       const blob = new Blob([byteArray], { type: mimeType })
       downloadBlob(blob, filename)
       resolve()
-    }
-    catch (error) {
+    } catch (error) {
       reject(error)
     }
   })
@@ -182,9 +171,12 @@ export function downloadBase64(
  * @param url 请求URL
  * @param options 请求选项
  */
-export function fetchBlobResponse<T = any>(url: string, axiosRequestConfig: AxiosRequestConfig = {}) {
+export function fetchBlobResponse<T = any>(
+  url: string,
+  axiosRequestConfig: AxiosRequestConfig = {}
+) {
   return http.get<T>(url, {
     responseType: 'blob',
-    ...axiosRequestConfig,
+    ...axiosRequestConfig
   })
 }

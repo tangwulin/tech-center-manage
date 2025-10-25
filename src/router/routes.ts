@@ -15,8 +15,8 @@ const notFoundRoute: RouteRecordRaw = {
   path: '/:path(.*)*',
   component: () => import('@/views/demos/fallback/404.vue'),
   meta: {
-    title: '404',
-  },
+    title: '404'
+  }
 }
 
 /**
@@ -28,8 +28,8 @@ const rootRoute = {
   component: () => import('@/components/layout/index.vue'),
   children: [],
   meta: {
-    hideInBreadcrumb: true,
-  },
+    hideInBreadcrumb: true
+  }
 }
 
 /**
@@ -42,9 +42,9 @@ const ignoreAccessRoutes: RouteRecordRaw[] = [
     meta: {
       title: '登录',
       titleI18nKey: 'routes.login',
-      requiresAuth: false,
-    },
-  },
+      requiresAuth: false
+    }
+  }
 ]
 
 /**
@@ -58,8 +58,37 @@ const accessRoutes: RouteRecordRaw[] = [
       title: '首页',
       titleI18nKey: 'routes.home',
       icon: 'material-symbols:dashboard-outline-rounded',
-      fixedInTabs: true,
+      fixedInTabs: true
+    }
+  },
+  {
+    path: '/creations',
+    meta: {
+      title: '创作中心',
+      titleI18nKey: 'routes.creations',
+      icon: 'material-symbols:create-outline-rounded',
+      fixedInTabs: true
     },
+    children: [
+      {
+        path: 'article',
+        component: () => import('@/views/creations/article/index.vue'),
+        meta: {
+          title: '文章',
+          titleI18nKey: 'routes.article',
+          icon: 'material-symbols:article-outline-rounded'
+        }
+      },
+      {
+        path: 'video',
+        component: () => import('@/views/creations/video/index.vue'),
+        meta: {
+          title: '视频',
+          titleI18nKey: 'routes.video',
+          icon: 'mdi:video-outline'
+        }
+      }
+    ]
   },
   {
     path: '/demos',
@@ -73,15 +102,15 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '权限切换',
               titleI18nKey: 'routes.accessToggle',
-              icon: 'mdi:page-previous-outline',
-            },
-          },
+              icon: 'mdi:page-previous-outline'
+            }
+          }
         ],
         meta: {
           title: '权限',
           titleI18nKey: 'routes.access',
-          icon: 'material-symbols:lock-outline',
-        },
+          icon: 'material-symbols:lock-outline'
+        }
       },
       {
         path: 'fallback',
@@ -92,8 +121,8 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '403',
               titleI18nKey: 'routes.403',
-              icon: 'mdi:forbid',
-            },
+              icon: 'mdi:forbid'
+            }
           },
           {
             path: '404',
@@ -101,8 +130,8 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '404',
               titleI18nKey: 'routes.404',
-              icon: 'ic:baseline-browser-not-supported',
-            },
+              icon: 'ic:baseline-browser-not-supported'
+            }
           },
           {
             path: '500',
@@ -110,22 +139,22 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '500',
               titleI18nKey: 'routes.500',
-              icon: 'streamline-flex:monitor-error',
-            },
-          },
+              icon: 'streamline-flex:monitor-error'
+            }
+          }
         ],
         meta: {
           title: '异常页',
           titleI18nKey: 'routes.exception',
-          icon: 'solar:shield-warning-broken',
-        },
+          icon: 'solar:shield-warning-broken'
+        }
       },
       {
         path: 'external',
         meta: {
           title: '外部页面',
           titleI18nKey: 'routes.externalPage',
-          icon: 'ant-design:link-outlined',
+          icon: 'ant-design:link-outlined'
         },
         children: [
           {
@@ -139,8 +168,8 @@ const accessRoutes: RouteRecordRaw[] = [
                   titleI18nKey: 'routes.complexForm',
                   icon: 'lets-icons:form',
                   link: 'https://naive-ui.pro-components.cn/zh-CN/os-theme/components/form-list#list-nest.vue',
-                  linkMode: 'iframe',
-                },
+                  linkMode: 'iframe'
+                }
               },
               {
                 path: 'edit-data-table',
@@ -150,8 +179,8 @@ const accessRoutes: RouteRecordRaw[] = [
                   titleI18nKey: 'routes.editTable',
                   icon: 'material-symbols:table-outline',
                   link: 'https://naive-ui.pro-components.cn/zh-CN/os-theme/components/edit-data-table#async.vue',
-                  linkMode: 'iframe',
-                },
+                  linkMode: 'iframe'
+                }
               },
               {
                 path: 'baidu-iframe',
@@ -161,8 +190,8 @@ const accessRoutes: RouteRecordRaw[] = [
                   titleI18nKey: 'routes.baiduIframe',
                   icon: 'ri:baidu-fill',
                   link: 'https://www.baidu.com',
-                  linkMode: 'iframe',
-                },
+                  linkMode: 'iframe'
+                }
               },
               {
                 path: 'menu',
@@ -171,15 +200,15 @@ const accessRoutes: RouteRecordRaw[] = [
                   title: '菜单管理',
                   titleI18nKey: 'routes.menuManagementIframe',
                   link: true,
-                  linkMode: 'iframe',
-                },
-              },
+                  linkMode: 'iframe'
+                }
+              }
             ],
             meta: {
               title: '内嵌',
               titleI18nKey: 'routes.embedded',
-              icon: 'material-symbols:iframe',
-            },
+              icon: 'material-symbols:iframe'
+            }
           },
           {
             path: 'link',
@@ -190,8 +219,8 @@ const accessRoutes: RouteRecordRaw[] = [
                 meta: {
                   icon: 'logos:vitejs',
                   title: 'Vite',
-                  link: 'https://vite.dev',
-                },
+                  link: 'https://vite.dev'
+                }
               },
               {
                 path: 'vue',
@@ -199,8 +228,8 @@ const accessRoutes: RouteRecordRaw[] = [
                 meta: {
                   icon: 'logos:vue',
                   title: 'Vue',
-                  link: 'https://vuejs.org/',
-                },
+                  link: 'https://vuejs.org/'
+                }
               },
               {
                 path: 'menu-layout-falsy',
@@ -209,8 +238,8 @@ const accessRoutes: RouteRecordRaw[] = [
                   title: '无布局',
                   titleI18nKey: 'routes.noLayout',
                   layout: false,
-                  link: true,
-                },
+                  link: true
+                }
               },
               {
                 path: 'menu',
@@ -218,17 +247,17 @@ const accessRoutes: RouteRecordRaw[] = [
                 meta: {
                   title: '菜单管理',
                   titleI18nKey: 'routes.menuManagementExternal',
-                  link: true,
-                },
-              },
+                  link: true
+                }
+              }
             ],
             meta: {
               title: '外链',
               titleI18nKey: 'routes.externalLink',
-              icon: 'akar-icons:link-out',
-            },
-          },
-        ],
+              icon: 'akar-icons:link-out'
+            }
+          }
+        ]
       },
       {
         path: 'download',
@@ -237,8 +266,8 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '文件下载',
           titleI18nKey: 'routes.fileDownload',
-          icon: 'material-symbols:download',
-        },
+          icon: 'material-symbols:download'
+        }
       },
       {
         path: 'nested-detail',
@@ -250,15 +279,15 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '详情页',
               titleI18nKey: 'routes.detail',
-              hideInMenu: true,
-            },
-          },
+              hideInMenu: true
+            }
+          }
         ],
         meta: {
           title: '嵌套详情页',
           titleI18nKey: 'routes.nestedDetail',
-          icon: 'bx:detail',
-        },
+          icon: 'bx:detail'
+        }
       },
       {
         path: 'nested-detail2',
@@ -272,8 +301,8 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '详情页（1）',
               titleI18nKey: 'routes.detail1',
-              hideInMenu: true,
-            },
+              hideInMenu: true
+            }
           },
           {
             path: 'detail2',
@@ -282,16 +311,16 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '详情页（2）',
               titleI18nKey: 'routes.detail2',
-              hideInMenu: true,
-            },
-          },
+              hideInMenu: true
+            }
+          }
         ],
         meta: {
           title: '嵌套详情页（2）',
           titleI18nKey: 'routes.nestedDetail2',
           icon: 'bx:detail',
-          nestedRouteRenderEnd: true,
-        },
+          nestedRouteRenderEnd: true
+        }
       },
       {
         path: 'keep-alive',
@@ -302,8 +331,8 @@ const accessRoutes: RouteRecordRaw[] = [
             meta: {
               title: '基础缓存',
               titleI18nKey: 'routes.keepAliveDemo1',
-              keepAlive: true,
-            },
+              keepAlive: true
+            }
           },
           {
             path: 'demo2',
@@ -312,16 +341,16 @@ const accessRoutes: RouteRecordRaw[] = [
               title: '条件缓存',
               titleI18nKey: 'routes.keepAliveDemo2',
               keepAlive: {
-                include: ['Tabs'],
-              },
-            },
-          },
+                include: ['Tabs']
+              }
+            }
+          }
         ],
         meta: {
           title: '缓存路由',
           titleI18nKey: 'routes.keepAlive',
-          icon: 'octicon:cache-16',
-        },
+          icon: 'octicon:cache-16'
+        }
       },
       {
         path: 'tabs',
@@ -330,8 +359,8 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '多标签',
           titleI18nKey: 'routes.tabs',
-          icon: 'mdi:tab',
-        },
+          icon: 'mdi:tab'
+        }
       },
       {
         path: 'page-component',
@@ -339,8 +368,8 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '页面级组件',
           titleI18nKey: 'routes.pageComponent',
-          icon: 'material-symbols:pageview-outline',
-        },
+          icon: 'material-symbols:pageview-outline'
+        }
       },
       {
         path: 'editor',
@@ -348,8 +377,8 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '富文本',
           titleI18nKey: 'routes.richText',
-          icon: 'material-symbols:edit-document-outline',
-        },
+          icon: 'material-symbols:edit-document-outline'
+        }
       },
       {
         path: 'complex-form',
@@ -357,8 +386,8 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '复杂表单',
           titleI18nKey: 'routes.complexForm',
-          icon: 'material-symbols:dynamic-form-outline',
-        },
+          icon: 'material-symbols:dynamic-form-outline'
+        }
       },
       {
         path: 'icon',
@@ -366,8 +395,8 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '图标选择器',
           titleI18nKey: 'routes.iconSelector',
-          icon: 'mdi:image-outline',
-        },
+          icon: 'mdi:image-outline'
+        }
       },
       {
         path: 'loading',
@@ -375,15 +404,15 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: 'Loading 指令',
           titleI18nKey: 'routes.loading',
-          icon: 'line-md:loading-twotone-loop',
-        },
-      },
+          icon: 'line-md:loading-twotone-loop'
+        }
+      }
     ],
     meta: {
       title: '演示',
       titleI18nKey: 'routes.demo',
-      icon: 'hugeicons:codesandbox',
-    },
+      icon: 'hugeicons:codesandbox'
+    }
   },
   {
     path: '/system',
@@ -395,8 +424,8 @@ const accessRoutes: RouteRecordRaw[] = [
           title: '用户管理',
           titleI18nKey: 'routes.userManagement',
           icon: 'ant-design:user-outlined',
-          roles: ['super', 'admin'],
-        },
+          roles: ['super', 'admin']
+        }
       },
       {
         path: 'role',
@@ -405,8 +434,8 @@ const accessRoutes: RouteRecordRaw[] = [
           title: '角色管理',
           titleI18nKey: 'routes.roleManagement',
           icon: 'carbon:user-role',
-          roles: ['super'],
-        },
+          roles: ['super']
+        }
       },
       {
         path: 'menu',
@@ -414,17 +443,17 @@ const accessRoutes: RouteRecordRaw[] = [
         meta: {
           title: '菜单管理',
           titleI18nKey: 'routes.menuManagement',
-          roles: ['super'],
-        },
-      },
+          roles: ['super']
+        }
+      }
     ],
     meta: {
       title: '系统管理',
       titleI18nKey: 'routes.system',
       icon: 'ant-design:setting-outlined',
-      roles: ['super', 'admin'],
-    },
-  },
+      roles: ['super', 'admin']
+    }
+  }
 ]
 
 /**
@@ -444,5 +473,5 @@ export {
   notFoundRoute,
   pageMap,
   ROOT_ROUTE_NAME,
-  rootRoute,
+  rootRoute
 }

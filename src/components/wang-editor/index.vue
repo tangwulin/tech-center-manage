@@ -1,18 +1,18 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { IDomEditor } from '@wangeditor/editor'
-import type { EditorProps, ToolbarProps } from './props'
 import { Boot } from '@wangeditor/editor'
+import type { EditorProps, ToolbarProps } from './props'
+import { wangEditorProps } from './props'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { merge } from 'lodash-es'
 import { useThemeVars } from 'naive-ui'
 import { call } from 'naive-ui/es/_utils'
 import { computed, inject, mergeProps, onBeforeUnmount, shallowRef, watchEffect } from 'vue'
 import { withEmptyHtmlPlugin } from './plugin/emptyHtmlPlugin'
-import { wangEditorProps } from './props'
 import '@wangeditor/editor/dist/css/style.css'
 
 defineOptions({
-  name: 'WangEditor',
+  name: 'WangEditor'
 })
 
 const props = defineProps(wangEditorProps)
@@ -38,63 +38,67 @@ const mergedDisabled = computed(() => {
 })
 
 const mergedEditorEvents = computed(() => {
-  return mergeProps({
-    onOnCreated: (editor: IDomEditor) => {
-      editorInstRef.value = editor
-    },
-    onOnBlur: () => {
-      if (NFormItem) {
-        NFormItem.handleContentBlur()
+  return mergeProps(
+    {
+      onOnCreated: (editor: IDomEditor) => {
+        editorInstRef.value = editor
+      },
+      onOnBlur: () => {
+        if (NFormItem) {
+          NFormItem.handleContentBlur()
+        }
       }
     },
-  }, {
-    onOnBlur: props.onOnBlur,
-    onOnFocus: props.onOnFocus,
-    onOnChange: props.onOnChange,
-    onOnCreated: props.onOnCreated,
-    onOnDestroyed: props.onOnDestroyed,
-    onOnMaxLength: props.onOnMaxLength,
-    onCustomAlert: props.onCustomAlert,
-  })
+    {
+      onOnBlur: props.onOnBlur,
+      onOnFocus: props.onOnFocus,
+      onOnChange: props.onOnChange,
+      onOnCreated: props.onOnCreated,
+      onOnDestroyed: props.onOnDestroyed,
+      onOnMaxLength: props.onOnMaxLength,
+      onCustomAlert: props.onCustomAlert
+    }
+  )
 })
 
 const editorProps = computed<EditorProps>(() => {
   return {
-    'defaultConfig': merge({
-      autoFocus: false,
-      placeholder: props.placeholder,
-      MENU_CONF: {
-        // 图片上传可在这里对接
-        // uploadImage: {
-        //   fieldName: 'file',
-        //   customInsert: (res, insertFn) => {
-        //     const url = res?.url ?? ''
-        //     insertFn(url, '', url)
-        //   },
-        //   server: 'api/file/upload',
-        // },
+    defaultConfig: merge(
+      {
+        autoFocus: false,
+        placeholder: props.placeholder,
+        MENU_CONF: {
+          // 图片上传可在这里对接
+          // uploadImage: {
+          //   fieldName: 'file',
+          //   customInsert: (res, insertFn) => {
+          //     const url = res?.url ?? ''
+          //     insertFn(url, '', url)
+          //   },
+          //   server: 'api/file/upload',
+          // },
+        }
       },
-    }, props.editorConfig ?? {}),
+      props.editorConfig ?? {}
+    ),
     ...mergedEditorEvents.value,
-    'mode': 'simple',
-    'modelValue': props.modelValue ?? '',
-    'style': { height: props.height },
-    'onUpdate:modelValue': doUpdateValue,
+    mode: 'simple',
+    modelValue: props.modelValue ?? '',
+    style: { height: props.height },
+    'onUpdate:modelValue': doUpdateValue
   }
 })
 
 const toolbarProps = computed<ToolbarProps>(() => {
   return {
-    defaultConfig: merge({
-      excludeKeys: [
-        'insertVideo',
-        'uploadVideo',
-        'editVideoSize',
-        'fullScreen',
-      ],
-    }, props.toolbarConfig ?? {}),
+    defaultConfig: merge(
+      {
+        excludeKeys: ['insertVideo', 'uploadVideo', 'editVideoSize', 'fullScreen']
+      },
+      props.toolbarConfig ?? {}
+    ),
     editor: editorInstRef.value,
-    mode: 'simple',
+    mode: 'simple'
   }
 })
 
@@ -122,9 +126,7 @@ watchEffect(() => {
   const editor = editorInstRef.value
   const disabled = mergedDisabled.value
   if (editor) {
-    disabled
-      ? editor.disable()
-      : editor.enable()
+    disabled ? editor.disable() : editor.enable()
   }
 })
 
@@ -142,18 +144,14 @@ Boot.registerPlugin(withEmptyHtmlPlugin)
 <template>
   <div class="wangeditor-wrapper">
     <toolbar
-      v-bind="toolbarProps"
+      :class="[mergedStatus && `wangeditor-toolbar-${mergedStatus}-status`]"
       class="wangeditor-toolbar"
-      :class="[
-        mergedStatus && `wangeditor-toolbar-${mergedStatus}-status`,
-      ]"
+      v-bind="toolbarProps"
     />
     <editor
-      v-bind="editorProps"
+      :class="[mergedStatus && `wangeditor-editor-${mergedStatus}-status`]"
       class="wangeditor-editor"
-      :class="[
-        mergedStatus && `wangeditor-editor-${mergedStatus}-status`,
-      ]"
+      v-bind="editorProps"
     />
   </div>
 </template>

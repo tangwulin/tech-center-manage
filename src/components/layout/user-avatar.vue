@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
 import { Icon } from '@iconify/vue'
 import { NIcon, useDialog } from 'naive-ui'
@@ -10,9 +10,7 @@ import { useUserStore } from '@/store/use-user-store'
 const dialog = useDialog()
 const userStore = useUserStore()
 
-const {
-  user,
-} = storeToRefs(userStore)
+const { user } = storeToRefs(userStore)
 
 const options = computed<DropdownMixedOption[]>(() => [
   {
@@ -24,7 +22,7 @@ const options = computed<DropdownMixedOption[]>(() => [
           <Icon icon="formkit:filedoc" />
         </NIcon>
       )
-    },
+    }
   },
   {
     label: $t('common.layout.userAvatar.documentationForProNaiveUI'),
@@ -35,7 +33,7 @@ const options = computed<DropdownMixedOption[]>(() => [
           <Icon icon="formkit:filedoc" />
         </NIcon>
       )
-    },
+    }
   },
   {
     label: 'Github',
@@ -46,10 +44,10 @@ const options = computed<DropdownMixedOption[]>(() => [
           <Icon icon="akar-icons:github-fill" />
         </NIcon>
       )
-    },
+    }
   },
   {
-    type: 'divider',
+    type: 'divider'
   },
   {
     label: $t('common.layout.userAvatar.logout'),
@@ -60,8 +58,8 @@ const options = computed<DropdownMixedOption[]>(() => [
           <Icon icon="material-symbols:logout" />
         </NIcon>
       )
-    },
-  },
+    }
+  }
 ])
 
 function handleSelect(key: string) {
@@ -85,18 +83,14 @@ function handleSelect(key: string) {
       positiveText: $t('common.often.confirm'),
       onPositiveClick: () => {
         userStore.logoutWithQueryRedirect()
-      },
+      }
     })
   }
 }
 </script>
 
 <template>
-  <n-dropdown
-    trigger="hover"
-    :options="options"
-    @select="handleSelect"
-  >
+  <n-dropdown :options="options" trigger="hover" @select="handleSelect">
     <pro-button quaternary>
       <template #icon>
         <n-icon>

@@ -11,8 +11,8 @@ export class Api {
       baseURL: import.meta.env.VITE_ICONIFY_API_PREFIX_URL,
       params: {
         query,
-        limit,
-      },
+        limit
+      }
     })
   }
 }

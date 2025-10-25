@@ -4,8 +4,8 @@
       {{ $t('pages.demos.keepAlive.basicCache.description') }}
     </p>
     <n-input
-      class="w-full"
       :placeholder="$t('pages.demos.keepAlive.basicCache.inputPlaceholder')"
+      class="w-full"
     />
   </n-card>
 </template>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useLayoutStore } from '@/store/use-layout-store'
 import CollapseSidebarButton from './collapse-sidebar-button.vue'
@@ -13,11 +13,7 @@ interface MobileSidebarDrawerProps {
 
 defineProps<MobileSidebarDrawerProps>()
 
-const {
-  collapsed,
-  sidebarWidth,
-  showMobileSidebarDrawer,
-} = storeToRefs(useLayoutStore())
+const { collapsed, sidebarWidth, showMobileSidebarDrawer } = storeToRefs(useLayoutStore())
 </script>
 
 <template>
@@ -25,8 +21,8 @@ const {
     v-model:show="showMobileSidebarDrawer"
     :auto-focus="false"
     :width="collapsed ? collapsedWidth : sidebarWidth"
-    placement="left"
     class="mobile-sidebar-drawer transition-[width] duration-300 ease-[var(--n-bezier)]"
+    placement="left"
   >
     <n-drawer-content :native-scrollbar="false">
       <template #header>

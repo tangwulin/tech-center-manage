@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useProRequest } from '@/composables/use-pro-request'
 import { translateOptions } from '@/utils/common'
 import { Api } from '../index.api'
@@ -6,9 +6,9 @@ import { genderOptions, statusOptions } from '../utils/constants'
 
 const { data: roleOptions } = useProRequest(async () => {
   const res = await Api.roleList()
-  return res.data.map(item => ({
+  return res.data.map((item) => ({
     value: item.id,
-    label: item.name,
+    label: item.name
   }))
 })
 </script>
@@ -16,64 +16,54 @@ const { data: roleOptions } = useProRequest(async () => {
 <template>
   <pro-input
     :title="$t('pages.system.user.username')"
-    path="username"
     :tooltip="$t('pages.system.user.usernameTooltip')"
+    path="username"
     required
   />
-  <pro-input
-    :title="$t('pages.system.user.nickname')"
-    path="nickname"
-    required
-  />
+  <pro-input :title="$t('pages.system.user.nickname')" path="nickname" required />
   <pro-radio-group
+    :field-props="{
+      options: translateOptions(genderOptions)
+    }"
     :title="$t('pages.system.user.gender')"
     path="gender"
     required
-    :field-props="{
-      options: translateOptions(genderOptions),
-    }"
   />
   <pro-password
+    :field-props="{
+      showPasswordOn: 'click'
+    }"
     :title="$t('pages.system.user.password')"
     path="password"
     required
-    :field-props="{
-      showPasswordOn: 'click',
-    }"
   />
   <pro-select
+    :field-props="{
+      options: roleOptions,
+      multiple: true
+    }"
     :title="$t('pages.system.user.role')"
     path="roleIds"
     required
-    :field-props="{
-      options: roleOptions,
-      multiple: true,
-    }"
   />
   <pro-radio-group
+    :field-props="{
+      options: translateOptions(statusOptions)
+    }"
     :title="$t('common.often.status')"
     path="status"
     required
-    :field-props="{
-      options: translateOptions(statusOptions),
-    }"
   />
-  <pro-input
-    :title="$t('pages.system.user.email')"
-    path="email"
-  />
-  <pro-input
-    :title="$t('pages.system.user.phone')"
-    path="phone"
-  />
+  <pro-input :title="$t('pages.system.user.email')" path="email" />
+  <pro-input :title="$t('pages.system.user.phone')" path="phone" />
   <pro-textarea
-    :title="$t('common.often.remark')"
-    path="remark"
     :field-props="{
       autosize: {
         minRows: 3,
-        maxRows: 5,
-      },
+        maxRows: 5
+      }
     }"
+    :title="$t('common.often.remark')"
+    path="remark"
   />
 </template>

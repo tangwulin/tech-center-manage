@@ -1,10 +1,10 @@
-<script setup lang='tsx'>
+<script lang="tsx" setup>
 import type { MenuOption } from 'naive-ui'
-import type { ProLayoutMode } from 'pro-naive-ui'
-import { isNil } from 'lodash-es'
 import { useThemeVars } from 'naive-ui'
-import { storeToRefs } from 'pinia'
+import type { ProLayoutMode } from 'pro-naive-ui'
 import { useLayoutMenu } from 'pro-naive-ui'
+import { isNil } from 'lodash-es'
+import { storeToRefs } from 'pinia'
 import { computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLayoutStore } from '@/store/use-layout-store'
@@ -40,17 +40,12 @@ const {
   sidebarMenuDivider,
   sidebarCollapsedWidth,
   sidebarCollapsedShowMenuTitle,
-  sidebarCollapsedWidthWhenShowMenuTitle,
+  sidebarCollapsedWidthWhenShowMenuTitle
 } = storeToRefs(useLayoutStore())
 
-const {
-  layout,
-  fullKeys,
-  activeKey,
-  verticalLayout,
-} = useLayoutMenu({
+const { layout, fullKeys, activeKey, verticalLayout } = useLayoutMenu({
   mode,
-  menus: computed(() => router.buildMenus()),
+  menus: computed(() => router.buildMenus())
 })
 
 const finalShowSidebar = computed(() => {
@@ -71,28 +66,29 @@ const finalSidebarCollapsedWidth = computed(() => {
 
 const showSidebarCollapseButton = computed(() => {
   const layoutMode = mode.value as ProLayoutMode
-  return layoutMode === 'vertical'
-    || layoutMode === 'sidebar'
-    || layoutMode === 'mixed-sidebar'
+  return layoutMode === 'vertical' || layoutMode === 'sidebar' || layoutMode === 'mixed-sidebar'
 })
 
 const showSidebarExtraCollapseButton = computed(() => {
   const layoutMode = mode.value as ProLayoutMode
-  return layoutMode === 'two-column'
-    || layoutMode === 'mixed-two-column'
+  return layoutMode === 'two-column' || layoutMode === 'mixed-two-column'
 })
 
-watch(() => route.path, (path) => {
-  if (activeKey.value === path) {
-    return
-  }
-  const key = findAvailableMenuKey()
-  if (isNil(key) && __DEV__) {
-    console.warn('This looks like a bug, please open an issue to report this problem')
-    return
-  }
-  activeKey.value = key!
-}, { immediate: true })
+watch(
+  () => route.path,
+  (path) => {
+    if (activeKey.value === path) {
+      return
+    }
+    const key = findAvailableMenuKey()
+    if (isNil(key) && __DEV__) {
+      console.warn('This looks like a bug, please open an issue to report this problem')
+      return
+    }
+    activeKey.value = key!
+  },
+  { immediate: true }
+)
 
 function findAvailableMenuKey() {
   const keys = fullKeys.value
@@ -118,8 +114,7 @@ function handleMenuGroupAndDivider(menus: MenuOption[] = []) {
       finalMenus = finalMenus.flatMap((item) => {
         return item.children?.length ? [...item.children] : [item]
       })
-    }
-    else {
+    } else {
       finalMenus = finalMenus.map((item) => {
         return item.children?.length ? { ...item, type: 'group' } : item
       })
@@ -140,22 +135,22 @@ async function pushTo(path: string) {
 <template>
   <pro-layout
     v-model:collapsed="collapsed"
-    :mode="mode"
+    :footer-fixed="footerFixed"
+    :footer-height="footerHeight"
     :is-mobile="mobile"
-    :show-nav="showNav"
-    :show-logo="showLogo"
+    :mode="mode"
     :nav-fixed="navFixed"
     :nav-height="navHeight"
     :show-footer="showFooter"
-    :show-tabbar="showTabbar"
-    :footer-fixed="footerFixed"
-    :footer-height="footerHeight"
-    :sidebar-width="sidebarWidth"
-    :tabbar-height="tabbarHeight"
+    :show-logo="showLogo"
+    :show-nav="showNav"
     :show-sidebar="finalShowSidebar"
     :show-sidebar-extra="showSidebarExtra"
-    content-class="pro-layout__content--embedded p-16px"
+    :show-tabbar="showTabbar"
     :sidebar-collapsed-width="finalSidebarCollapsedWidth"
+    :sidebar-width="sidebarWidth"
+    :tabbar-height="tabbarHeight"
+    content-class="pro-layout__content--embedded p-16px"
   >
     <template #logo>
       <logo />
@@ -165,26 +160,19 @@ async function pushTo(path: string) {
       <mobile-sidebar-drawer :collapsed-width="finalSidebarCollapsedWidth">
         <n-scrollbar class="flex-[1_0_0]">
           <pro-menu
-            v-bind="verticalLayout.verticalMenuProps"
-            :indent="18"
-            :collapsed-width="finalSidebarCollapsedWidth"
             :collapsed-show-title="sidebarCollapsedShowMenuTitle"
+            :collapsed-width="finalSidebarCollapsedWidth"
+            :indent="18"
             :options="handleMenuGroupAndDivider(verticalLayout.verticalMenuProps.options)"
+            v-bind="verticalLayout.verticalMenuProps"
             @update:value="pushTo"
           />
         </n-scrollbar>
       </mobile-sidebar-drawer>
     </template>
     <template #nav-center>
-      <div
-        v-show="!mobile"
-        class="flex items-center h-full"
-      >
-        <pro-menu
-          v-bind="layout.horizontalMenuProps"
-          :indent="18"
-          @update:value="pushTo"
-        />
+      <div v-show="!mobile" class="flex items-center h-full">
+        <pro-menu :indent="18" v-bind="layout.horizontalMenuProps" @update:value="pushTo" />
       </div>
     </template>
     <template #nav-right>
@@ -197,18 +185,15 @@ async function pushTo(path: string) {
       <div class="flex flex-col h-full">
         <n-scrollbar class="flex-[1_0_0]">
           <pro-menu
-            v-bind="layout.verticalMenuProps"
-            :indent="18"
-            :collapsed-width="finalSidebarCollapsedWidth"
             :collapsed-show-title="sidebarCollapsedShowMenuTitle"
+            :collapsed-width="finalSidebarCollapsedWidth"
+            :indent="18"
             :options="handleMenuGroupAndDivider(layout.verticalMenuProps.options)"
+            v-bind="layout.verticalMenuProps"
             @update:value="pushTo"
           />
         </n-scrollbar>
-        <div
-          v-if="showSidebarCollapseButton"
-          class="flex p-8px"
-        >
+        <div v-if="showSidebarCollapseButton" class="flex p-8px">
           <collapse-sidebar-button />
         </div>
       </div>
@@ -217,18 +202,15 @@ async function pushTo(path: string) {
       <div class="flex flex-col h-full">
         <n-scrollbar class="flex-[1_0_0]">
           <pro-menu
-            v-bind="layout.verticalExtraMenuProps"
-            :indent="18"
-            :collapsed-width="finalSidebarCollapsedWidth"
             :collapsed-show-title="sidebarCollapsedShowMenuTitle"
+            :collapsed-width="finalSidebarCollapsedWidth"
+            :indent="18"
             :options="handleMenuGroupAndDivider(layout.verticalExtraMenuProps.options)"
+            v-bind="layout.verticalExtraMenuProps"
             @update:value="pushTo"
           />
         </n-scrollbar>
-        <div
-          v-if="showSidebarExtraCollapseButton"
-          class="flex p-8px"
-        >
+        <div v-if="showSidebarExtraCollapseButton" class="flex p-8px">
           <collapse-sidebar-button />
         </div>
       </div>

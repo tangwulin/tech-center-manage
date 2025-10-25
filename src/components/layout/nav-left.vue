@@ -1,4 +1,4 @@
-<script setup lang='tsx'>
+<script lang="tsx" setup>
 import type { ProLayoutMode } from 'pro-naive-ui'
 import { Icon } from '@iconify/vue'
 import { storeToRefs } from 'pinia'
@@ -6,12 +6,7 @@ import { computed } from 'vue'
 import { useLayoutStore } from '@/store/use-layout-store'
 import Breadcrumbs from './breadcrumbs.vue'
 
-const {
-  mode,
-  mobile,
-  showSidebar,
-  showMobileSidebarDrawer,
-} = storeToRefs(useLayoutStore())
+const { mode, mobile, showSidebar, showMobileSidebarDrawer } = storeToRefs(useLayoutStore())
 
 const showSidebarHiddenButton = computed(() => {
   const layoutMode = mode.value as ProLayoutMode
@@ -26,9 +21,7 @@ const showBreadcrumbs = computed(() => {
   if (mobile.value) {
     return false
   }
-  return layoutMode === 'vertical'
-    || layoutMode === 'two-column'
-    || layoutMode === 'sidebar'
+  return layoutMode === 'vertical' || layoutMode === 'two-column' || layoutMode === 'sidebar'
 })
 
 function toggleSidebar() {
@@ -42,12 +35,7 @@ function toggleSidebar() {
 
 <template>
   <div class="pl-8px flex items-center h-full gap-4px">
-    <pro-button
-      v-if="showSidebarHiddenButton"
-      quaternary
-      size="small"
-      @click="toggleSidebar"
-    >
+    <pro-button v-if="showSidebarHiddenButton" quaternary size="small" @click="toggleSidebar">
       <template #icon>
         <icon icon="line-md:menu" />
       </template>

@@ -12,7 +12,7 @@ export interface BaseModel {
 
 export function buildCURDRoutes<T extends BaseModel>(
   baseURL: string,
-  collection: T[],
+  collection: T[]
 ): FakeRoute[] {
   const getOrderedCollection = () => orderBy(collection, ['updateTime'], ['desc'])
 
@@ -35,9 +35,9 @@ export function buildCURDRoutes<T extends BaseModel>(
           page,
           pageSize,
           total: filteredData.length,
-          list: filteredData.slice((page - 1) * pageSize, page * pageSize),
+          list: filteredData.slice((page - 1) * pageSize, page * pageSize)
         })
-      },
+      }
     },
     // #endregion
 
@@ -47,7 +47,7 @@ export function buildCURDRoutes<T extends BaseModel>(
       url: 'list',
       response({ query }) {
         return RF.success(filterByParams(getOrderedCollection(), query))
-      },
+      }
     },
     // #endregion
 
@@ -59,8 +59,8 @@ export function buildCURDRoutes<T extends BaseModel>(
         if (params.id == null) {
           return RF.error('缺失 id 参数')
         }
-        return RF.success(collection.find(item => item.id === params.id))
-      },
+        return RF.success(collection.find((item) => item.id === params.id))
+      }
     },
     // #endregion
 
@@ -73,11 +73,11 @@ export function buildCURDRoutes<T extends BaseModel>(
           ...body,
           id: faker.string.uuid(),
           createTime: new Date().toISOString(),
-          updateTime: new Date().toISOString(),
+          updateTime: new Date().toISOString()
         } as T)
         return RF.error('演示环境，不支持删除！')
         // return RF.success(null)
-      },
+      }
     },
     // #endregion
 
@@ -86,7 +86,7 @@ export function buildCURDRoutes<T extends BaseModel>(
       method: 'put',
       url: '',
       response({ body }) {
-        const item = collection.find(item => item.id === body.id)
+        const item = collection.find((item) => item.id === body.id)
         if (!item) {
           return RF.error('数据不存在')
         }
@@ -96,7 +96,7 @@ export function buildCURDRoutes<T extends BaseModel>(
         //   updateTime: new Date().toISOString(),
         // })
         // return RF.success(null)
-      },
+      }
     },
     // #endregion
 
@@ -115,8 +115,8 @@ export function buildCURDRoutes<T extends BaseModel>(
         // collection.push(...newData)
 
         // return RF.success(null)
-      },
-    },
+      }
+    }
     // #endregion
   ]
 

@@ -1,6 +1,6 @@
 import type { ComputedRef } from 'vue'
-import type { ProRouterPlugin } from '../plugin'
 import { computed, getCurrentInstance, inject, toValue } from 'vue'
+import type { ProRouterPlugin } from '../plugin'
 import { useRoute, viewDepthKey } from 'vue-router'
 
 declare module 'vue-router' {
@@ -54,12 +54,12 @@ export function nestedRouteRenderPlugin(): ProRouterPlugin {
             if (index > viewDepth && index !== arr.length - 1) {
               return {
                 ...item,
-                components: undefined,
+                components: undefined
               }
             }
 
             return item
-          }),
+          })
         }
       })
     }

@@ -10,18 +10,22 @@ function useMobile() {
   })
 }
 
-export const useLayoutStore = defineStore('layout', () => {
-  const mobile = useMobile()
-  const showMobileSidebarDrawer = ref(false)
-  const layout = reactive({ ...preferenceConfig.layout })
+export const useLayoutStore = defineStore(
+  'layout',
+  () => {
+    const mobile = useMobile()
+    const showMobileSidebarDrawer = ref(false)
+    const layout = reactive({ ...preferenceConfig.layout })
 
-  return {
-    mobile,
-    showMobileSidebarDrawer,
-    ...toRefs(layout),
-  }
-}, {
-  preference: {
-    pick: [Object.keys(preferenceConfig.layout), 'layout'],
+    return {
+      mobile,
+      showMobileSidebarDrawer,
+      ...toRefs(layout)
+    }
   },
-})
+  {
+    preference: {
+      pick: [Object.keys(preferenceConfig.layout), 'layout']
+    }
+  }
+)

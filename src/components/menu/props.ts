@@ -7,18 +7,18 @@ const extendProps = {
    */
   collapsedShowTitle: {
     type: Boolean,
-    default: undefined,
+    default: undefined
   },
   /**
    * 当折叠后是否显示 title 开启时，菜单项的高度
    * @default 82
    */
-  menuItemHeightWhenCollapsedShowTitle: Number,
+  menuItemHeightWhenCollapsedShowTitle: Number
 } as const
 
 export const proMenuProps = {
   ...menuProps,
-  ...extendProps,
+  ...extendProps
 } as const
 
 export type ProMenuProps = ExtractPublicPropTypes<typeof proMenuProps>

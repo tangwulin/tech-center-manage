@@ -40,7 +40,7 @@ export class Api {
     return http({
       method: isNil(data.id) ? 'post' : 'put',
       url: '/system/menu',
-      data,
+      data
     })
   }
 

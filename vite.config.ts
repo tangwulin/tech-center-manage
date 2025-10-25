@@ -22,11 +22,11 @@ export default defineConfig(({ mode }) => {
         'lodash-es',
         'vue-router',
         'pro-naive-ui',
-        '@vueuse/core',
-      ],
+        '@vueuse/core'
+      ]
     },
     define: {
-      __DEV__: mode === 'development',
+      __DEV__: mode === 'development'
     },
     plugins: [
       vue(),
@@ -34,9 +34,9 @@ export default defineConfig(({ mode }) => {
       createHtmlPlugin({
         inject: {
           data: {
-            title: preferenceConfig.app.title,
-          },
-        },
+            title: preferenceConfig.app.title
+          }
+        }
       }),
       Components({
         resolvers: [
@@ -47,37 +47,37 @@ export default defineConfig(({ mode }) => {
                 { name: 'ProPage', from: '@/components/page' },
                 { name: 'ProWangEditor', from: '@/components/wang-editor' },
                 { name: 'ProIconifyIcons', from: '@/components/iconify-icons' },
-                { name: 'ProIconifyIcons2', from: '@/components/iconify-icons' },
+                { name: 'ProIconifyIcons2', from: '@/components/iconify-icons' }
               ]
-              const comp = components.find(comp => comp.name === name)
+              const comp = components.find((comp) => comp.name === name)
               if (comp) {
                 return {
                   name: comp.name,
-                  from: comp.from,
+                  from: comp.from
                 }
               }
-            },
+            }
           },
           NaiveUiResolver(),
-          ProNaiveUIResolver(),
+          ProNaiveUIResolver()
         ],
         dirs: [],
-        dts: 'typings/components.d.ts',
+        dts: 'typings/components.d.ts'
       }),
       UnoCSS(),
       vitePluginFakeServer({
         logger: false,
         enableProd: true,
-        include: ['mock'],
-      }),
+        include: ['mock']
+      })
       // analyzer(),
     ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
         '@root': path.resolve(__dirname, './'),
-        '@pro/router': path.resolve(__dirname, './packages/router/src/index.ts'),
-      },
+        '@pro/router': path.resolve(__dirname, './packages/router/src/index.ts')
+      }
     },
     build: {
       rollupOptions: {
@@ -86,18 +86,18 @@ export default defineConfig(({ mode }) => {
             'naive-ui': ['naive-ui'],
             'lodash-es': ['lodash-es'],
             'vue-router': ['vue-router'],
-            'vueuse': ['@vueuse/core'],
+            vueuse: ['@vueuse/core'],
             'pro-naive-ui': ['pro-naive-ui'],
-            'vue': ['vue'],
-            'pinia': ['pinia'],
-            'iconify': ['@iconify/vue'],
-            'wangeditor': ['@wangeditor/editor'],
-          },
-        },
-      },
+            vue: ['vue'],
+            pinia: ['pinia'],
+            iconify: ['@iconify/vue'],
+            wangeditor: ['@wangeditor/editor']
+          }
+        }
+      }
     },
     css: {
-      transformer: 'lightningcss',
+      transformer: 'lightningcss'
     },
     server: {
       host: true,
@@ -105,9 +105,9 @@ export default defineConfig(({ mode }) => {
         '/iconify': {
           target: 'https://api.iconify.design',
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/iconify/, ''),
-        },
-      },
-    },
+          rewrite: (path) => path.replace(/^\/iconify/, '')
+        }
+      }
+    }
   }
 })

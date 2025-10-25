@@ -1,55 +1,56 @@
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import type { ProDataTableColumns, ProSearchFormColumns } from 'pro-naive-ui'
+import {
+  createProModalForm,
+  createProSearchForm,
+  renderProDateText,
+  renderProTags
+} from 'pro-naive-ui'
 import type { SetOptional } from 'type-fest'
 import type { ListSearchParams, Role } from './index.api'
+import { Api } from './index.api'
 import { Icon } from '@iconify/vue'
-import { createProModalForm, createProSearchForm, renderProDateText, renderProTags } from 'pro-naive-ui'
 import { computed } from 'vue'
 import { useProNDataTable } from '@/composables/use-pro-n-data-table'
 import { useProRequest } from '@/composables/use-pro-request'
 import { $t } from '@/locales/locales'
 import { translateOptions } from '@/utils/common'
 import RoleModalForm from './components/role-modal-form.vue'
-import { Api } from './index.api'
-import {
-  statusMapping,
-  statusOptions,
-  statusToColorMapping,
-} from './utils/constants'
+import { statusMapping, statusOptions, statusToColorMapping } from './utils/constants'
 
 const searchForm = createProSearchForm()
 
-const {
-  loading: insertOrUpdateLoading,
-  runAsync: runAsyncInsertOrUpdate,
-} = useProRequest(Api.insertOrUpdate, {
-  manual: true,
-  successTip: true,
-})
+const { loading: insertOrUpdateLoading, runAsync: runAsyncInsertOrUpdate } = useProRequest(
+  Api.insertOrUpdate,
+  {
+    manual: true,
+    successTip: true
+  }
+)
 
 const {
   search: { proSearchFormProps },
-  table: { tableProps, onChange },
+  table: { tableProps, onChange }
 } = useProNDataTable(
   async ({ current, pageSize }, values) => {
     const { data } = await Api.page({ pageSize, page: current, ...values })
     return data
   },
   {
-    form: searchForm,
-  },
+    form: searchForm
+  }
 )
 
 const modalForm = createProModalForm<SetOptional<Role, 'id'>>({
   onSubmit: (values) => {
     runAsyncInsertOrUpdate({
       ...values,
-      id: modalForm.values.value.id,
+      id: modalForm.values.value.id
     }).then(() => {
       modalForm.show.value = false
       onChange({ page: 1 })
     })
-  },
+  }
 })
 
 const { run: runDeleteRoles } = useProRequest(Api.del, {
@@ -57,7 +58,7 @@ const { run: runDeleteRoles } = useProRequest(Api.del, {
   successTip: 'common.often.deleteSuccess',
   onSuccess() {
     onChange({ page: 1 })
-  },
+  }
 })
 
 const { run: handleEditRole } = useProRequest(Api.get, {
@@ -65,18 +66,18 @@ const { run: handleEditRole } = useProRequest(Api.get, {
   onSuccess: ({ data: role }) => {
     modalForm.show.value = true
     modalForm.values.value = role
-  },
+  }
 })
 
 const searchColumns = computed<ProSearchFormColumns<ListSearchParams>>(() => {
   return [
     {
       title: $t('pages.system.role.roleName'),
-      path: 'name',
+      path: 'name'
     },
     {
       title: $t('pages.system.role.roleCode'),
-      path: 'code',
+      path: 'code'
     },
     {
       title: $t('common.often.status'),
@@ -84,10 +85,10 @@ const searchColumns = computed<ProSearchFormColumns<ListSearchParams>>(() => {
       field: 'select',
       fieldProps: () => {
         return {
-          options: translateOptions(statusOptions),
+          options: translateOptions(statusOptions)
         }
-      },
-    },
+      }
+    }
   ]
 })
 
@@ -95,17 +96,17 @@ const tableColumns = computed<ProDataTableColumns<Role>>(() => {
   return [
     {
       title: $t('common.often.index'),
-      type: 'index',
+      type: 'index'
     },
     {
       title: $t('pages.system.role.roleName'),
       path: 'name',
-      width: 120,
+      width: 120
     },
     {
       title: $t('pages.system.role.roleCode'),
       path: 'code',
-      width: 120,
+      width: 120
     },
     {
       title: $t('common.often.status'),
@@ -113,22 +114,22 @@ const tableColumns = computed<ProDataTableColumns<Role>>(() => {
       render: (row) => {
         return renderProTags({
           content: $t(statusMapping[row.status]),
-          type: statusToColorMapping[row.status],
+          type: statusToColorMapping[row.status]
         })
-      },
+      }
     },
     {
       title: $t('common.often.remark'),
       path: 'remark',
       ellipsis: {
-        tooltip: true,
+        tooltip: true
       },
-      width: 230,
+      width: 230
     },
     {
       title: $t('common.often.updateTime'),
       width: 220,
-      render: row => renderProDateText(row.updateTime),
+      render: (row) => renderProDateText(row.updateTime)
     },
     {
       title: $t('common.often.operation'),
@@ -155,52 +156,36 @@ const tableColumns = computed<ProDataTableColumns<Role>>(() => {
                 ),
                 trigger: () => {
                   return (
-                    <n-button
-                      type="error"
-                      size="small"
-                      text={true}
-                    >
+                    <n-button type="error" size="small" text={true}>
                       {$t('common.often.delete')}
                     </n-button>
                   )
-                },
+                }
               }}
             </n-popconfirm>
           </n-flex>
         )
-      },
-    },
+      }
+    }
   ]
 })
 </script>
 
 <template>
-  <n-flex
-    class="h-full"
-    vertical
-    size="large"
-  >
+  <n-flex class="h-full" size="large" vertical>
     <pro-card content-class="pb-0!">
-      <pro-search-form
-        :form="searchForm"
-        :columns="searchColumns"
-        v-bind="proSearchFormProps"
-      />
+      <pro-search-form :columns="searchColumns" :form="searchForm" v-bind="proSearchFormProps" />
     </pro-card>
     <pro-data-table
+      :columns="tableColumns"
+      :scroll-x="970"
       :title="$t('pages.system.role.title')"
       row-key="id"
-      :scroll-x="970"
-      :columns="tableColumns"
       v-bind="tableProps"
     >
       <template #toolbar>
         <n-flex>
-          <n-button
-            type="primary"
-            ghost
-            @click="modalForm.show.value = true"
-          >
+          <n-button ghost type="primary" @click="modalForm.show.value = true">
             <template #icon>
               <n-icon>
                 <icon icon="ant-design:plus-outlined" />

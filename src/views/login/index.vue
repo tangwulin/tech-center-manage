@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useNotification } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { createProForm } from 'pro-naive-ui'
@@ -45,14 +45,14 @@ const form = createProForm({
     <div class="hidden lg:flex w-[62%] relative overflow-hidden">
       <!-- 主背景 -->
       <div
-        class="absolute inset-0 blur-2xl"
         :style="{
           background: `linear-gradient(154deg,#07070915 30%,${via} 60%,#07070915 10%)`
         }"
+        class="absolute inset-0 blur-2xl"
       />
       <div class="relative z-10 w-full flex flex-col">
         <div class="flex items-center gap-3 p-8">
-          <img src="@/assets/logo.svg" alt="Logo" class="w-8 h-8" />
+          <img alt="Logo" class="w-8 h-8" src="@/assets/logo.svg" />
           <span class="text-xl font-semibold text-gray-800 dark:text-gray-100">{{ title }}</span>
         </div>
         <div class="flex-grow flex items-center justify-center">
@@ -72,7 +72,7 @@ const form = createProForm({
       <div class="flex-grow flex items-center justify-center">
         <div class="w-full max-w-[420px] px-6 lg:px-12">
           <div class="lg:hidden flex items-center justify-center gap-2 mb-12">
-            <img src="@/assets/logo.svg" alt="Logo" class="w-8 h-8" />
+            <img alt="Logo" class="w-8 h-8" src="@/assets/logo.svg" />
             <span class="text-xl font-semibold text-gray-900 dark:text-white">{{ title }}</span>
           </div>
 
@@ -85,18 +85,18 @@ const form = createProForm({
             </p>
           </div>
 
-          <pro-form :form="form" size="large" :loading="loading" label-placement="left">
-            <pro-input required path="email" :placeholder="$t('pages.login.usernamePlaceholder')" />
+          <pro-form :form="form" :loading="loading" label-placement="left" size="large">
+            <pro-input :placeholder="$t('pages.login.usernamePlaceholder')" path="email" required />
             <pro-password
-              required
-              path="password"
-              :placeholder="$t('pages.login.passwordPlaceholder')"
               :field-props="{
                 showPasswordOn: 'click'
               }"
+              :placeholder="$t('pages.login.passwordPlaceholder')"
+              path="password"
+              required
             />
             <div class="flex justify-between items-center mb-6">
-              <pro-checkbox path="rememberMe" size="small" :show-feedback="false">
+              <pro-checkbox :show-feedback="false" path="rememberMe" size="small">
                 {{ $t('pages.login.rememberMe') }}
               </pro-checkbox>
               <n-button text type="primary">
@@ -104,12 +104,12 @@ const form = createProForm({
               </n-button>
             </div>
 
-            <n-button type="primary" block size="large" :loading="loading" @click="form.submit">
+            <n-button :loading="loading" block size="large" type="primary" @click="form.submit">
               {{ loading ? $t('pages.login.loginButtonLoading') : $t('pages.login.loginButton') }}
             </n-button>
             <div class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
               {{ $t('pages.login.noAccount') }}
-              <n-button text type="primary" class="font-medium">
+              <n-button class="font-medium" text type="primary">
                 {{ $t('pages.login.register') }}
               </n-button>
             </div>

@@ -1,17 +1,17 @@
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import type { SelectOption, SelectRenderLabel } from 'naive-ui'
+import { NButton } from 'naive-ui'
 import type { ProSelectProps, ProSelectSlots } from 'pro-naive-ui'
+import { ProSelect, useForwardRef, useProField } from 'pro-naive-ui'
 import { Icon } from '@iconify/vue'
 import { castArray } from 'lodash-es'
-import { NButton } from 'naive-ui'
-import { ProSelect, useForwardRef, useProField } from 'pro-naive-ui'
 import { computed, h, ref } from 'vue'
 import { useProRequest } from '@/composables/use-pro-request'
 import { Api } from './index.api'
 import { proIconifyIconsProps } from './props'
 
 defineOptions({
-  name: 'ProIconifyIcons2',
+  name: 'ProIconifyIcons2'
 })
 
 const props = defineProps(proIconifyIconsProps)
@@ -20,15 +20,13 @@ defineSlots<ProSelectSlots>()
 
 const forwardRef = useForwardRef()
 
-const {
-  field,
-} = useProField(props, 'ProSelect')
+const { field } = useProField(props, 'ProSelect')
 
 const {
   cancel,
   loading,
   data: icons,
-  run: queryIcons,
+  run: queryIcons
 } = useProRequest(
   async (query: string, limit: number = 50) => {
     limit = props.fieldProps?.limit ?? limit
@@ -37,8 +35,8 @@ const {
   },
   {
     manual: true,
-    debounceWait: 300,
-  },
+    debounceWait: 300
+  }
 )
 
 const searching = ref(false)
@@ -59,9 +57,9 @@ function handleSearch(query: string) {
 const options = computed(() => {
   const set = new Set([
     ...castArray(searching.value ? [] : field.value.value || []),
-    ...(icons.value ?? []),
+    ...(icons.value ?? [])
   ])
-  return [...set].map(icon => ({ label: icon, value: icon } as SelectOption))
+  return [...set].map((icon) => ({ label: icon, value: icon }) as SelectOption)
 })
 
 const renderLabel: SelectRenderLabel = (option) => {
@@ -93,8 +91,8 @@ const proSelectProps = computed<ProSelectProps>(() => {
       loading: loading.value,
       options: options.value,
       onSearch: handleSearch,
-      renderLabel,
-    },
+      renderLabel
+    }
   }
 })
 </script>

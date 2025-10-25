@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import type { ProEditDataTableColumns } from 'pro-naive-ui'
 import { NButton, NFlex } from 'naive-ui'
 import { computed, ref } from 'vue'
@@ -21,8 +21,8 @@ const columns = computed<ProEditDataTableColumns<DataSourceType>>(() => {
       width: 200,
       proFieldProps: {
         showFeedback: false,
-        labelPlacement: 'left',
-      },
+        labelPlacement: 'left'
+      }
     },
     {
       title: $t('pages.demos.complexForm.dataTable.tableTime'),
@@ -31,8 +31,8 @@ const columns = computed<ProEditDataTableColumns<DataSourceType>>(() => {
       width: 200,
       proFieldProps: {
         showFeedback: false,
-        labelPlacement: 'left',
-      },
+        labelPlacement: 'left'
+      }
     },
     {
       title: $t('pages.demos.complexForm.dataTable.actions'),
@@ -42,44 +42,36 @@ const columns = computed<ProEditDataTableColumns<DataSourceType>>(() => {
         const { remove, editable } = action
         return (
           <NFlex>
-            {editable
-              ? (
-                  <NButton
-                    text={true}
-                    type="primary"
-                    onClick={() => cancelEditable(row.id)}
-                  >
-                    {$t('pages.demos.complexForm.dataTable.save')}
-                  </NButton>
-                )
-              : [
-                  <NButton
-                    text={true}
-                    type="primary"
-                    onClick={() => editableKeys.value.push(row.id)}
-                  >
-                    {$t('pages.demos.complexForm.dataTable.edit')}
-                  </NButton>,
-                  <NButton
-                    text={true}
-                    type="error"
-                    onClick={() => {
-                      remove(rowIndex)
-                      cancelEditable(row.id)
-                    }}
-                  >
-                    {$t('pages.demos.complexForm.dataTable.delete')}
-                  </NButton>,
-                ]}
+            {editable ? (
+              <NButton text={true} type="primary" onClick={() => cancelEditable(row.id)}>
+                {$t('pages.demos.complexForm.dataTable.save')}
+              </NButton>
+            ) : (
+              [
+                <NButton text={true} type="primary" onClick={() => editableKeys.value.push(row.id)}>
+                  {$t('pages.demos.complexForm.dataTable.edit')}
+                </NButton>,
+                <NButton
+                  text={true}
+                  type="error"
+                  onClick={() => {
+                    remove(rowIndex)
+                    cancelEditable(row.id)
+                  }}
+                >
+                  {$t('pages.demos.complexForm.dataTable.delete')}
+                </NButton>
+              ]
+            )}
           </NFlex>
         )
-      },
-    },
+      }
+    }
   ]
 })
 
 function cancelEditable(id: string) {
-  editableKeys.value = editableKeys.value.filter(key => key !== id)
+  editableKeys.value = editableKeys.value.filter((key) => key !== id)
 }
 </script>
 
@@ -87,36 +79,36 @@ function cancelEditable(id: string) {
   <pro-card :title="$t('pages.demos.complexForm.dataTable.title')">
     <div class="grid-cols-responsive gap-x-24px">
       <pro-select
-        :title="$t('pages.demos.complexForm.dataTable.department')"
-        path="department"
-        required
         :field-props="{
           options: [
             { label: $t('pages.demos.complexForm.dataTable.departmentTech'), value: 'tech' },
-            { label: $t('pages.demos.complexForm.dataTable.departmentMarketing'), value: 'marketing' },
+            {
+              label: $t('pages.demos.complexForm.dataTable.departmentMarketing'),
+              value: 'marketing'
+            },
             { label: $t('pages.demos.complexForm.dataTable.departmentSales'), value: 'sales' },
-            { label: $t('pages.demos.complexForm.dataTable.departmentFinance'), value: 'finance' },
-          ],
+            { label: $t('pages.demos.complexForm.dataTable.departmentFinance'), value: 'finance' }
+          ]
         }"
+        :title="$t('pages.demos.complexForm.dataTable.department')"
+        path="department"
+        required
       />
       <pro-select
-        :title="$t('pages.demos.complexForm.dataTable.position')"
-        path="position"
-        required
         :field-props="{
           options: [
             { label: $t('pages.demos.complexForm.dataTable.positionJunior'), value: 'junior' },
             { label: $t('pages.demos.complexForm.dataTable.positionMid'), value: 'mid' },
             { label: $t('pages.demos.complexForm.dataTable.positionSenior'), value: 'senior' },
             { label: $t('pages.demos.complexForm.dataTable.positionExpert'), value: 'expert' },
-            { label: $t('pages.demos.complexForm.dataTable.positionManager'), value: 'manager' },
-          ],
+            { label: $t('pages.demos.complexForm.dataTable.positionManager'), value: 'manager' }
+          ]
         }"
+        :title="$t('pages.demos.complexForm.dataTable.position')"
+        path="position"
+        required
       />
       <pro-select
-        :title="$t('pages.demos.complexForm.dataTable.level')"
-        path="level"
-        required
         :field-props="{
           placeholder: $t('pages.demos.complexForm.dataTable.levelPlaceholder'),
           options: [
@@ -125,20 +117,23 @@ function cancelEditable(id: string) {
             { label: 'P3', value: 'p3' },
             { label: 'P4', value: 'p4' },
             { label: 'P5', value: 'p5' },
-            { label: 'P6', value: 'p6' },
-          ],
+            { label: 'P6', value: 'p6' }
+          ]
         }"
+        :title="$t('pages.demos.complexForm.dataTable.level')"
+        path="level"
+        required
       />
       <pro-edit-data-table
         v-model:editable-keys="editableKeys"
+        :columns="columns"
+        :record-creator-props="{
+          record: () => ({ id: `${Date.now()}` })
+        }"
         :title="$t('pages.demos.complexForm.dataTable.personnelManagement')"
         class="col-span-1 md:col-span-2 lg:col-span-3"
         path="list"
         required
-        :columns="columns"
-        :record-creator-props="{
-          record: () => ({ id: `${Date.now()}` }),
-        }"
         row-key="id"
       />
     </div>

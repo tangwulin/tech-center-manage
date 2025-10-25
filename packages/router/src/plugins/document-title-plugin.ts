@@ -14,7 +14,7 @@ interface DocumentTitlePluginOptions {
 }
 
 export function documentTitlePlugin({
-  resolveTitle = r => r.meta.title,
+  resolveTitle = (r) => r.meta.title
 }: DocumentTitlePluginOptions = {}): ProRouterPlugin {
   return ({ router }) => {
     const ready = ref(false)
@@ -22,9 +22,7 @@ export function documentTitlePlugin({
       ready.value = true
     })
     useTitle(() => {
-      return ready.value
-        ? resolveTitle(router.currentRoute.value)
-        : null
+      return ready.value ? resolveTitle(router.currentRoute.value) : null
     })
   }
 }

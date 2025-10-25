@@ -1,20 +1,12 @@
 import type { VNodeChild } from 'vue'
-import type { RouteLocationNormalizedGeneric, Router } from 'vue-router'
-import type { ProRouterPlugin } from '../plugin'
 import { defineComponent } from 'vue'
+import type { RouteLocationNormalizedGeneric, Router } from 'vue-router'
 import { useRoute } from 'vue-router'
+import type { ProRouterPlugin } from '../plugin'
 import { warn } from '../utils/warn'
 
-const IFRAME_CONFIG = Symbol(
-  __DEV__
-    ? 'iframe config'
-    : ``,
-)
-const IFRAME_CLEANUP = Symbol(
-  __DEV__
-    ? 'iframe cleanup fn'
-    : ``,
-)
+const IFRAME_CONFIG = Symbol(__DEV__ ? 'iframe config' : ``)
+const IFRAME_CLEANUP = Symbol(__DEV__ ? 'iframe cleanup fn' : ``)
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -86,24 +78,17 @@ const BuiltinIframeComponent = /* @__PURE__ */ defineComponent({
 
     return {
       src,
-      renderIframe,
+      renderIframe
     }
   },
   render() {
     return this.renderIframe(this.src)
-  },
+  }
 })
 
 export function linkPlugin({
-  openInNewWindow = url => (
-    window.open(url, '_blank')
-  ),
-  renderIframe = url => (
-    <iframe
-      class="size-full border-none overflow-hidden"
-      src={url}
-    />
-  ),
+  openInNewWindow = (url) => window.open(url, '_blank'),
+  renderIframe = (url) => <iframe class="size-full border-none overflow-hidden" src={url} />
 }: LinkPluginOptions = {}): ProRouterPlugin {
   return ({ router }) => {
     router.beforeEach((to, from) => {
@@ -149,14 +134,9 @@ export function linkPlugin({
   }
 }
 
-function resolveLink(
-  route: RouteLocationNormalizedGeneric,
-  router: Router,
-) {
+function resolveLink(route: RouteLocationNormalizedGeneric, router: Router) {
   const link = route.meta.link
-  return link === true
-    ? router.options.history.createHref(route.fullPath)
-    : link
+  return link === true ? router.options.history.createHref(route.fullPath) : link
 }
 
 function buildStorageKey(link: string, linkMode: LinkMode) {

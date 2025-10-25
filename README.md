@@ -1,6 +1,10 @@
 ## 简介
 
-[`naive-ui-pro`](https://github.com/Zheng-Changfu/naive-ui-pro) 完全免费，基于 vue3、vite、 pro-naive-ui、typescript 的中后台解决方案，和市面上**所有开源 admin 的架构设计都不同**，我们创新了基于路由的插件化架构，提供了 admin 中所需要的全部插件，让 admin 像搭积木一样慢慢堆起来，同时还基于 naive-ui 封装了大量的组件，并将这些组件放到了 [pro-naive-ui](https://naive-ui.pro-components.cn/) 组件库中，它也是完全开源，相信不管是从架构设计还是其他方面，都能帮助到你！
+[`naive-ui-pro`](https://github.com/Zheng-Changfu/naive-ui-pro) 完全免费，基于 vue3、vite、 pro-naive-ui、typescript
+的中后台解决方案，和市面上**所有开源 admin 的架构设计都不同**，我们创新了基于路由的插件化架构，提供了 admin 中所需要的全部插件，让
+admin 像搭积木一样慢慢堆起来，同时还基于 naive-ui
+封装了大量的组件，并将这些组件放到了 [pro-naive-ui](https://naive-ui.pro-components.cn/)
+组件库中，它也是完全开源，相信不管是从架构设计还是其他方面，都能帮助到你！
 
 ## 特性
 

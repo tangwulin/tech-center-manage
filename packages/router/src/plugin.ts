@@ -41,24 +41,19 @@ export interface ProRouterPluginReturned {
 
 export interface ProRouterFunctionPlugin {
   /**
-   * 插件安装函数
-   */
-  (ctx: ProRouterPluginContext): void | ProRouterPluginReturned
-  /**
    * 插件执行前，可以对 options 进行修改
    */
   resolveOptions?: (options: RouterOptions) => RouterOptions
+
+  /**
+   * 插件安装函数
+   */
+  (ctx: ProRouterPluginContext): void | ProRouterPluginReturned
 }
 
 export type ProRouterPlugin = ProRouterObjectPlugin | ProRouterFunctionPlugin
 
-export function setupPlugin({
-  router,
-  plugin,
-}: {
-  router: Router
-  plugin: ProRouterObjectPlugin
-}) {
+export function setupPlugin({ router, plugin }: { router: Router; plugin: ProRouterObjectPlugin }) {
   router[EFFECT_SCOPE].run(() => {
     plugin.install({
       router,
@@ -73,7 +68,7 @@ export function setupPlugin({
         }
         const handlers = (router[RUN_WITH_APP_HANDLERS] ??= [])
         handlers.push(handler)
-      },
+      }
     })
   })
 }

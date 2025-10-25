@@ -1,20 +1,14 @@
 import type { SelectProps } from 'naive-ui'
 import type { BaseFieldProps } from 'pro-naive-ui'
+import { proSelectProps } from 'pro-naive-ui'
 import type { Merge } from 'type-fest'
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { proSelectProps } from 'pro-naive-ui'
 
 export type ProIconifyIconsFieldProps = Merge<
   BaseFieldProps<
     Omit<
       SelectProps,
-      | 'remote'
-      | 'options'
-      | 'loading'
-      | 'onSearch'
-      | 'renderTag'
-      | 'filterable'
-      | 'renderLabel'
+      'remote' | 'options' | 'loading' | 'onSearch' | 'renderTag' | 'filterable' | 'renderLabel'
     >
   >,
   {
@@ -26,8 +20,8 @@ export const proIconifyIconsProps = {
   ...proSelectProps,
   fieldProps: {
     type: Object as PropType<ProIconifyIconsFieldProps>,
-    default: () => ({}),
-  },
+    default: () => ({})
+  }
 } as const
 
 export type ProIconifyIconsProps = ExtractPublicPropTypes<typeof proIconifyIconsProps>

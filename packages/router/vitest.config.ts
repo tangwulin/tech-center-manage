@@ -2,18 +2,14 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-  ],
+  plugins: [vue()],
   test: {
-    environment: 'happy-dom',
+    environment: 'happy-dom'
   },
   define: {
-    __DEV__: JSON.stringify(true),
+    __DEV__: JSON.stringify(true)
   },
   resolve: {
-    dedupe: [
-      'vue',
-    ],
-  },
+    dedupe: ['vue']
+  }
 })

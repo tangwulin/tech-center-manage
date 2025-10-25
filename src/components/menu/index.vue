@@ -1,9 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, inject, toValue } from 'vue'
 import { proMenuProps } from './props'
 
 defineOptions({
-  name: 'ProMenu',
+  name: 'ProMenu'
 })
 
 const props = defineProps(proMenuProps)
@@ -14,11 +14,7 @@ const mergedCollapsed = computed(() => {
 })
 
 const nMenuProps = computed(() => {
-  const {
-    collapsedShowTitle,
-    menuItemHeightWhenCollapsedShowTitle,
-    ...rest
-  } = props
+  const { collapsedShowTitle, menuItemHeightWhenCollapsedShowTitle, ...rest } = props
 
   if (!collapsedShowTitle || !mergedCollapsed.value) {
     return rest
@@ -29,18 +25,16 @@ const nMenuProps = computed(() => {
     ...rest,
     builtinThemeOverrides: {
       ...(rest.builtinThemeOverrides ?? {}),
-      itemHeight: `${itemHeight}px`,
-    },
+      itemHeight: `${itemHeight}px`
+    }
   }
 })
 </script>
 
 <template>
   <n-menu
+    :class="[mergedCollapsed && collapsedShowTitle && 'pro-menu--collapsed-show-title']"
     class="pro-menu"
-    :class="[
-      mergedCollapsed && collapsedShowTitle && 'pro-menu--collapsed-show-title',
-    ]"
     v-bind="nMenuProps"
   />
 </template>

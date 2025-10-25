@@ -1,9 +1,9 @@
 import type { WritableComputedRef } from 'vue'
+import { computed, ref } from 'vue'
 import type { RouteLocationNormalized } from 'vue-router'
 import type { ProRouterPlugin } from '../plugin'
 import { tryOnScopeDispose } from '@vueuse/core'
 import { move as _move } from 'pro-composables'
-import { computed, ref } from 'vue'
 import { warn } from '../utils/warn'
 
 declare module 'vue-router' {
@@ -56,7 +56,9 @@ interface Interceptor {
   /**
    * 在添加路由之前执行
    */
-  beforeAdd?: (callback: (route: RouteLocationNormalized) => MaybePromise<RouteLocationNormalized | false>) => () => void
+  beforeAdd?: (
+    callback: (route: RouteLocationNormalized) => MaybePromise<RouteLocationNormalized | false>
+  ) => () => void
   /**
    * 在添加路由之后执行
    */
@@ -68,11 +70,15 @@ interface Interceptor {
   /**
    * 在移除路由之后执行
    */
-  afterRemove?: (callback: ([removedIndex, removedRoute]: [number, RouteLocationNormalized]) => void) => () => void
+  afterRemove?: (
+    callback: ([removedIndex, removedRoute]: [number, RouteLocationNormalized]) => void
+  ) => () => void
   /**
    * 在移动路由之前执行
    */
-  beforeMove?: (callback: ([from, to]: [number, number]) => MaybePromise<[number, number] | false>) => () => void
+  beforeMove?: (
+    callback: ([from, to]: [number, number]) => MaybePromise<[number, number] | false>
+  ) => () => void
   /**
    * 在移动路由之后执行
    */
@@ -92,11 +98,14 @@ class InterceptorStore {
       beforeRemove: new Set(),
       afterRemove: new Set(),
       beforeMove: new Set(),
-      afterMove: new Set(),
+      afterMove: new Set()
     }
   }
 
-  on = <T extends keyof Interceptor>(interceptorName: T, callback: Parameters<Interceptor[T]>[0]) => {
+  on = <T extends keyof Interceptor>(
+    interceptorName: T,
+    callback: Parameters<Interceptor[T]>[0]
+  ) => {
     if (this.interceptorsRecord[interceptorName]) {
       this.interceptorsRecord[interceptorName].add(callback)
     }
@@ -109,7 +118,10 @@ class InterceptorStore {
     return off
   }
 
-  run = async <T extends keyof Interceptor>(interceptorName: T, params: Parameters<Parameters<Interceptor[T]>[0]>[0]) => {
+  run = async <T extends keyof Interceptor>(
+    interceptorName: T,
+    params: Parameters<Parameters<Interceptor[T]>[0]>[0]
+  ) => {
     if (!this.interceptorsRecord[interceptorName]) {
       return
     }
@@ -124,8 +136,7 @@ class InterceptorStore {
         currentResult = result as any
       }
       return currentResult
-    }
-    else {
+    } else {
       for (let i = 0; i < interceptors.length; i++) {
         interceptors[i](params as any)
       }
@@ -149,7 +160,9 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
       const result = await interceptorStore.run('beforeAdd', route)
       const successed = result !== false
       if (successed) {
-        const i = visitedRoutes.value.findIndex(item => isEqualRoute(item as RouteLocationNormalized, result))
+        const i = visitedRoutes.value.findIndex((item) =>
+          isEqualRoute(item as RouteLocationNormalized, result)
+        )
         if (~i) {
           return false
         }
@@ -160,9 +173,16 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
     }
 
     async function move(from: number, to: number) {
-      if (from < 0 || to < 0 || to >= visitedRoutes.value.length || from >= visitedRoutes.value.length) {
+      if (
+        from < 0 ||
+        to < 0 ||
+        to >= visitedRoutes.value.length ||
+        from >= visitedRoutes.value.length
+      ) {
         if (__DEV__) {
-          warn(`from or to is out of range, from: ${from}, to: ${to}, length: ${visitedRoutes.value.length}`)
+          warn(
+            `from or to is out of range, from: ${from}, to: ${to}, length: ${visitedRoutes.value.length}`
+          )
         }
         return false
       }
@@ -196,9 +216,17 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
     }
 
     async function removes(from: number, to: number) {
-      if (from < 0 || to < 0 || from > to || to > visitedRoutes.value.length || from > visitedRoutes.value.length) {
+      if (
+        from < 0 ||
+        to < 0 ||
+        from > to ||
+        to > visitedRoutes.value.length ||
+        from > visitedRoutes.value.length
+      ) {
         if (__DEV__) {
-          warn(`from or to is out of range, from: ${from}, to: ${to}, length: ${visitedRoutes.value.length}`)
+          warn(
+            `from or to is out of range, from: ${from}, to: ${to}, length: ${visitedRoutes.value.length}`
+          )
         }
         return
       }
@@ -224,7 +252,9 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
     }
 
     interceptorStore.on('beforeAdd', (route) => {
-      const i = visitedRoutes.value.findIndex(item => isEqualRoute(item as RouteLocationNormalized, route))
+      const i = visitedRoutes.value.findIndex((item) =>
+        isEqualRoute(item as RouteLocationNormalized, route)
+      )
       if (~i) {
         activeIndex.value = i
       }
@@ -278,7 +308,7 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
             return
           }
           setActiveIndex(index)
-        },
+        }
       }),
       add,
       move,
@@ -302,8 +332,8 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
         },
         afterMove: (callback) => {
           return interceptorStore.on('afterMove', callback)
-        },
-      },
+        }
+      }
     }
 
     function cleanup() {
@@ -319,7 +349,7 @@ export function visitedRoutesPlugin(): ProRouterPlugin {
     })
 
     return {
-      onCleanup: cleanup,
+      onCleanup: cleanup
     }
   }
 }

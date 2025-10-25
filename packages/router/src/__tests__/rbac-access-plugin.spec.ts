@@ -1,8 +1,11 @@
 import type { RouteRecordRaw } from 'vue-router'
-import type { RbacAccessPluginBackendServiceReturned, RbacAccessPluginFrontendServiceReturned } from '../types'
+import { createWebHashHistory } from 'vue-router'
+import type {
+  RbacAccessPluginBackendServiceReturned,
+  RbacAccessPluginFrontendServiceReturned
+} from '../types'
 import { describe, expect, it } from 'vitest'
 import { createApp } from 'vue'
-import { createWebHashHistory } from 'vue-router'
 import { createRouter } from '../../src/create-router'
 import { rbacAccessPlugin } from '../plugins/rbac-access-plugin'
 
@@ -14,20 +17,22 @@ const Register = { template: `<div>Register</div>` }
 const BasicInfo = { template: `<div>BasicInfo</div>` }
 const BasicList = { template: `<div>BasicList</div>` }
 
-type RbacAccessPluginServiceReturned = RbacAccessPluginBackendServiceReturned | RbacAccessPluginFrontendServiceReturned
+type RbacAccessPluginServiceReturned =
+  | RbacAccessPluginBackendServiceReturned
+  | RbacAccessPluginFrontendServiceReturned
 
 const rootRoute = {
   name: 'Root',
   path: '/',
   redirect: '/list',
   component: Layout,
-  children: [],
+  children: []
 }
 
 const notFoundRoute = {
   name: 'FallbackNotFound',
   path: '/:path(.*)*',
-  component: () => NotFound,
+  component: () => NotFound
 }
 
 const ignoreAccessRoutes: RouteRecordRaw[] = [
@@ -36,25 +41,25 @@ const ignoreAccessRoutes: RouteRecordRaw[] = [
     path: '/admin',
     component: Admin,
     meta: {
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
   },
   {
     name: 'Login',
     path: '/login',
     component: Login,
     meta: {
-      requiresAuth: false,
-    },
+      requiresAuth: false
+    }
   },
   {
     name: 'Register',
     path: '/register',
     component: Register,
     meta: {
-      requiresAuth: false,
-    },
-  },
+      requiresAuth: false
+    }
+  }
 ]
 
 const accessRoutes: RouteRecordRaw[] = [
@@ -63,7 +68,7 @@ const accessRoutes: RouteRecordRaw[] = [
     name: 'List',
     redirect: '/list/basic-list',
     meta: {
-      title: 'List',
+      title: 'List'
     },
     children: [
       {
@@ -71,24 +76,27 @@ const accessRoutes: RouteRecordRaw[] = [
         path: 'basic-list',
         meta: {
           title: 'basic-list',
-          keepAlive: true,
+          keepAlive: true
         },
-        component: () => BasicList,
+        component: () => BasicList
       },
       {
         name: 'basic-info',
         path: 'basic-info',
         meta: {
           title: 'basic-info',
-          keepAlive: true,
+          keepAlive: true
         },
-        component: () => BasicInfo,
-      },
-    ],
-  },
+        component: () => BasicInfo
+      }
+    ]
+  }
 ]
 
-function setupRouter(options: Partial<RbacAccessPluginServiceReturned> = {}, notFoundRouteRequiresAuth = false) {
+function setupRouter(
+  options: Partial<RbacAccessPluginServiceReturned> = {},
+  notFoundRouteRequiresAuth = false
+) {
   let finalOptions = {
     mode: 'frontend',
     routes: accessRoutes,
@@ -96,7 +104,7 @@ function setupRouter(options: Partial<RbacAccessPluginServiceReturned> = {}, not
     roles: [],
     parentNameForAddRoute: 'Root',
     logined: false,
-    ...(options as any),
+    ...(options as any)
   }
   const app = createApp({})
   const router = createRouter({
@@ -107,17 +115,17 @@ function setupRouter(options: Partial<RbacAccessPluginServiceReturned> = {}, not
       {
         ...notFoundRoute,
         meta: {
-          requiresAuth: notFoundRouteRequiresAuth,
-        },
-      },
+          requiresAuth: notFoundRouteRequiresAuth
+        }
+      }
     ],
     plugins: [
       rbacAccessPlugin({
         service: async () => {
           return finalOptions
-        },
-      }),
-    ],
+        }
+      })
+    ]
   })
   app.use(router)
   app.mount(document.createElement('div'))
@@ -129,9 +137,9 @@ function setupRouter(options: Partial<RbacAccessPluginServiceReturned> = {}, not
     setOptions: (value: Partial<RbacAccessPluginServiceReturned>) => {
       finalOptions = {
         ...finalOptions,
-        ...value,
+        ...value
       }
-    },
+    }
   }
 }
 
@@ -145,7 +153,7 @@ describe('rbac-access-plugin', () => {
     })
 
     it('redirect to Login when navigation to not exsit path', async () => {
-      const router = setupRouter({ }, true)
+      const router = setupRouter({}, true)
       await router.push('/list?a=1')
       expect(router.currentRoute.value.name).toBe('Login')
       expect(router.currentRoute.value.fullPath).toBe('/login?redirect=/list?a=1')

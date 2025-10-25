@@ -1,8 +1,8 @@
 import type { EventHookOn } from '@vueuse/core'
+import { createEventHook } from '@vueuse/core'
 import type { Merge } from 'type-fest'
 import type { Router, RouteRecordRaw } from 'vue-router'
 import type { ProRouterPlugin } from '../plugin'
-import { createEventHook } from '@vueuse/core'
 import { cloneDeep, noop } from 'lodash-es'
 import { mapTree } from 'pro-composables'
 
@@ -22,10 +22,13 @@ declare module 'vue-router' {
 
 type MaybePromise<T> = T | Promise<T>
 
-export type RouteRecordRawWithStringComponent = Merge<RouteRecordRaw, {
-  component?: string
-  children?: RouteRecordRawWithStringComponent[]
-}>
+export type RouteRecordRawWithStringComponent = Merge<
+  RouteRecordRaw,
+  {
+    component?: string
+    children?: RouteRecordRawWithStringComponent[]
+  }
+>
 
 type ResolveComponent = (component: string) => NonNullable<RouteRecordRaw['component']>
 
@@ -98,7 +101,7 @@ export function rbacAccessPlugin(options: RbacAccessPluginOptions): ProRouterPlu
       const resolvedOptions = await resolveOptions(options)
       const replaceAgain = await resolveRoutes(resolvedOptions, {
         router,
-        onCleanup,
+        onCleanup
       })
 
       if (replaceAgain) {
@@ -106,15 +109,11 @@ export function rbacAccessPlugin(options: RbacAccessPluginOptions): ProRouterPlu
         return {
           path: to.path,
           replace: true,
-          query: to.query,
+          query: to.query
         }
       }
 
-      const {
-        logined,
-        homePath,
-        loginPath,
-      } = resolvedOptions
+      const { logined, homePath, loginPath } = resolvedOptions
 
       // 已登录跳转 login 页面，重定向到 redirect 参数或者 homePath
       if (logined && to.path === loginPath) {
@@ -132,8 +131,8 @@ export function rbacAccessPlugin(options: RbacAccessPluginOptions): ProRouterPlu
         return {
           path: loginPath,
           query: {
-            redirect: to.fullPath,
-          },
+            redirect: to.fullPath
+          }
         }
       }
     })
@@ -143,27 +142,22 @@ export function rbacAccessPlugin(options: RbacAccessPluginOptions): ProRouterPlu
     })
 
     return {
-      onCleanup: cleanup,
+      onCleanup: cleanup
     }
   }
 }
 
 async function resolveOptions(
-  options: RbacAccessPluginOptions,
+  options: RbacAccessPluginOptions
 ): Promise<Required<BackendServiceReturned | FrontendServiceReturned>> {
-  const {
-    homePath,
-    loginPath,
-    onRoutesBuilt,
-    parentNameForAddRoute,
-    ...rest
-  } = await options.service()
+  const { homePath, loginPath, onRoutesBuilt, parentNameForAddRoute, ...rest } =
+    await options.service()
   return {
     ...rest,
     homePath: homePath ?? '/home',
     loginPath: loginPath ?? '/login',
     onRoutesBuilt: onRoutesBuilt ?? noop,
-    parentNameForAddRoute: parentNameForAddRoute ?? null,
+    parentNameForAddRoute: parentNameForAddRoute ?? null
   }
 }
 
@@ -171,16 +165,15 @@ let registeredRoutes = false
 const removeRouteHandlers: (() => void)[] = []
 async function resolveRoutes(
   options: Required<BackendServiceReturned | FrontendServiceReturned>,
-  { router, onCleanup }: {
+  {
+    router,
+    onCleanup
+  }: {
     router: Router
     onCleanup: EventHookOn
-  },
+  }
 ) {
-  const {
-    mode,
-    logined,
-    parentNameForAddRoute,
-  } = options
+  const { mode, logined, parentNameForAddRoute } = options
 
   if (registeredRoutes || !logined) {
     return
@@ -191,16 +184,14 @@ async function resolveRoutes(
     roles: (options as any).roles ?? [],
     routes: (options as any).routes ?? [],
     resolveComponent: (options as any).resolveComponent,
-    fetchRoutes: (options as any).fetchRoutes ?? (() => []),
+    fetchRoutes: (options as any).fetchRoutes ?? (() => [])
   })
 
   options.onRoutesBuilt(finalRoutes)
 
   finalRoutes.forEach((route) => {
     removeRouteHandlers.push(
-      parentNameForAddRoute
-        ? router.addRoute(parentNameForAddRoute, route)
-        : router.addRoute(route),
+      parentNameForAddRoute ? router.addRoute(parentNameForAddRoute, route) : router.addRoute(route)
     )
   })
 
@@ -208,7 +199,7 @@ async function resolveRoutes(
 
   onCleanup(() => {
     registeredRoutes = false
-    removeRouteHandlers.forEach(removeRoute => removeRoute())
+    removeRouteHandlers.forEach((removeRoute) => removeRoute())
     removeRouteHandlers.length = 0
   })
 
@@ -223,20 +214,11 @@ function buildRoutes(options: {
   fetchRoutes: () => MaybePromise<RouteRecordRawWithStringComponent[]>
 }) {
   return options.mode === 'frontend'
-    ? buildRoutesByFrontend(
-        options.routes,
-        options.roles,
-      )
-    : buildRoutesByBackend(
-        options.fetchRoutes,
-        options.resolveComponent as ResolveComponent,
-      )
+    ? buildRoutesByFrontend(options.routes, options.roles)
+    : buildRoutesByBackend(options.fetchRoutes, options.resolveComponent as ResolveComponent)
 }
 
-function buildRoutesByFrontend(
-  routes: RouteRecordRaw[],
-  roles: string[],
-): RouteRecordRaw[] {
+function buildRoutesByFrontend(routes: RouteRecordRaw[], roles: string[]): RouteRecordRaw[] {
   routes = cloneDeep(routes)
   const hasAuth = (route: RouteRecordRaw) => {
     const routeRoles = route.meta?.roles ?? []
@@ -244,7 +226,7 @@ function buildRoutesByFrontend(
       // 如果没有设置 roles，则表示所有角色都可以访问
       return true
     }
-    return roles.some(role => routeRoles.includes(role))
+    return roles.some((role) => routeRoles.includes(role))
   }
   const filterRoutes = (routes: RouteRecordRaw[]) => {
     return routes.filter((route) => {
@@ -262,23 +244,26 @@ function buildRoutesByFrontend(
 
 async function buildRoutesByBackend(
   fetchRoutes: () => MaybePromise<RouteRecordRawWithStringComponent[]>,
-  resolveComponent: ResolveComponent,
+  resolveComponent: ResolveComponent
 ) {
   let routes: RouteRecordRawWithStringComponent[] = []
   try {
     routes = await fetchRoutes()
-  }
-  catch (error) {
+  } catch (error) {
     routes = []
     console.error(error)
   }
-  return mapTree(routes, (route) => {
-    if (!route.component) {
-      return route
-    }
-    return {
-      ...route,
-      component: resolveComponent(route.component),
-    }
-  }, 'children') as RouteRecordRaw[]
+  return mapTree(
+    routes,
+    (route) => {
+      if (!route.component) {
+        return route
+      }
+      return {
+        ...route,
+        component: resolveComponent(route.component)
+      }
+    },
+    'children'
+  ) as RouteRecordRaw[]
 }

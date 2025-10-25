@@ -1,6 +1,6 @@
 import type { ProRouterPlugin } from '@pro/router'
-import type { RouteLocationNormalized } from 'vue-router'
 import { getRouteComponentName, isEqualRoute } from '@pro/router'
+import type { RouteLocationNormalized } from 'vue-router'
 import { useEventListener } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useLayoutStore } from '@/store/use-layout-store'
@@ -24,17 +24,9 @@ declare module 'vue-router' {
  */
 export function tabsPlugin(): ProRouterPlugin {
   return ({ router }) => {
-    const {
-      tabsPersist,
-      resetCacheAfterCloseTab,
-    } = storeToRefs(useLayoutStore())
+    const { tabsPersist, resetCacheAfterCloseTab } = storeToRefs(useLayoutStore())
 
-    const {
-      routes,
-      guards,
-      activeIndex,
-      move,
-    } = router.visitedRoutesPlugin
+    const { routes, guards, activeIndex, move } = router.visitedRoutesPlugin
 
     guards.beforeAdd((route) => {
       // 如果不是 layout 页面中的路由，则跳过添加
@@ -59,13 +51,13 @@ export function tabsPlugin(): ProRouterPlugin {
     // 如果新增路由配置 fixedInTabs，则移动到固定区最后一项
     guards.afterAdd(async (route) => {
       if (route?.meta?.fixedInTabs) {
-        const fixedCount = routes.filter(r => r.meta?.fixedInTabs).length - 1
+        const fixedCount = routes.filter((r) => r.meta?.fixedInTabs).length - 1
         await move(routes.length - 1, Math.max(0, fixedCount))
       }
     })
 
     // 关闭标签页后重置缓存
-    guards.afterRemove(([,removedRoute]) => {
+    guards.afterRemove(([, removedRoute]) => {
       if (resetCacheAfterCloseTab.value) {
         const name = getRouteComponentName(removedRoute)
         const index = router.cachedComponentNames.value.indexOf(name!)
@@ -92,7 +84,10 @@ export function tabsPlugin(): ProRouterPlugin {
     useEventListener('beforeunload', () => {
       // 需要 map 处理一下，matched 存在循环引用，导致 JSON.stringify 报错
       tabsPersist.value
-        ? localStorage.setItem('tabs', JSON.stringify(routes.map(item => ({ ...item, matched: [] }))))
+        ? localStorage.setItem(
+            'tabs',
+            JSON.stringify(routes.map((item) => ({ ...item, matched: [] })))
+          )
         : localStorage.removeItem('tabs')
     })
   }
@@ -106,18 +101,17 @@ function getTabsFromStorage(): RouteLocationNormalized[] {
   return []
 }
 
-function resolveActiveIndexAndTabs(route: RouteLocationNormalized): [number, RouteLocationNormalized[]] {
+function resolveActiveIndexAndTabs(
+  route: RouteLocationNormalized
+): [number, RouteLocationNormalized[]] {
   const cachedTabs = getTabsFromStorage()
-  const index = cachedTabs.findIndex(item => isEqualRoute(item, route))
+  const index = cachedTabs.findIndex((item) => isEqualRoute(item, route))
   if (~index) {
-    return [
-      index,
-      cachedTabs,
-    ]
+    return [index, cachedTabs]
   }
   // 如果新增路由配置 fixedInTabs，则插到已有固定项之后，否则插到最末尾
   if (route.meta?.fixedInTabs) {
-    const insertIndex = cachedTabs.findIndex(item => !item.meta?.fixedInTabs)
+    const insertIndex = cachedTabs.findIndex((item) => !item.meta?.fixedInTabs)
     if (~insertIndex) {
       cachedTabs.splice(insertIndex, 0, route)
       return [insertIndex, cachedTabs]

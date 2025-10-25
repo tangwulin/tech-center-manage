@@ -1,24 +1,15 @@
-<script setup lang='tsx'>
+<script lang="tsx" setup>
 import { Icon } from '@iconify/vue'
 import { storeToRefs } from 'pinia'
 import { $t } from '@/locales/locales'
 import { useThemeStore } from '@/store/use-theme-store'
 
-const {
-  grayscale,
-  primaryColor,
-  colorWeakness,
-  mode: themeMode,
-} = storeToRefs(useThemeStore())
+const { grayscale, primaryColor, colorWeakness, mode: themeMode } = storeToRefs(useThemeStore())
 </script>
 
 <template>
   <div class="px-32px my-24px">
-    <n-tabs
-      v-model:value="themeMode"
-      type="segment"
-      animated
-    >
+    <n-tabs v-model:value="themeMode" animated type="segment">
       <n-tab-pane name="light">
         <template #tab>
           <n-icon size="20">
@@ -42,10 +33,7 @@ const {
       </n-tab-pane>
     </n-tabs>
   </div>
-  <n-flex
-    vertical
-    :size="12"
-  >
+  <n-flex :size="12" vertical>
     <div class="preference-item">
       <span>{{ $t('common.preference.theme.colorWeakness') }}</span>
       <n-switch v-model:value="colorWeakness" />
@@ -56,10 +44,7 @@ const {
     </div>
     <div class="preference-item">
       <span>{{ $t('common.preference.theme.primaryColor') }}</span>
-      <n-color-picker
-        v-model:value="primaryColor"
-        class="w-90px"
-      />
+      <n-color-picker v-model:value="primaryColor" class="w-90px" />
     </div>
   </n-flex>
 </template>

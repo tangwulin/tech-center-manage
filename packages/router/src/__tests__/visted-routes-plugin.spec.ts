@@ -1,7 +1,7 @@
 import type { Router } from 'vue-router'
+import { createWebHashHistory, RouterView } from 'vue-router'
 import { describe, expect, it, vi } from 'vitest'
 import { createApp, h } from 'vue'
-import { createWebHashHistory, RouterView } from 'vue-router'
 import { createRouter } from '../../src/create-router'
 import { visitedRoutesPlugin } from '../plugins/visited-routes-plugin'
 
@@ -17,7 +17,7 @@ async function setupRouter(options: SetupRouterOptions = {}) {
   const app = createApp({
     render() {
       return h(RouterView)
-    },
+    }
   })
   const router = createRouter({
     history: createWebHashHistory(),
@@ -30,8 +30,8 @@ async function setupRouter(options: SetupRouterOptions = {}) {
           },
           render() {
             return h('div', 'Test1')
-          },
-        },
+          }
+        }
       },
       {
         path: '/test2',
@@ -41,8 +41,8 @@ async function setupRouter(options: SetupRouterOptions = {}) {
           },
           render() {
             return h('div', 'Test2')
-          },
-        },
+          }
+        }
       },
       {
         path: '/test3',
@@ -52,8 +52,8 @@ async function setupRouter(options: SetupRouterOptions = {}) {
           },
           render() {
             return h('div', 'Test3')
-          },
-        },
+          }
+        }
       },
       {
         path: '/test4',
@@ -63,8 +63,8 @@ async function setupRouter(options: SetupRouterOptions = {}) {
           },
           render() {
             return h('div', 'Test4')
-          },
-        },
+          }
+        }
       },
       {
         path: '/test5',
@@ -74,13 +74,11 @@ async function setupRouter(options: SetupRouterOptions = {}) {
           },
           render() {
             return h('div', 'Test5')
-          },
-        },
-      },
+          }
+        }
+      }
     ],
-    plugins: [
-      visitedRoutesPlugin(),
-    ],
+    plugins: [visitedRoutesPlugin()]
   })
   app.use(router)
   await router.isReady()
@@ -90,7 +88,7 @@ async function setupRouter(options: SetupRouterOptions = {}) {
     unmount: () => {
       app.unmount()
       window.location.hash = ''
-    },
+    }
   }
 }
 
@@ -159,7 +157,10 @@ describe('visited-routes-plugin', () => {
     await vi.runAllTimersAsync()
     await router.visitedRoutesPlugin.remove(1)
     await vi.runAllTimersAsync()
-    expect(router.visitedRoutesPlugin.routes.map(item => item.path)).toStrictEqual(['/test1', '/test3'])
+    expect(router.visitedRoutesPlugin.routes.map((item) => item.path)).toStrictEqual([
+      '/test1',
+      '/test3'
+    ])
     router.unmount()
   })
 
@@ -171,10 +172,13 @@ describe('visited-routes-plugin', () => {
     await vi.runAllTimersAsync()
     await router.visitedRoutesPlugin.removes(1, 2)
     await vi.runAllTimersAsync()
-    expect(router.visitedRoutesPlugin.routes.map(item => item.path)).toStrictEqual(['/test1', '/test3'])
+    expect(router.visitedRoutesPlugin.routes.map((item) => item.path)).toStrictEqual([
+      '/test1',
+      '/test3'
+    ])
     await router.visitedRoutesPlugin.removes(0, 2)
     await vi.runAllTimersAsync()
-    expect(router.visitedRoutesPlugin.routes.map(item => item.path)).toStrictEqual([])
+    expect(router.visitedRoutesPlugin.routes.map((item) => item.path)).toStrictEqual([])
     router.unmount()
   })
 

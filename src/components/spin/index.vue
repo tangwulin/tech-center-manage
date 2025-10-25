@@ -1,14 +1,14 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue'
-import { useThemeVars } from 'naive-ui'
 import { computed } from 'vue'
+import { useThemeVars } from 'naive-ui'
 import { useThemeStore } from '@/store/use-theme-store'
 
 const props = defineProps({
   size: {
     type: [String, Number] as PropType<'small' | 'medium' | 'large' | number>,
-    default: 'medium',
-  },
+    default: 'medium'
+  }
 })
 
 const vars = useThemeVars()

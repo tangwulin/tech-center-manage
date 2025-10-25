@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import type { DropdownMixedOption } from 'naive-ui/es/dropdown/src/interface'
 import { Icon } from '@iconify/vue'
 import { NIcon } from 'naive-ui'
@@ -17,7 +17,7 @@ const options: DropdownMixedOption[] = [
           <Icon icon="noto-v1:flag-for-flag-china" />
         </NIcon>
       )
-    },
+    }
   },
   {
     label: 'English',
@@ -28,22 +28,19 @@ const options: DropdownMixedOption[] = [
           <Icon icon="circle-flags:lang-en-us" />
         </NIcon>
       )
-    },
-  },
+    }
+  }
 ]
 </script>
 
 <template>
   <n-dropdown
+    :options="options"
     :value="appStore.lang"
     trigger="hover"
-    :options="options"
     @select="appStore.lang = $event"
   >
-    <pro-button
-      quaternary
-      size="small"
-    >
+    <pro-button quaternary size="small">
       <template #icon>
         <n-icon>
           <icon icon="meteor-icons:language" />

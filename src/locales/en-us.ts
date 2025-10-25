@@ -12,11 +12,11 @@ export default {
       forgotPassword: 'Forgot password?',
       loginButton: 'Login',
       loginButtonLoading: 'Logging in...',
-      noAccount: 'Don\'t have an account?',
+      noAccount: "Don't have an account?",
       register: 'Register now',
       loginSuccess: 'Login successful',
       welcomeBack: 'Welcome back',
-      loginFailed: 'Login failed',
+      loginFailed: 'Login failed'
     },
 
     // System management pages
@@ -45,7 +45,7 @@ export default {
         keepAlive: 'Keep Alive Component',
         pageLayout: 'Page Contains Layout',
         embedded: 'Embedded',
-        externalLink: 'External Link',
+        externalLink: 'External Link'
       },
 
       // User management
@@ -61,7 +61,7 @@ export default {
         role: 'Role',
         addUser: 'Add User',
         editUser: 'Edit User',
-        usernameTooltip: 'Username',
+        usernameTooltip: 'Username'
       },
 
       // Role management
@@ -72,8 +72,8 @@ export default {
         addRole: 'Add Role',
         editRole: 'Edit Role',
         roleNameTooltip: 'Role Name',
-        roleCodeTooltip: 'Role Code',
-      },
+        roleCodeTooltip: 'Role Code'
+      }
     },
 
     // Demo pages
@@ -81,7 +81,8 @@ export default {
       // Wang Editor demo
       wangEditor: {
         title: 'ProWangEditor Rich Text Editor Example',
-        subtitle: 'Demonstrates various usages and configuration options of ProWangEditor global component',
+        subtitle:
+          'Demonstrates various usages and configuration options of ProWangEditor global component',
         basicUsage: 'Basic Usage',
         editorHeight: 'Editor Height',
         status: 'Status',
@@ -98,7 +99,7 @@ export default {
         validateSuccess: 'Validation successful',
         validateFailed: 'Validation failed',
         editorCreated: 'Editor created successfully',
-        editorDestroyed: 'Editor destroyed',
+        editorDestroyed: 'Editor destroyed'
       },
       // Access demo
       access: {
@@ -108,12 +109,13 @@ export default {
           toggleAccount: 'Switch Account',
           frontendControl: 'Frontend Permission Control',
           backendControl: 'Backend Permission Control',
-          afterToggleCheck: 'Check [Left Menu -> System Management] after switching permission mode',
+          afterToggleCheck:
+            'Check [Left Menu -> System Management] after switching permission mode',
           afterAccountCheck: 'Check [Left Menu -> System Management] after switching account',
           superAdmin: 'Super Administrator',
           admin: 'Administrator',
-          user: 'Regular User',
-        },
+          user: 'Regular User'
+        }
       },
       // Icon demo
       icon: {
@@ -122,7 +124,7 @@ export default {
         singleIcon: 'Single Icon',
         multipleIcon: 'Multiple Icons',
         remoteSearchTooltip1: 'Remote search options when echoing',
-        remoteSearchTooltip2: 'Merge options when echoing',
+        remoteSearchTooltip2: 'Merge options when echoing'
       },
       // Download demo
       download: {
@@ -163,7 +165,7 @@ export default {
         downloadTextFailed: 'Download text failed',
         downloadBase64Failed: 'Download base64 data failed',
         requestUrl: 'Request URL',
-        requestOptions: 'Request options',
+        requestOptions: 'Request options'
       },
       nested: {
         title: 'Nested Route Demo',
@@ -171,23 +173,24 @@ export default {
         goToDetail: 'Click to go to detail page',
         detailTitle: 'Detail Page',
         detailDescription: 'Detail page that is not in the menu but can highlight the menu',
-        backToList: 'Back to list',
+        backToList: 'Back to list'
       },
       keepAlive: {
         basicCache: {
           title: 'Basic Cache',
           description: 'This is a page demonstrating basic keep-alive functionality',
-          inputPlaceholder: 'Please enter content to test cache...',
+          inputPlaceholder: 'Please enter content to test cache...'
         },
         conditionalCache: {
           title: 'Conditional Cache',
           description: 'Only cached when entering from multi-tab page',
-          inputPlaceholder: 'Please enter content to test cache...',
-        },
+          inputPlaceholder: 'Please enter content to test cache...'
+        }
       },
       pageComponent: {
         title: 'Page Component',
-        description: 'Page-level loading effect, you can switch layout or collapse to see the effect after enabling loading',
+        description:
+          'Page-level loading effect, you can switch layout or collapse to see the effect after enabling loading',
         description2: 'Can pass rich loading configuration',
         description3: 'Fixed bottom footer, which is also layout-adaptive',
         itemText: 'Hello, ',
@@ -195,7 +198,7 @@ export default {
         randomNumber: 'Random Number',
         currentNumber: 'Current Number',
         loadingText: 'Loading...',
-        loadingTime: 'Loading Time',
+        loadingTime: 'Loading Time'
       },
       loading: {
         title: 'v-loading Directive Usage Examples',
@@ -205,7 +208,7 @@ export default {
           description2: 'When loading is activated, a loading mask will be displayed',
           description3: 'Click the button below to toggle loading state',
           showButton: 'Show Loading',
-          hideButton: 'Hide Loading',
+          hideButton: 'Hide Loading'
         },
         fullscreen: {
           title: '2. v-loading.fullscreen Fullscreen Loading',
@@ -213,7 +216,7 @@ export default {
           description2: 'Use .fullscreen modifier to create fullscreen loading effect',
           description3: 'The mask will cover the entire viewport',
           showButton: 'Show Fullscreen Loading',
-          hideButton: 'Hide Fullscreen Loading',
+          hideButton: 'Hide Fullscreen Loading'
         },
         lock: {
           title: '3. v-loading.lock Lock Scrolling',
@@ -223,7 +226,7 @@ export default {
           scrollArea: 'This is a scrollable area',
           scrollAreaDesc: 'When loading is activated, scrolling will be locked',
           showButton: 'Show Lock Loading',
-          hideButton: 'Hide Lock Loading',
+          hideButton: 'Hide Lock Loading'
         },
         dynamic: {
           title: '4. v-loading Dynamic Description Text',
@@ -233,7 +236,7 @@ export default {
           showButton: 'Start Dynamic Loading',
           loadingData: 'Loading data...',
           processingRequest: 'Processing request...',
-          almostDone: 'Almost done...',
+          almostDone: 'Almost done...'
         },
         functional: {
           title: '5. Functional Call',
@@ -242,7 +245,7 @@ export default {
           description3: 'Suitable for use in asynchronous operations',
           showButton: 'Show Functional Loading',
           hideButton: 'Hide Functional Loading',
-          functionalLoading: 'Functional loading...',
+          functionalLoading: 'Functional loading...'
         },
         functionalDynamic: {
           title: '6. Functional Dynamic Description Text',
@@ -255,8 +258,8 @@ export default {
           connectingServer: 'Connecting to server...',
           fetchingData: 'Fetching data...',
           processingResult: 'Processing result...',
-          almostComplete: 'Almost complete...',
-        },
+          almostComplete: 'Almost complete...'
+        }
       },
       complexForm: {
         title: 'Complex Form Example',
@@ -273,7 +276,7 @@ export default {
           phone: 'Phone',
           gender: 'Gender',
           birthDate: 'Birth Date',
-          status: 'Status',
+          status: 'Status'
         },
         contentInfo: {
           title: 'Content Information',
@@ -297,7 +300,7 @@ export default {
           tagJavaScript: 'JavaScript',
           tagTypeScript: 'TypeScript',
           tagCSS: 'CSS',
-          tagHTML: 'HTML',
+          tagHTML: 'HTML'
         },
         dataTable: {
           title: 'Data Management',
@@ -322,9 +325,9 @@ export default {
           actions: 'Actions',
           edit: 'Edit',
           save: 'Save',
-          delete: 'Delete',
-        },
-      },
+          delete: 'Delete'
+        }
+      }
     },
 
     // Home page
@@ -353,7 +356,7 @@ export default {
         updatedStatus: 'updated status',
         solvedProblem: 'solved problem',
         mergedCode: 'merged code',
-        closedIssue: 'closed issue',
+        closedIssue: 'closed issue'
       },
       targets: {
         systemArchitectureDesign: 'System Architecture Design',
@@ -362,22 +365,27 @@ export default {
         frontendDevelopment: 'Frontend Development',
         backendDevelopment: 'Backend Development',
         testingAndDeployment: 'Testing and Deployment',
-        documentation: 'Documentation',
+        documentation: 'Documentation'
       },
       // Project updates
       updates: {
         newVersionRelease: 'New Version Release',
-        newVersionDesc: 'Version v2.3.0 has been successfully released, fixing multiple known issues',
+        newVersionDesc:
+          'Version v2.3.0 has been successfully released, fixing multiple known issues',
         systemMaintenanceNotice: 'System Maintenance Notice',
-        systemMaintenanceDesc: 'The system will undergo routine maintenance this Saturday, estimated to take 2 hours',
+        systemMaintenanceDesc:
+          'The system will undergo routine maintenance this Saturday, estimated to take 2 hours',
         featureUpdatePreview: 'Feature Update Preview',
         featureUpdateDesc: 'The next version will add a data analysis module, stay tuned',
         securityUpdateReminder: 'Security Update Reminder',
-        securityUpdateDesc: 'All users are advised to update their passwords promptly to enhance account security',
+        securityUpdateDesc:
+          'All users are advised to update their passwords promptly to enhance account security',
         userFeedbackImprovement: 'User Feedback Improvement',
-        userFeedbackDesc: 'Based on user feedback, optimized interface interaction and response speed',
+        userFeedbackDesc:
+          'Based on user feedback, optimized interface interaction and response speed',
         newFeatureResearch: 'New Feature Research',
-        newFeatureDesc: 'Researching AI intelligent analysis features, welcome to provide suggestions',
+        newFeatureDesc:
+          'Researching AI intelligent analysis features, welcome to provide suggestions'
       },
       // Time
       time: {
@@ -386,9 +394,9 @@ export default {
         yesterday: 'yesterday',
         daysAgo: 'days ago',
         weekAgo: 'week ago',
-        today: 'today',
-      },
-    },
+        today: 'today'
+      }
+    }
   },
 
   // Common component modules (components directory)
@@ -401,7 +409,7 @@ export default {
         documentationForProNaiveUI: 'ProNaiveUI Documentation',
         logout: 'Logout',
         logoutConfirmTitle: 'Confirm',
-        logoutConfirmContent: 'Are you sure you want to logout?',
+        logoutConfirmContent: 'Are you sure you want to logout?'
       },
 
       // Tab menu component
@@ -419,7 +427,8 @@ export default {
         tabManagementDesc: 'Support dynamic creation, batch operations and smart interception',
         dynamicTabs: 'Dynamic Tabs',
         interceptor: 'Interceptor',
-        dynamicTitleDesc: 'Create dynamic titles with timestamps, demonstrating one-time interceptor functionality',
+        dynamicTitleDesc:
+          'Create dynamic titles with timestamps, demonstrating one-time interceptor functionality',
         createDynamicTitlePage: 'Create Dynamic Title Page',
         openCloseTabs: 'Open/Close Tabs',
         basic: 'Basic',
@@ -436,25 +445,25 @@ export default {
         closeAllTabs: 'Close All Tabs',
         fullscreen: 'Fullscreen',
         exitFullscreen: 'Exit Fullscreen',
-        refresh: 'Refresh',
-      },
+        refresh: 'Refresh'
+      }
     },
 
     // Error page components
     fallback: {
       403: {
         title: 'Access Denied',
-        description: 'You do not have permission to access this page',
+        description: 'You do not have permission to access this page'
       },
       404: {
         title: 'Page Not Found',
-        description: 'The page you are looking for was not found',
+        description: 'The page you are looking for was not found'
       },
       500: {
         title: 'Server Error',
-        description: 'The server is having a break, please try again later',
+        description: 'The server is having a break, please try again later'
       },
-      backHome: 'Back to Home',
+      backHome: 'Back to Home'
     },
 
     // Preference setting components
@@ -510,7 +519,7 @@ export default {
         fadeBottom: 'Fade Bottom',
         fadeScale: 'Fade Scale',
         zoomFade: 'Zoom Fade',
-        zoomOut: 'Zoom Out',
+        zoomOut: 'Zoom Out'
       },
       theme: {
         title: 'Theme',
@@ -520,7 +529,7 @@ export default {
         themeColor: 'Theme Color',
         primaryColor: 'Primary Color',
         grayMode: 'Gray Mode',
-        colorWeakness: 'Color Weakness Mode',
+        colorWeakness: 'Color Weakness Mode'
       },
       app: {
         routeTransition: 'Route Transition',
@@ -528,13 +537,12 @@ export default {
         fadeUp: 'Fade Up',
         fadeDown: 'Fade Down',
         fadeSlide: 'Fade Slide',
-        none: 'None',
-      },
+        none: 'None'
+      }
     },
 
     // Common status and options
     status: {
-
       // Gender options
       male: 'Male',
       female: 'Female',
@@ -553,7 +561,7 @@ export default {
       admin: 'Administrator',
       user: 'Regular User',
       guest: 'Guest',
-      super: 'Super Administrator',
+      super: 'Super Administrator'
     },
 
     // Common texts
@@ -577,8 +585,8 @@ export default {
       failed: 'Failed',
       operationSuccess: 'Operation successful',
       enable: 'Enable',
-      disable: 'Disable',
-    },
+      disable: 'Disable'
+    }
   },
 
   // Route titles
@@ -620,6 +628,6 @@ export default {
     500: '500',
     keepAlive: 'Keep Alive',
     keepAliveDemo1: 'Basic Cache',
-    keepAliveDemo2: 'Conditional Cache',
-  },
+    keepAliveDemo2: 'Conditional Cache'
+  }
 } as const

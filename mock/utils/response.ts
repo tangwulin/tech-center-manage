@@ -11,22 +11,19 @@ export class RF {
     return {
       code: 200,
       data,
-      message,
+      message
     }
   }
 
   static error(message: string, code?: number): ResponseFormat<null>
   static error(format: ResponseFormat<any>): ResponseFormat<any>
-  static error(
-    messageOrFormat: string | ResponseFormat<any>,
-    code = 500,
-  ): ResponseFormat<any> {
+  static error(messageOrFormat: string | ResponseFormat<any>, code = 500): ResponseFormat<any> {
     return isObject(messageOrFormat)
       ? messageOrFormat
       : {
           code,
           data: null,
-          message: messageOrFormat,
+          message: messageOrFormat
         }
   }
 }

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Icon } from '@iconify/vue'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
@@ -7,17 +7,13 @@ import Tabs from './tabs/index.vue'
 
 const isFullscreen = ref(false)
 
-const {
-  showNav,
-  showSidebar,
-} = storeToRefs(useLayoutStore())
+const { showNav, showSidebar } = storeToRefs(useLayoutStore())
 
 function handleFullscreen() {
   if (isFullscreen.value) {
     showNav.value = true
     showSidebar.value = true
-  }
-  else {
+  } else {
     showNav.value = false
     showSidebar.value = false
   }
@@ -29,22 +25,16 @@ function handleFullscreen() {
   <div class="tabbar">
     <tabs class="tabbar__tabs" />
     <div class="tabbar__actions">
-      <pro-button
-        quaternary
-        size="small"
-        @click="handleFullscreen"
-      >
+      <pro-button quaternary size="small" @click="handleFullscreen">
         <template #icon>
           <n-icon>
-            <icon :icon="isFullscreen ? 'mingcute:fullscreen-exit-line' : 'mingcute:fullscreen-line'" />
+            <icon
+              :icon="isFullscreen ? 'mingcute:fullscreen-exit-line' : 'mingcute:fullscreen-line'"
+            />
           </n-icon>
         </template>
       </pro-button>
-      <pro-button
-        quaternary
-        size="small"
-        @click="$router.refresh()"
-      >
+      <pro-button quaternary size="small" @click="$router.refresh()">
         <template #icon>
           <n-icon>
             <icon icon="mingcute:refresh-1-line" />
@@ -55,7 +45,7 @@ function handleFullscreen() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .tabbar {
   width: 100%;
   display: flex;

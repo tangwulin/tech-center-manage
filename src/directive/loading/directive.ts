@@ -1,15 +1,11 @@
 import type { Directive, DirectiveBinding } from 'vue'
+import { isRef } from 'vue'
 import type { LoadingInstance } from './loading'
 import type { LoadingOptions } from './types'
 import { isBoolean, isObject } from 'lodash-es'
-import { isRef } from 'vue'
 import { Loading } from './service'
 
-const INSTANCE_KEY = Symbol(
-  __DEV__
-    ? 'loadingInstance'
-    : ``,
-)
+const INSTANCE_KEY = Symbol(__DEV__ ? 'loadingInstance' : ``)
 
 interface LoadingEl extends HTMLElement {
   [INSTANCE_KEY]?: {
@@ -40,17 +36,13 @@ function createInstance(el: LoadingEl, binding: DirectiveBinding<LoadingBinding>
   const fullscreen = getBindingProp('fullscreen') ?? binding.modifiers.fullscreen
   const to = getBindingProp('to') ?? (fullscreen ? undefined : el)
   const instance = Loading({
-    ...(
-      isBoolean(binding.value)
-        ? { show: binding.value }
-        : (binding.value ?? {})
-    ),
+    ...(isBoolean(binding.value) ? { show: binding.value } : (binding.value ?? {})),
     to,
     lock,
-    fullscreen,
+    fullscreen
   })
   el[INSTANCE_KEY] = {
-    instance,
+    instance
   }
 }
 
@@ -84,5 +76,5 @@ export const vLoading: Directive<LoadingEl, LoadingBinding> = {
       el[INSTANCE_KEY].instance.show.value = false
       el[INSTANCE_KEY] = undefined
     }
-  },
+  }
 }

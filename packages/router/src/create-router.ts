@@ -1,77 +1,91 @@
 import type { App, EffectScope } from 'vue'
-import type { RouterOptions as _RouterOptions, Router } from 'vue-router'
-import type { ProRouterObjectPlugin, ProRouterPlugin, ProRouterPluginCleanupHandler, ProRouterPluginRunWithAppHandler, ProRouterPluginUnmountHandler } from './plugin'
 import { effectScope } from 'vue'
+import type { Router, RouterOptions as _RouterOptions } from 'vue-router'
 import { createRouter as _createRouter } from 'vue-router'
+import type {
+  ProRouterObjectPlugin,
+  ProRouterPlugin,
+  ProRouterPluginCleanupHandler,
+  ProRouterPluginRunWithAppHandler,
+  ProRouterPluginUnmountHandler
+} from './plugin'
 import { setupPlugin } from './plugin'
 import { normalizeRoutesPlugin } from './plugins/normalize-routes-plugin'
-import { ALREADY_INSTALLED, APP, EFFECT_SCOPE, RUN_WITH_APP_HANDLERS, UNMOUNT_HANDLERS } from './symbols'
+import {
+  ALREADY_INSTALLED,
+  APP,
+  EFFECT_SCOPE,
+  RUN_WITH_APP_HANDLERS,
+  UNMOUNT_HANDLERS
+} from './symbols'
 
 export interface ProRouterOptions extends _RouterOptions {
   plugins?: ProRouterPlugin[]
 }
 
 export function createRouter(options: ProRouterOptions): Router {
-  const {
-    vrOptions,
-    plugins = [],
-    pluginCleanups,
-  } = resolveOptions(options)
+  const { vrOptions, plugins = [], pluginCleanups } = resolveOptions(options)
 
   const router = _createRouter(vrOptions)
   const scope = (router[EFFECT_SCOPE] ??= effectScope(true))
 
-  const {
-    install,
-    onError,
-    afterEach,
-    beforeEach,
-    beforeResolve,
-  } = router
+  const { install, onError, afterEach, beforeEach, beforeResolve } = router
 
   router.install = (...args) => {
     const [app] = args
     prepareInstall(app, router)
     install.call(router, ...args)
     const runWithAppHandlers = (router[RUN_WITH_APP_HANDLERS] ??= [])
-    runWithAppHandlers.forEach(handler => handler(app))
+    runWithAppHandlers.forEach((handler) => handler(app))
     runWithAppHandlers.length = 0
   }
 
   router.beforeEach = (guard, ...rest) => {
-    return beforeEach((...args) => {
-      return scope.run(() => {
-        return guard.call(undefined, ...args)
-      })
-    }, ...rest)
+    return beforeEach(
+      (...args) => {
+        return scope.run(() => {
+          return guard.call(undefined, ...args)
+        })
+      },
+      ...rest
+    )
   }
 
   router.beforeResolve = (guard, ...rest) => {
-    return beforeResolve((...args) => {
-      return scope.run(() => {
-        return guard.call(undefined, ...args)
-      })
-    }, ...rest)
+    return beforeResolve(
+      (...args) => {
+        return scope.run(() => {
+          return guard.call(undefined, ...args)
+        })
+      },
+      ...rest
+    )
   }
 
   router.afterEach = (guard, ...rest) => {
-    return afterEach((...args) => {
-      return scope.run(() => {
-        return guard.call(undefined, ...args)
-      })
-    }, ...rest)
+    return afterEach(
+      (...args) => {
+        return scope.run(() => {
+          return guard.call(undefined, ...args)
+        })
+      },
+      ...rest
+    )
   }
 
   router.onError = (handler, ...rest) => {
-    return onError((...args) => {
-      return scope.run(() => {
-        return handler.call(undefined, ...args)
-      })
-    }, ...rest)
+    return onError(
+      (...args) => {
+        return scope.run(() => {
+          return handler.call(undefined, ...args)
+        })
+      },
+      ...rest
+    )
   }
 
   router.runPluginsCleanup = () => {
-    pluginCleanups.forEach(cleanup => cleanup())
+    pluginCleanups.forEach((cleanup) => cleanup())
   }
 
   plugins.forEach((plugin) => {
@@ -90,7 +104,7 @@ function prepareInstall(app: App, router: Router) {
 
   app.onUnmount(() => {
     router[EFFECT_SCOPE]?.stop()
-    router[UNMOUNT_HANDLERS]?.forEach(handler => handler())
+    router[UNMOUNT_HANDLERS]?.forEach((handler) => handler())
     delete router[APP]
     delete router[EFFECT_SCOPE]
     delete router[UNMOUNT_HANDLERS]
@@ -103,19 +117,13 @@ function prepareInstall(app: App, router: Router) {
 function resolveOptions(options: ProRouterOptions) {
   const pluginCleanups: ProRouterPluginCleanupHandler[] = []
 
-  const {
-    plugins = [],
-    ...vueRouterOptions
-  } = options
+  const { plugins = [], ...vueRouterOptions } = options
 
-  const builtinPlugins = [
-    normalizeRoutesPlugin(),
-  ]
+  const builtinPlugins = [normalizeRoutesPlugin()]
 
-  const objectPlugins = [
-    ...builtinPlugins,
-    ...plugins,
-  ].map(plugin => convertToObjectPlugin(plugin, pluginCleanups))
+  const objectPlugins = [...builtinPlugins, ...plugins].map((plugin) =>
+    convertToObjectPlugin(plugin, pluginCleanups)
+  )
 
   const finalVrOptions = objectPlugins.reduce((p, c) => {
     if (c.resolveOptions) {
@@ -127,13 +135,13 @@ function resolveOptions(options: ProRouterOptions) {
   return {
     pluginCleanups,
     plugins: objectPlugins,
-    vrOptions: finalVrOptions,
+    vrOptions: finalVrOptions
   }
 }
 
 function convertToObjectPlugin(
   plugin: ProRouterPlugin,
-  pluginCleanups: ProRouterPluginCleanupHandler[],
+  pluginCleanups: ProRouterPluginCleanupHandler[]
 ): ProRouterObjectPlugin {
   if (typeof plugin === 'function') {
     return {
@@ -143,7 +151,7 @@ function convertToObjectPlugin(
           pluginCleanups.push(exposed.onCleanup)
         }
         return exposed
-      },
+      }
     }
   }
   return plugin

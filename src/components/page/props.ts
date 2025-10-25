@@ -9,7 +9,7 @@ export const proPageProps = {
   /**
    * 底部区域高度
    */
-  footerHeight: Number,
+  footerHeight: Number
 } as const
 
 export type ProPageProps = ExtractPublicPropTypes<typeof proPageProps>

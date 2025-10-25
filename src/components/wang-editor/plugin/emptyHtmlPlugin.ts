@@ -5,8 +5,7 @@ export function withEmptyHtmlPlugin<T extends IDomEditor>(editor: T): T {
   const newEditor = editor
 
   newEditor.getHtml = () => {
-    if (newEditor.isEmpty())
-      return ''
+    if (newEditor.isEmpty()) return ''
 
     return getHtml()
   }

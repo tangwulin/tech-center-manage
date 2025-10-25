@@ -1,4 +1,4 @@
-<script setup lang='tsx'>
+<script lang="tsx" setup>
 import { Icon } from '@iconify/vue'
 import { useFullscreen, useTimeoutFn } from '@vueuse/core'
 import { ref, watch } from 'vue'
@@ -12,60 +12,46 @@ const rotating = ref(false)
 const appStore = useAppStore()
 const themeStore = useThemeStore()
 
-const {
-  toggle,
-  isFullscreen,
-} = useFullscreen()
+const { toggle, isFullscreen } = useFullscreen()
 
-const { start } = useTimeoutFn(
-  () => rotating.value = false,
-  rotateDuration,
-  { immediate: false },
+const { start } = useTimeoutFn(() => (rotating.value = false), rotateDuration, { immediate: false })
+
+watch(
+  () => themeStore.isDark,
+  () => {
+    rotating.value = true
+    start()
+  }
 )
-
-watch(() => themeStore.isDark, () => {
-  rotating.value = true
-  start()
-})
 </script>
 
 <template>
   <div class="pr-8px flex items-center h-full">
-    <pro-button
-      quaternary
-      size="small"
-      @click="appStore.showPreferenceDrawer = true"
-    >
+    <pro-button quaternary size="small" @click="appStore.showPreferenceDrawer = true">
       <template #icon>
         <n-icon>
           <icon icon="uil:setting" />
         </n-icon>
       </template>
     </pro-button>
-    <pro-button
-      quaternary
-      size="small"
-      @click="themeStore.toggleThemeModeWithAnimation"
-    >
+    <pro-button quaternary size="small" @click="themeStore.toggleThemeModeWithAnimation">
       <template #icon>
         <n-icon>
           <icon
-            class="transition-transform duration-300"
             :class="{ 'rotate-180': rotating }"
             :icon="themeStore.isDark ? 'ri:sun-fill' : 'fa6-solid:moon'"
+            class="transition-transform duration-300"
           />
         </n-icon>
       </template>
     </pro-button>
     <lang-switch />
-    <pro-button
-      quaternary
-      size="small"
-      @click="toggle"
-    >
+    <pro-button quaternary size="small" @click="toggle">
       <template #icon>
         <n-icon>
-          <icon :icon="isFullscreen ? 'mingcute:fullscreen-exit-line' : 'mingcute:fullscreen-line'" />
+          <icon
+            :icon="isFullscreen ? 'mingcute:fullscreen-exit-line' : 'mingcute:fullscreen-line'"
+          />
         </n-icon>
       </template>
     </pro-button>

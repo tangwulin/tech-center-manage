@@ -34,10 +34,7 @@ declare module 'vue-router' {
   }
 }
 
-type ServiceRoute = Merge<
-  RouteRecordRaw,
-  { component?: any, children?: any[] }
->
+type ServiceRoute = Merge<RouteRecordRaw, { component?: any; children?: any[] }>
 
 interface NMenuPluginOptions {
   service: () => {
@@ -60,7 +57,7 @@ export function nMenuPlugin({ service }: NMenuPluginOptions): ProRouterPlugin {
           return covertRoutesToMenus(routes, {
             to,
             router,
-            resolveMenuItem,
+            resolveMenuItem
           })
         })
 
@@ -81,23 +78,23 @@ function builtinResolveIcon(icon: string) {
     return h(Icon, {
       icon: 'ant-design:menu-outlined',
       width: 18,
-      height: 18,
+      height: 18
     })
   }
   if (isExternalIcon(icon)) {
     return h('img', {
       src: icon,
       style: {
-        'width': '18px',
-        'height': '18px',
-        'object-fit': 'contain',
-      },
+        width: '18px',
+        height: '18px',
+        'object-fit': 'contain'
+      }
     })
   }
   return h(Icon, {
     icon,
     width: 18,
-    height: 18,
+    height: 18
   })
 }
 
@@ -134,37 +131,31 @@ function covertRoutesToMenus(
   {
     router,
     to,
-    resolveMenuItem,
+    resolveMenuItem
   }: {
     router: Router
     to: RouteLocationNormalizedGeneric
     resolveMenuItem: (item: MenuOption, rawItem: ServiceRoute) => MenuOption
-  },
+  }
 ) {
   routes = sortRoutesByMetaOrder(routes)
   const traverse = (routes: ServiceRoute[], parents: ServiceRoute[] = []) => {
     return routes.map((route) => {
-      const {
-        icon,
-        title,
-        hideInMenu = false,
-      } = route.meta ?? {}
+      const { icon, title, hideInMenu = false } = route.meta ?? {}
       const routeFullPath = buildRouteFullPath(route, parents)
       const resolvedRoute = router.resolve(routeFullPath, to)
       const menu: MenuOption = {
         label: title,
         show: !hideInMenu,
-        key: resolvedRoute.fullPath,
+        key: resolvedRoute.fullPath
       }
       menu.icon = () => {
         return builtinResolveIcon(icon)
       }
-      if (route.children && route.children.filter(item => !item.meta?.hideInMenu).length > 0) {
+      if (route.children && route.children.filter((item) => !item.meta?.hideInMenu).length > 0) {
         menu.children = traverse(sortRoutesByMetaOrder([...route.children]), [...parents, route])
       }
-      return resolveMenuItem
-        ? resolveMenuItem(menu, route)
-        : menu
+      return resolveMenuItem ? resolveMenuItem(menu, route) : menu
     })
   }
   return traverse(routes, [])
