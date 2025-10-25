@@ -13,7 +13,8 @@
     "lint": "eslint --cache --cache-location=node_modules/.cache/.eslint-cache",
     "lint:fix": "pnpm run lint --fix",
     "test:@pro/router": "pnpm --filter @pro/router run test",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "syncapi": "alova gen && prettier --write \"src/api/**.*\""
   },
   "dependencies": {
     "@ant-design/colors": "^7.2.1",
@@ -25,6 +26,7 @@
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "alova": "^3.3.4",
+    "axios": "^1.9.0",
     "lodash-es": "^4.17.21",
     "naive-ui": "^2.42.0",
     "pinia": "^3.0.3",
