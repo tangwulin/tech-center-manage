@@ -33,8 +33,8 @@ export const useUserStore = defineStore('user', () => {
     email: '',
     name: '',
     nickName: '',
-    token: '',
-    refreshToken: '',
+    token: localStorage.getItem('token') ?? '',
+    refreshToken: localStorage.getItem('refreshToken') ?? '',
     roles: []
   })
 
