@@ -114,8 +114,6 @@ export interface LogoutRequest {
   refreshToken: string | null
 }
 export type GetUserInfoRequest = object
-export type GetAllPostRequest = object
-export type GetAllVideoRequest = object
 export interface GetPostByIdRequest {
   id?: number
 }
@@ -177,7 +175,6 @@ export interface DeletePostByIdRequest {
 export interface DeleteVideoByIdRequest {
   id?: number
 }
-export type IFormFile = Blob
 export interface ApiResultOfObject {
   code?: number
   message: string
@@ -426,13 +423,15 @@ declare global {
        *
        * [POST]
        *
-       * **path:** /api/content/posts/getAll
+       * **path:** /api/fileResources/upload
        *
        * ---
        *
        * **RequestBody**
        * ```ts
-       * type RequestBody = object
+       * type RequestBody = {
+       *   file: Blob
+       * }
        * ```
        *
        * ---
@@ -442,41 +441,32 @@ declare global {
        * type Response = null
        * ```
        */
-      post_api_content_posts_get_all<
+      post_api_file_resources_upload<
         Config extends Alova2MethodConfig<null> & {
-          data: GetAllPostRequest
+          data: {
+            file: Blob
+          }
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_posts_get_all', Config>
+      ): Alova2Method<null, 'techCenterApi.post_api_file_resources_upload', Config>
       /**
        * ---
        *
-       * [POST]
+       * [GET]
        *
-       * **path:** /api/content/videos/getAll
-       *
-       * ---
-       *
-       * **RequestBody**
-       * ```ts
-       * type RequestBody = object
-       * ```
+       * **path:** /
        *
        * ---
        *
        * **Response**
        * ```ts
-       * type Response = null
+       * type Response = string
        * ```
        */
-      post_api_content_videos_get_all<
-        Config extends Alova2MethodConfig<null> & {
-          data: GetAllVideoRequest
-        }
-      >(
-        config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_videos_get_all', Config>
+      get<Config extends Alova2MethodConfig<string>>(
+        config?: Config
+      ): Alova2Method<string, 'techCenterApi.get', Config>
       /**
        * ---
        *
@@ -863,55 +853,6 @@ declare global {
       >(
         config: Config
       ): Alova2Method<null, 'techCenterApi.post_api_content_videos_delete', Config>
-      /**
-       * ---
-       *
-       * [POST]
-       *
-       * **path:** /api/fileResources/upload
-       *
-       * ---
-       *
-       * **RequestBody**
-       * ```ts
-       * type RequestBody = {
-       *   file: Blob
-       * }
-       * ```
-       *
-       * ---
-       *
-       * **Response**
-       * ```ts
-       * type Response = null
-       * ```
-       */
-      post_api_file_resources_upload<
-        Config extends Alova2MethodConfig<null> & {
-          data: {
-            file: IFormFile
-          }
-        }
-      >(
-        config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_file_resources_upload', Config>
-      /**
-       * ---
-       *
-       * [GET]
-       *
-       * **path:** /
-       *
-       * ---
-       *
-       * **Response**
-       * ```ts
-       * type Response = string
-       * ```
-       */
-      get<Config extends Alova2MethodConfig<string>>(
-        config?: Config
-      ): Alova2Method<string, 'techCenterApi.get', Config>
     }
   }
 

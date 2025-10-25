@@ -21,8 +21,8 @@ export default {
   'Auth.refreshToken': ['POST', '/api/auth/refresh'],
   'Auth.logout': ['POST', '/api/auth/logout'],
   'techCenterApi.post_api_user_basic_info': ['POST', '/api/user/basicInfo'],
-  'techCenterApi.post_api_content_posts_get_all': ['POST', '/api/content/posts/getAll'],
-  'techCenterApi.post_api_content_videos_get_all': ['POST', '/api/content/videos/getAll'],
+  'techCenterApi.post_api_file_resources_upload': ['POST', '/api/fileResources/upload'],
+  'techCenterApi.get': ['GET', '/'],
   'techCenterApi.post_api_content_posts_get_by_id': ['POST', '/api/content/posts/getById'],
   'techCenterApi.post_api_content_videos_get_by_id': ['POST', '/api/content/videos/getById'],
   'techCenterApi.post_api_content_posts_add': ['POST', '/api/content/posts/add'],
@@ -30,7 +30,5 @@ export default {
   'techCenterApi.post_api_content_posts_update': ['POST', '/api/content/posts/update'],
   'techCenterApi.post_api_content_videos_update': ['POST', '/api/content/videos/update'],
   'techCenterApi.post_api_content_posts_delete': ['POST', '/api/content/posts/delete'],
-  'techCenterApi.post_api_content_videos_delete': ['POST', '/api/content/videos/delete'],
-  'techCenterApi.post_api_file_resources_upload': ['POST', '/api/fileResources/upload'],
-  'techCenterApi.get': ['GET', '/']
+  'techCenterApi.post_api_content_videos_delete': ['POST', '/api/content/videos/delete']
 }
