@@ -13,7 +13,7 @@ export default {
       register: '立即注册',
       loginSuccess: '登录成功',
       welcomeBack: '欢迎回来',
-      loginFailed: '登录失败',
+      loginFailed: '登录失败'
     },
     system: {
       menu: {
@@ -39,7 +39,7 @@ export default {
         keepAlive: '缓存组件',
         pageLayout: '页面包含布局',
         embedded: '内嵌',
-        externalLink: '外链',
+        externalLink: '外链'
       },
       user: {
         title: '用户列表',
@@ -53,7 +53,7 @@ export default {
         role: '所属角色',
         addUser: '新增用户',
         editUser: '编辑用户',
-        usernameTooltip: '用户名',
+        usernameTooltip: '用户名'
       },
       role: {
         title: '角色列表',
@@ -62,8 +62,8 @@ export default {
         addRole: '新增角色',
         editRole: '编辑角色',
         roleNameTooltip: '角色名',
-        roleCodeTooltip: '角色编码',
-      },
+        roleCodeTooltip: '角色编码'
+      }
     },
     demos: {
       // Wang Editor demo
@@ -86,7 +86,7 @@ export default {
         validateSuccess: '验证成功',
         validateFailed: '验证失败',
         editorCreated: '编辑器创建完成',
-        editorDestroyed: '编辑器销毁',
+        editorDestroyed: '编辑器销毁'
       },
       access: {
         toggle: {
@@ -98,8 +98,8 @@ export default {
           afterAccountCheck: '切换账号后查看【左侧菜单->系统管理】',
           superAdmin: '超级管理员',
           admin: '普通管理员',
-          user: '普通用户',
-        },
+          user: '普通用户'
+        }
       },
       icon: {
         remoteSearch1: '远程搜索-风格1',
@@ -107,7 +107,7 @@ export default {
         singleIcon: '单选图标',
         multipleIcon: '多选图标',
         remoteSearchTooltip1: '回显时远程搜索 options',
-        remoteSearchTooltip2: '回显时合并 options',
+        remoteSearchTooltip2: '回显时合并 options'
       },
       download: {
         title: '文件下载',
@@ -148,7 +148,7 @@ export default {
         downloadTextFailed: '下载文本失败',
         downloadBase64Failed: '下载base64数据失败',
         requestUrl: '请求URL',
-        requestOptions: '请求选项',
+        requestOptions: '请求选项'
       },
       nested: {
         title: '嵌套路由演示',
@@ -156,19 +156,19 @@ export default {
         goToDetail: '点击跳转详情页',
         detailTitle: '详情页',
         detailDescription: '详情页，它不在菜单中，也可以高亮菜单',
-        backToList: '返回列表页',
+        backToList: '返回列表页'
       },
       keepAlive: {
         basicCache: {
           title: '基础缓存',
           description: '这是一个演示 keep-alive 基础功能的页面',
-          inputPlaceholder: '请输入内容测试缓存...',
+          inputPlaceholder: '请输入内容测试缓存...'
         },
         conditionalCache: {
           title: '条件缓存',
           description: '只有从多标签页面进入时，才会缓存',
-          inputPlaceholder: '请输入内容测试缓存...',
-        },
+          inputPlaceholder: '请输入内容测试缓存...'
+        }
       },
       pageComponent: {
         title: '页面级组件',
@@ -180,7 +180,7 @@ export default {
         randomNumber: '随机数字',
         currentNumber: '当前数字',
         loadingText: '加载中...',
-        loadingTime: '加载时间',
+        loadingTime: '加载时间'
       },
       loading: {
         title: 'v-loading 指令使用示例',
@@ -190,7 +190,7 @@ export default {
           description2: '当 loading 激活时，会显示加载遮罩',
           description3: '点击下方按钮可以切换 loading 状态',
           showButton: '开启 Loading',
-          hideButton: '关闭 Loading',
+          hideButton: '关闭 Loading'
         },
         fullscreen: {
           title: '2. v-loading.fullscreen 全屏加载',
@@ -198,7 +198,7 @@ export default {
           description2: '使用 .fullscreen 修饰符可以创建全屏加载效果',
           description3: '遮罩会覆盖整个视口',
           showButton: '开启 全屏 Loading',
-          hideButton: '关闭 全屏 Loading',
+          hideButton: '关闭 全屏 Loading'
         },
         lock: {
           title: '3. v-loading.lock 锁定滚动',
@@ -208,7 +208,7 @@ export default {
           scrollArea: '这是一个可滚动的区域',
           scrollAreaDesc: '当 loading 激活时，滚动会被锁定',
           showButton: '开启 锁定滚动 Loading',
-          hideButton: '关闭 锁定滚动 Loading',
+          hideButton: '关闭 锁定滚动 Loading'
         },
         dynamic: {
           title: '4. v-loading 动态修改描述文字',
@@ -218,7 +218,7 @@ export default {
           showButton: '开始动态加载',
           loadingData: '正在加载数据...',
           processingRequest: '正在处理请求...',
-          almostDone: '即将完成...',
+          almostDone: '即将完成...'
         },
         functional: {
           title: '5. 函数式调用',
@@ -227,7 +227,7 @@ export default {
           description3: '适合在异步操作中使用',
           showButton: '开启 函数式 Loading',
           hideButton: '关闭 函数式 Loading',
-          functionalLoading: '函数式加载中...',
+          functionalLoading: '函数式加载中...'
         },
         functionalDynamic: {
           title: '6. 函数式动态修改描述文字',
@@ -240,8 +240,8 @@ export default {
           connectingServer: '正在连接服务器...',
           fetchingData: '正在获取数据...',
           processingResult: '正在处理结果...',
-          almostComplete: '即将完成...',
-        },
+          almostComplete: '即将完成...'
+        }
       },
       complexForm: {
         title: '复杂表单示例',
@@ -258,7 +258,7 @@ export default {
           phone: '手机号',
           gender: '性别',
           birthDate: '出生日期',
-          status: '状态',
+          status: '状态'
         },
         contentInfo: {
           title: '内容信息',
@@ -282,7 +282,7 @@ export default {
           tagJavaScript: 'JavaScript',
           tagTypeScript: 'TypeScript',
           tagCSS: 'CSS',
-          tagHTML: 'HTML',
+          tagHTML: 'HTML'
         },
         dataTable: {
           title: '数据管理',
@@ -307,9 +307,9 @@ export default {
           actions: '操作',
           edit: '编辑',
           save: '保存',
-          delete: '删除',
-        },
-      },
+          delete: '删除'
+        }
+      }
     },
     home: {
       welcomeBack: '欢迎回来',
@@ -335,7 +335,7 @@ export default {
         updatedStatus: '更新了状态',
         solvedProblem: '解决了问题',
         mergedCode: '合并了代码',
-        closedIssue: '关闭了问题',
+        closedIssue: '关闭了问题'
       },
       targets: {
         systemArchitectureDesign: '系统架构设计',
@@ -344,7 +344,7 @@ export default {
         frontendDevelopment: '前端开发',
         backendDevelopment: '后端开发',
         testingAndDeployment: '测试与部署',
-        documentation: '文档编写',
+        documentation: '文档编写'
       },
       updates: {
         newVersionRelease: '新版本发布',
@@ -358,7 +358,7 @@ export default {
         userFeedbackImprovement: '用户反馈改进',
         userFeedbackDesc: '根据用户反馈，优化了界面交互和响应速度',
         newFeatureResearch: '新功能调研',
-        newFeatureDesc: '正在调研AI智能分析功能，欢迎提供建议',
+        newFeatureDesc: '正在调研AI智能分析功能，欢迎提供建议'
       },
       time: {
         minutesAgo: '分钟前',
@@ -366,9 +366,9 @@ export default {
         yesterday: '昨天',
         daysAgo: '天前',
         weekAgo: '周前',
-        today: '今天',
-      },
-    },
+        today: '今天'
+      }
+    }
   },
   common: {
     layout: {
@@ -377,7 +377,7 @@ export default {
         documentationForProNaiveUI: '组件库文档',
         logout: '退出登录',
         logoutConfirmTitle: '提示',
-        logoutConfirmContent: '确认退出登录吗？',
+        logoutConfirmContent: '确认退出登录吗？'
       },
       tabs: {
         pin: '固定',
@@ -410,23 +410,23 @@ export default {
         closeAllTabs: '关闭所有标签页',
         fullscreen: '全屏',
         exitFullscreen: '退出全屏',
-        refresh: '刷新',
-      },
+        refresh: '刷新'
+      }
     },
     fallback: {
       403: {
         title: '访问被拒绝',
-        description: '您没有权限访问此页面',
+        description: '您没有权限访问此页面'
       },
       404: {
         title: '页面不存在',
-        description: '您访问的页面未找到',
+        description: '您访问的页面未找到'
       },
       500: {
         title: '服务器错误',
-        description: '服务器开小差了，请稍后再试',
+        description: '服务器开小差了，请稍后再试'
       },
-      backHome: '返回首页',
+      backHome: '返回首页'
     },
     preference: {
       title: '偏好设置',
@@ -443,7 +443,7 @@ export default {
         mixedSidebar: '混合侧边栏布局',
         fullContent: '内容全屏布局',
         twoColumn: '双栏布局',
-        chrome: '谷歌',
+        chrome: '仿Chrome',
         card: '卡片',
         showLogo: '显示logo',
         layoutMode: '布局模式',
@@ -480,7 +480,7 @@ export default {
         fadeBottom: '底部淡入',
         fadeScale: '缩放淡入',
         zoomFade: '缩放淡出',
-        zoomOut: '缩放',
+        zoomOut: '缩放'
       },
       theme: {
         title: '主题',
@@ -490,7 +490,7 @@ export default {
         themeColor: '主题颜色',
         primaryColor: '主色',
         grayMode: '灰色模式',
-        colorWeakness: '色弱模式',
+        colorWeakness: '色弱模式'
       },
       app: {
         routeTransition: '路由过渡动画',
@@ -498,8 +498,8 @@ export default {
         fadeUp: '渐变-向上',
         fadeDown: '渐变-向下',
         fadeSlide: '渐变-向左',
-        none: '无',
-      },
+        none: '无'
+      }
     },
     status: {
       male: '男',
@@ -513,7 +513,7 @@ export default {
       admin: '管理员',
       user: '普通用户',
       guest: '访客',
-      super: '超级管理员',
+      super: '超级管理员'
     },
     often: {
       status: '状态',
@@ -535,8 +535,8 @@ export default {
       failed: '失败',
       operationSuccess: '操作成功',
       enable: '启用',
-      disable: '禁用',
-    },
+      disable: '禁用'
+    }
   },
   routes: {
     home: '首页',
@@ -576,6 +576,6 @@ export default {
     500: '500',
     keepAlive: '缓存路由示例',
     keepAliveDemo1: '基础缓存',
-    keepAliveDemo2: '条件缓存',
-  },
+    keepAliveDemo2: '条件缓存'
+  }
 } as const
