@@ -40,8 +40,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function fetchUpdateUserInfo() {
     try {
-      const res = await Apis.techCenterApi.post_api_user_basic_info({
-        data: {},
+      const res = await Apis.User.GetUserBasicInfo({
         cacheFor: {
           mode: 'memory',
           expire: 60 * 1000 // 1 分钟
@@ -62,7 +61,7 @@ export const useUserStore = defineStore('user', () => {
   async function login(payload: UserLoginPayload) {
     try {
       loading.value = true
-      const req = Apis.Auth.login({
+      const req = Apis.Auth.Login({
         data: payload,
         cache: 'no-cache',
         meta: {
@@ -94,7 +93,7 @@ export const useUserStore = defineStore('user', () => {
       token: '',
       roles: []
     }
-    await Apis.Auth.logout({
+    await Apis.Auth.Logout({
       data: {
         userId: user.value.id,
         refreshToken: user.value.refreshToken
