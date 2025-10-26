@@ -14,7 +14,7 @@
  *
  * **Do not edit the file manually.**
  */
-import type { Alova, AlovaGenerics, AlovaMethodCreateConfig, Method } from 'alova'
+import type { Alova, AlovaMethodCreateConfig, AlovaGenerics, Method } from 'alova'
 import type { $$userConfigMap, alovaInstance } from './index'
 import type apiDefinitions from './apiDefinitions'
 
@@ -113,7 +113,18 @@ export interface LogoutRequest {
   userId: number
   refreshToken: string | null
 }
-export type GetUserInfoRequest = object
+export type NullableOfStatus = number | null
+export interface QueryContentsForManageRequest {
+  limit: number
+  offset: number
+  keyword: string | null
+  status: NullableOfStatus
+}
+export interface QueryContentsForViewerRequest {
+  limit: number
+  offset: number
+  keyword: string | null
+}
 export interface GetPostByIdRequest {
   id?: number
 }
@@ -175,22 +186,27 @@ export interface DeletePostByIdRequest {
 export interface DeleteVideoByIdRequest {
   id?: number
 }
-export interface ApiResultOfObject {
-  code?: number
-  message: string
-  data?: null
-}
-export interface BasicUserInfoDto {
+export type IFormFile = Blob
+export type BasicUserInfoDto = {
   id?: number
   name?: string
   nickName?: string
   email?: string
   roles?: string[]
+} | null
+export interface ApiResultOfBasicUserInfoDto {
+  code?: number
+  message: string
+  data?: BasicUserInfoDto
+}
+export interface ApiResultOfObject {
+  code?: number
+  message: string
+  data?: null
 }
 export type LoginResponse = {
   accessToken: string
   refreshToken: string
-  userInfo: BasicUserInfoDto
 } | null
 export interface ApiResultOfLoginResponse {
   code?: number
@@ -206,17 +222,143 @@ export interface ApiResultOfRefreshTokenResponse {
   message: string
   data?: RefreshTokenResponse
 }
-export type BasicUserInfoDto2 = {
+export type Status = number
+export interface EventDto {
+  contentType?: number
+  eventType?: string
+  actor?: IdAndNameDto
+  title?: string
+  message?: string
   id?: number
-  name?: string
-  nickName?: string
-  email?: string
-  roles?: string[]
-} | null
-export interface ApiResultOfBasicUserInfoDto {
+  createdAt?: string
+  updatedAt?: string
+}
+export interface PostForManageDto {
+  content?: string
+  title?: string
+  cover?: FileResourceDto
+  summary?: string
+  authors?: IdAndNameDto[]
+  categories?: null[]
+  tags?: null[]
+  status?: Status
+  viewCount?: number
+  events?: EventDto[]
+  timeWillUsed?: number
+  id?: number
+  createdAt?: string
+  updatedAt?: string
+}
+export interface Api_result_of_post_for_manage_dto {
   code?: number
   message: string
-  data?: BasicUserInfoDto2
+  data?: PostForManageDto[] | null
+}
+export interface VideoForManageDto {
+  videoFile?: FileResourceDto
+  title?: string
+  cover?: FileResourceDto
+  summary?: string
+  authors?: IdAndNameDto[]
+  categories?: null[]
+  tags?: null[]
+  status?: Status
+  viewCount?: number
+  events?: EventDto[]
+  timeWillUsed?: number
+  id?: number
+  createdAt?: string
+  updatedAt?: string
+}
+export interface Api_result_of_video_for_manage_dto {
+  code?: number
+  message: string
+  data?: VideoForManageDto[] | null
+}
+export type PostForManageDto2 = {
+  content?: string
+  title?: string
+  cover?: FileResourceDto
+  summary?: string
+  authors?: IdAndNameDto[]
+  categories?: null[]
+  tags?: null[]
+  status?: Status
+  viewCount?: number
+  events?: EventDto[]
+  timeWillUsed?: number
+  id?: number
+  createdAt?: string
+  updatedAt?: string
+} | null
+export interface ApiResultOfPostForManageDto {
+  code?: number
+  message: string
+  data?: PostForManageDto2
+}
+export type VideoForManageDto2 = {
+  videoFile?: FileResourceDto
+  title?: string
+  cover?: FileResourceDto
+  summary?: string
+  authors?: IdAndNameDto[]
+  categories?: null[]
+  tags?: null[]
+  status?: Status
+  viewCount?: number
+  events?: EventDto[]
+  timeWillUsed?: number
+  id?: number
+  createdAt?: string
+  updatedAt?: string
+} | null
+export interface ApiResultOfVideoForManageDto {
+  code?: number
+  message: string
+  data?: VideoForManageDto2
+}
+export interface PostForViewerDto {
+  content?: string
+  title?: string
+  cover?: string | null
+  summary?: string
+  authors?: IdAndNameDto[]
+  categories?: null[]
+  tags?: null[]
+  viewCount?: number
+  timeWillUsed?: number
+  id?: number
+  createdAt?: string
+  updatedAt?: string
+}
+export interface Api_result_of_post_for_viewer_dto {
+  code?: number
+  message: string
+  data?: PostForViewerDto[] | null
+}
+export interface VideoForViewerDto {
+  videoFile?: FileResourceDto2
+  title?: string
+  cover?: string | null
+  summary?: string
+  authors?: IdAndNameDto[]
+  categories?: null[]
+  tags?: null[]
+  viewCount?: number
+  timeWillUsed?: number
+  id?: number
+  createdAt?: string
+  updatedAt?: string
+}
+export interface Api_result_of_video_for_viewer_dto {
+  code?: number
+  message: string
+  data?: VideoForViewerDto[] | null
+}
+export interface ApiResultOfFileResourceDto {
+  code?: number
+  message: string
+  data?: FileResourceDto
 }
 declare global {
   interface Apis {
@@ -224,7 +366,7 @@ declare global {
       /**
        * ---
        *
-       * [POST] register
+       * [POST] 注册
        *
        * **path:** /api/auth/register
        *
@@ -250,17 +392,17 @@ declare global {
        * }
        * ```
        */
-      register<
+      Register<
         Config extends Alova2MethodConfig<ApiResultOfObject> & {
           data: RegisterRequest
         }
       >(
         config: Config
-      ): Alova2Method<ApiResultOfObject, 'Auth.register', Config>
+      ): Alova2Method<ApiResultOfObject, 'Auth.Register', Config>
       /**
        * ---
        *
-       * [POST] login
+       * [POST] 登录
        *
        * **path:** /api/auth/login
        *
@@ -284,30 +426,21 @@ declare global {
        *   data?: {
        *     accessToken: string
        *     refreshToken: string
-       *     userInfo: {
-       *       id?: number
-       *       name?: string
-       *       nickName?: string
-       *       email?: string
-       *       // [items] start
-       *       // [items] end
-       *       roles?: string[]
-       *     }
        *   } | null
        * }
        * ```
        */
-      login<
+      Login<
         Config extends Alova2MethodConfig<ApiResultOfLoginResponse> & {
           data: LoginRequest
         }
       >(
         config: Config
-      ): Alova2Method<ApiResultOfLoginResponse, 'Auth.login', Config>
+      ): Alova2Method<ApiResultOfLoginResponse, 'Auth.Login', Config>
       /**
        * ---
        *
-       * [POST] refreshToken
+       * [POST] 刷新令牌
        *
        * **path:** /api/auth/refresh
        *
@@ -334,17 +467,17 @@ declare global {
        * }
        * ```
        */
-      refreshToken<
+      RefreshToken<
         Config extends Alova2MethodConfig<ApiResultOfRefreshTokenResponse> & {
           data: RefreshTokenRequest
         }
       >(
         config: Config
-      ): Alova2Method<ApiResultOfRefreshTokenResponse, 'Auth.refreshToken', Config>
+      ): Alova2Method<ApiResultOfRefreshTokenResponse, 'Auth.RefreshToken', Config>
       /**
        * ---
        *
-       * [POST] logout
+       * [POST] 登出
        *
        * **path:** /api/auth/logout
        *
@@ -369,28 +502,21 @@ declare global {
        * }
        * ```
        */
-      logout<
+      Logout<
         Config extends Alova2MethodConfig<ApiResultOfObject> & {
           data: LogoutRequest
         }
       >(
         config: Config
-      ): Alova2Method<ApiResultOfObject, 'Auth.logout', Config>
+      ): Alova2Method<ApiResultOfObject, 'Auth.Logout', Config>
     }
-    techCenterApi: {
+    User: {
       /**
        * ---
        *
-       * [POST]
+       * [POST] 获取用户基本信息
        *
        * **path:** /api/user/basicInfo
-       *
-       * ---
-       *
-       * **RequestBody**
-       * ```ts
-       * type RequestBody = object
-       * ```
        *
        * ---
        *
@@ -411,26 +537,27 @@ declare global {
        * }
        * ```
        */
-      post_api_user_basic_info<
-        Config extends Alova2MethodConfig<ApiResultOfBasicUserInfoDto> & {
-          data: GetUserInfoRequest
-        }
-      >(
-        config: Config
-      ): Alova2Method<ApiResultOfBasicUserInfoDto, 'techCenterApi.post_api_user_basic_info', Config>
+      GetUserBasicInfo<Config extends Alova2MethodConfig<ApiResultOfBasicUserInfoDto>>(
+        config?: Config
+      ): Alova2Method<ApiResultOfBasicUserInfoDto, 'User.GetUserBasicInfo', Config>
+    }
+    Content: {
       /**
        * ---
        *
-       * [POST]
+       * [POST] 查询本账号的文章
        *
-       * **path:** /api/fileResources/upload
+       * **path:** /api/content/posts/queryForManage
        *
        * ---
        *
        * **RequestBody**
        * ```ts
        * type RequestBody = {
-       *   file: Blob
+       *   limit: number
+       *   offset: number
+       *   keyword: string | null
+       *   status: number | null
        * }
        * ```
        *
@@ -438,39 +565,508 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = null
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   // [params1] start
+       *   // [items] start
+       *   // [items] end
+       *   // [params1] end
+       *   data?: Array<{
+       *     content?: string
+       *     title?: string
+       *     cover?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     } | null
+       *     summary?: string
+       *     // [items] start
+       *     // [items] end
+       *     authors?: Array<{
+       *       id: number
+       *       name: string
+       *     }>
+       *     // [items] start
+       *     // [items] end
+       *     categories?: null[]
+       *     // [items] start
+       *     // [items] end
+       *     tags?: null[]
+       *     status?: number
+       *     viewCount?: number
+       *     // [items] start
+       *     // [items] end
+       *     events?: Array<{
+       *       contentType?: number
+       *       eventType?: string
+       *       actor?: {
+       *         id: number
+       *         name: string
+       *       }
+       *       title?: string
+       *       message?: string
+       *       id?: number
+       *       createdAt?: string
+       *       updatedAt?: string
+       *     }>
+       *     timeWillUsed?: number
+       *     id?: number
+       *     createdAt?: string
+       *     updatedAt?: string
+       *   }> | null
+       * }
        * ```
        */
-      post_api_file_resources_upload<
-        Config extends Alova2MethodConfig<null> & {
-          data: {
-            file: Blob
-          }
+      QueryPostsForManage<
+        Config extends Alova2MethodConfig<Api_result_of_post_for_manage_dto> & {
+          data: QueryContentsForManageRequest
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_file_resources_upload', Config>
+      ): Alova2Method<Api_result_of_post_for_manage_dto, 'Content.QueryPostsForManage', Config>
       /**
        * ---
        *
-       * [GET]
+       * [POST] 查询本账号的视频
        *
-       * **path:** /
+       * **path:** /api/content/videos/queryForManage
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   limit: number
+       *   offset: number
+       *   keyword: string | null
+       *   status: number | null
+       * }
+       * ```
        *
        * ---
        *
        * **Response**
        * ```ts
-       * type Response = string
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   // [params1] start
+       *   // [items] start
+       *   // [items] end
+       *   // [params1] end
+       *   data?: Array<{
+       *     videoFile?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     } | null
+       *     title?: string
+       *     cover?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     } | null
+       *     summary?: string
+       *     // [items] start
+       *     // [items] end
+       *     authors?: Array<{
+       *       id: number
+       *       name: string
+       *     }>
+       *     // [items] start
+       *     // [items] end
+       *     categories?: null[]
+       *     // [items] start
+       *     // [items] end
+       *     tags?: null[]
+       *     status?: number
+       *     viewCount?: number
+       *     // [items] start
+       *     // [items] end
+       *     events?: Array<{
+       *       contentType?: number
+       *       eventType?: string
+       *       actor?: {
+       *         id: number
+       *         name: string
+       *       }
+       *       title?: string
+       *       message?: string
+       *       id?: number
+       *       createdAt?: string
+       *       updatedAt?: string
+       *     }>
+       *     timeWillUsed?: number
+       *     id?: number
+       *     createdAt?: string
+       *     updatedAt?: string
+       *   }> | null
+       * }
        * ```
        */
-      get<Config extends Alova2MethodConfig<string>>(
-        config?: Config
-      ): Alova2Method<string, 'techCenterApi.get', Config>
+      QueryVideosForManage<
+        Config extends Alova2MethodConfig<Api_result_of_video_for_manage_dto> & {
+          data: QueryContentsForManageRequest
+        }
+      >(
+        config: Config
+      ): Alova2Method<Api_result_of_video_for_manage_dto, 'Content.QueryVideosForManage', Config>
       /**
        * ---
        *
-       * [POST]
+       * [POST] 获取文章内部详情
+       *
+       * **path:** /api/content/posts/getByIdForManage
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   postId: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   data?: {
+       *     content?: string
+       *     title?: string
+       *     cover?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     } | null
+       *     summary?: string
+       *     // [items] start
+       *     // [items] end
+       *     authors?: Array<{
+       *       id: number
+       *       name: string
+       *     }>
+       *     // [items] start
+       *     // [items] end
+       *     categories?: null[]
+       *     // [items] start
+       *     // [items] end
+       *     tags?: null[]
+       *     status?: number
+       *     viewCount?: number
+       *     // [items] start
+       *     // [items] end
+       *     events?: Array<{
+       *       contentType?: number
+       *       eventType?: string
+       *       actor?: {
+       *         id: number
+       *         name: string
+       *       }
+       *       title?: string
+       *       message?: string
+       *       id?: number
+       *       createdAt?: string
+       *       updatedAt?: string
+       *     }>
+       *     timeWillUsed?: number
+       *     id?: number
+       *     createdAt?: string
+       *     updatedAt?: string
+       *   } | null
+       * }
+       * ```
+       */
+      GetPostByIdForManage<
+        Config extends Alova2MethodConfig<ApiResultOfPostForManageDto> & {
+          params: {
+            postId: number
+          }
+        }
+      >(
+        config: Config
+      ): Alova2Method<ApiResultOfPostForManageDto, 'Content.GetPostByIdForManage', Config>
+      /**
+       * ---
+       *
+       * [POST] 获取视频内部详情
+       *
+       * **path:** /api/content/videos/getByIdForManage
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   videoId: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   data?: {
+       *     videoFile?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     } | null
+       *     title?: string
+       *     cover?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     } | null
+       *     summary?: string
+       *     // [items] start
+       *     // [items] end
+       *     authors?: Array<{
+       *       id: number
+       *       name: string
+       *     }>
+       *     // [items] start
+       *     // [items] end
+       *     categories?: null[]
+       *     // [items] start
+       *     // [items] end
+       *     tags?: null[]
+       *     status?: number
+       *     viewCount?: number
+       *     // [items] start
+       *     // [items] end
+       *     events?: Array<{
+       *       contentType?: number
+       *       eventType?: string
+       *       actor?: {
+       *         id: number
+       *         name: string
+       *       }
+       *       title?: string
+       *       message?: string
+       *       id?: number
+       *       createdAt?: string
+       *       updatedAt?: string
+       *     }>
+       *     timeWillUsed?: number
+       *     id?: number
+       *     createdAt?: string
+       *     updatedAt?: string
+       *   } | null
+       * }
+       * ```
+       */
+      GetVideoByIdForManage<
+        Config extends Alova2MethodConfig<ApiResultOfVideoForManageDto> & {
+          params: {
+            videoId: number
+          }
+        }
+      >(
+        config: Config
+      ): Alova2Method<ApiResultOfVideoForManageDto, 'Content.GetVideoByIdForManage', Config>
+      /**
+       * ---
+       *
+       * [POST] 查询文章
+       *
+       * **path:** /api/content/posts/queryForViewer
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   limit: number
+       *   offset: number
+       *   keyword: string | null
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   // [params1] start
+       *   // [items] start
+       *   // [items] end
+       *   // [params1] end
+       *   data?: Array<{
+       *     content?: string
+       *     title?: string
+       *     cover?: string | null
+       *     summary?: string
+       *     // [items] start
+       *     // [items] end
+       *     authors?: Array<{
+       *       id: number
+       *       name: string
+       *     }>
+       *     // [items] start
+       *     // [items] end
+       *     categories?: null[]
+       *     // [items] start
+       *     // [items] end
+       *     tags?: null[]
+       *     viewCount?: number
+       *     timeWillUsed?: number
+       *     id?: number
+       *     createdAt?: string
+       *     updatedAt?: string
+       *   }> | null
+       * }
+       * ```
+       */
+      QueryPostsForViewer<
+        Config extends Alova2MethodConfig<Api_result_of_post_for_viewer_dto> & {
+          data: QueryContentsForViewerRequest
+        }
+      >(
+        config: Config
+      ): Alova2Method<Api_result_of_post_for_viewer_dto, 'Content.QueryPostsForViewer', Config>
+      /**
+       * ---
+       *
+       * [POST] 查询视频
+       *
+       * **path:** /api/content/videos/queryForViewer
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   limit: number
+       *   offset: number
+       *   keyword: string | null
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   // [params1] start
+       *   // [items] start
+       *   // [items] end
+       *   // [params1] end
+       *   data?: Array<{
+       *     videoFile?: {
+       *       id?: number
+       *       fileName?: string
+       *       storageKey?: string
+       *       ownerId?: number
+       *       // [items] start
+       *       // [items] end
+       *       contents?: Array<{
+       *         type?: number
+       *         id?: number
+       *       }>
+       *       providerId?: number
+       *       size?: number
+       *     }
+       *     title?: string
+       *     cover?: string | null
+       *     summary?: string
+       *     // [items] start
+       *     // [items] end
+       *     authors?: Array<{
+       *       id: number
+       *       name: string
+       *     }>
+       *     // [items] start
+       *     // [items] end
+       *     categories?: null[]
+       *     // [items] start
+       *     // [items] end
+       *     tags?: null[]
+       *     viewCount?: number
+       *     timeWillUsed?: number
+       *     id?: number
+       *     createdAt?: string
+       *     updatedAt?: string
+       *   }> | null
+       * }
+       * ```
+       */
+      QueryVideosForViewer<
+        Config extends Alova2MethodConfig<Api_result_of_video_for_viewer_dto> & {
+          data: QueryContentsForViewerRequest
+        }
+      >(
+        config: Config
+      ): Alova2Method<Api_result_of_video_for_viewer_dto, 'Content.QueryVideosForViewer', Config>
+      /**
+       * ---
+       *
+       * [POST] 通过ID获取文章
        *
        * **path:** /api/content/posts/getById
        *
@@ -490,17 +1086,17 @@ declare global {
        * type Response = null
        * ```
        */
-      post_api_content_posts_get_by_id<
+      GetPostById<
         Config extends Alova2MethodConfig<null> & {
           data: GetPostByIdRequest
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_posts_get_by_id', Config>
+      ): Alova2Method<null, 'Content.GetPostById', Config>
       /**
        * ---
        *
-       * [POST]
+       * [POST] 通过ID获取视频
        *
        * **path:** /api/content/videos/getById
        *
@@ -520,13 +1116,13 @@ declare global {
        * type Response = null
        * ```
        */
-      post_api_content_videos_get_by_id<
+      GetVideoById<
         Config extends Alova2MethodConfig<null> & {
           data: GetVideoByIdRequest
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_videos_get_by_id', Config>
+      ): Alova2Method<null, 'Content.GetVideoById', Config>
       /**
        * ---
        *
@@ -586,7 +1182,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_posts_add', Config>
+      ): Alova2Method<null, 'Content.post_api_content_posts_add', Config>
       /**
        * ---
        *
@@ -659,7 +1255,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_videos_add', Config>
+      ): Alova2Method<null, 'Content.post_api_content_videos_add', Config>
       /**
        * ---
        *
@@ -719,7 +1315,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_posts_update', Config>
+      ): Alova2Method<null, 'Content.post_api_content_posts_update', Config>
       /**
        * ---
        *
@@ -792,7 +1388,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_videos_update', Config>
+      ): Alova2Method<null, 'Content.post_api_content_videos_update', Config>
       /**
        * ---
        *
@@ -822,7 +1418,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_posts_delete', Config>
+      ): Alova2Method<null, 'Content.post_api_content_posts_delete', Config>
       /**
        * ---
        *
@@ -852,7 +1448,77 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<null, 'techCenterApi.post_api_content_videos_delete', Config>
+      ): Alova2Method<null, 'Content.post_api_content_videos_delete', Config>
+    }
+    BuiltinStorageProvider: {
+      /**
+       * ---
+       *
+       * [POST] 上传文件至内置存储提供商
+       *
+       * **path:** /api/builtinStorageProvider/upload
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   file: Blob
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   message: string
+       *   data?: {
+       *     id?: number
+       *     fileName?: string
+       *     storageKey?: string
+       *     ownerId?: number
+       *     // [items] start
+       *     // [items] end
+       *     contents?: Array<{
+       *       type?: number
+       *       id?: number
+       *     }>
+       *     providerId?: number
+       *     size?: number
+       *   } | null
+       * }
+       * ```
+       */
+      UploadFile<
+        Config extends Alova2MethodConfig<ApiResultOfFileResourceDto> & {
+          data: {
+            file: IFormFile
+          }
+        }
+      >(
+        config: Config
+      ): Alova2Method<ApiResultOfFileResourceDto, 'BuiltinStorageProvider.UploadFile', Config>
+    }
+    techCenterApi: {
+      /**
+       * ---
+       *
+       * [GET]
+       *
+       * **path:** /
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = null
+       * ```
+       */
+      get<Config extends Alova2MethodConfig<null>>(
+        config?: Config
+      ): Alova2Method<null, 'techCenterApi.get', Config>
     }
   }
 

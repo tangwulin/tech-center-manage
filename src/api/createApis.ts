@@ -14,7 +14,7 @@
  *
  * **Do not edit the file manually.**
  */
-import type { Alova, AlovaGenerics, AlovaMethodCreateConfig, MethodType } from 'alova'
+import type { Alova, MethodType, AlovaGenerics, AlovaMethodCreateConfig } from 'alova'
 import { Method } from 'alova'
 import apiDefinitions from './apiDefinitions'
 
