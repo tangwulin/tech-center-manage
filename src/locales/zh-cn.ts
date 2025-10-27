@@ -576,6 +576,9 @@ export default {
     500: '500',
     keepAlive: '缓存路由示例',
     keepAliveDemo1: '基础缓存',
-    keepAliveDemo2: '条件缓存'
+    keepAliveDemo2: '条件缓存',
+    creations: '创作中心',
+    myArticle: '我的文章',
+    myVideo: '我的视频'
   }
 } as const

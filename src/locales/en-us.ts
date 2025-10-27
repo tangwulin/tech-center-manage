@@ -628,6 +628,9 @@ export default {
     500: '500',
     keepAlive: 'Keep Alive',
     keepAliveDemo1: 'Basic Cache',
-    keepAliveDemo2: 'Conditional Cache'
+    keepAliveDemo2: 'Conditional Cache',
+    creations: 'My Creations',
+    myArticle: 'Article',
+    myVideo: 'Video'
   }
 } as const
